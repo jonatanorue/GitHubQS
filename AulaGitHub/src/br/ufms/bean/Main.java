@@ -18,4 +18,6 @@ public class Main {
     int soma = i + x;
     
     double div = x/i;
+        
+    int mult = x*i;    
 }
