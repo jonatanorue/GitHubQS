@@ -10,7 +10,10 @@ package br.ufms.bean;
  * @author JonatanOrue
  */
 public class Main {
-    int i = 5;
+    
     int x = 10;
+    
+    int i = 5;
+    //int x = 10;
     int soma = i + x;
 }
