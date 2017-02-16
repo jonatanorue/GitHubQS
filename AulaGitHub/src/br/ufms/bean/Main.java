@@ -11,4 +11,6 @@ package br.ufms.bean;
  */
 public class Main {
     
+    int x = 10;
+    
 }
