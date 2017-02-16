@@ -16,4 +16,6 @@ public class Main {
     int i = 5;
     //int x = 10;
     int soma = i + x;
+    
+    double div = x/i;
 }
