@@ -127,14 +127,18 @@ public class Menu extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         String buscar = JOptionPane.showInputDialog("Digite o cliente a ser buscado");
-        ClienteFisico c = new ClienteFisico();
-        ClienteFisico buscaC = c.buscaClienteFisico(buscar);
-                
-                
-                
-        Clientes cs = new Clientes(buscaC);
-        cs.setVisible(true);
-        this.setVisible(false);
+         if(buscar == null){
+            JOptionPane.showMessageDialog(null, "ERRO");
+        }else{
+            ClienteFisico c = new ClienteFisico();
+            ClienteFisico buscaC = c.buscaClienteFisico(buscar);
+
+            Clientes cs = new Clientes(buscaC);
+            cs.setVisible(true);
+            this.setVisible(false);
+           
+        }
+        
                 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -171,6 +175,9 @@ public class Menu extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         String buscar = JOptionPane.showInputDialog("Digite o cliente a ser buscado");
+        if(buscar == null){
+            JOptionPane.showMessageDialog(null, "ERRO");
+        }else{
         ClienteJuridico c = new ClienteJuridico();
         ClienteJuridico buscaC = c.buscaClienteJuridico(buscar);
                 
@@ -179,7 +186,7 @@ public class Menu extends javax.swing.JFrame {
         Clientes cs = new Clientes(buscaC);
         cs.setVisible(true);
         this.setVisible(false);
-                
+        }     
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
