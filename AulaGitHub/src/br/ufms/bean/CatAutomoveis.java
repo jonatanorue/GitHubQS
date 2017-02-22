@@ -12,7 +12,7 @@ package br.ufms.bean;
 public class CatAutomoveis {
     private String codCategoria;
     private String descCategoria;
-    private String valorDiario;
+    private double valorDiario;
     private String valorSemanal;
     private String valorMensal;
     private String valorKM;
@@ -38,11 +38,11 @@ public class CatAutomoveis {
         this.descCategoria = descCategoria;
     }
     
-    public String getvalorDiario(){
+    public double getvalorDiario(){
         return valorDiario;
     }
     
-    public void setvalorDiario(String valorDiario){
+    public void setvalorDiario(double valorDiario){
         this.valorDiario = valorDiario;
     }
     
