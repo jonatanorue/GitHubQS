@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class ClienteFisico extends Cliente{
     
     
-    private static ArrayList<ClienteFisico> listaClienteFisico = new ArrayList<ClienteFisico>();
+    public static ArrayList<ClienteFisico> listaClienteFisico = new ArrayList<>();
     private String cpf;
     
       public String getCpf() {
@@ -43,7 +43,6 @@ public class ClienteFisico extends Cliente{
     }
     
     public ClienteFisico buscaClienteFisico(String cpfBusca){
-        boolean status = false;
         for(int i = 0; i < listaClienteFisico.size(); i++){
             if(listaClienteFisico.get(i).getCpf().equals(cpfBusca)){
                 return listaClienteFisico.get(i);
@@ -51,5 +50,26 @@ public class ClienteFisico extends Cliente{
         }
         return null;
     }
+    
+    public int buscaClienteFisicoB(String cpfBusca){
+        int indice = -1;
+        for(int i = 0; i < listaClienteFisico.size(); i++){
+            if(listaClienteFisico.get(i).getCpf().equals(cpfBusca)){
+                indice = i;
+            }
+        }
+        return indice;
+    }
+    
+   /* public boolean editarClienteFisico(ClienteFisico c){
+        boolean status = false;
+        for(int i = 0; i < listaClienteFisico.size(); i++){
+                if(listaClienteFisico.get(i).getCpf().equals(c.getCpf())){
+                    listaClienteFisico.add(i, c);
+                    status = true;
+                }
+        }
+        return status;
+    }*/
     
 }

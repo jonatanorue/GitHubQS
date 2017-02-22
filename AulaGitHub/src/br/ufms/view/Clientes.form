@@ -167,10 +167,7 @@
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jTextField7" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jTextField7" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>

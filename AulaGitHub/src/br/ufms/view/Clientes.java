@@ -22,8 +22,8 @@ public class Clientes extends javax.swing.JFrame {
     public Clientes() {
         initComponents();
     }
-    
-    public Clientes(ClienteFisico c){
+
+    public Clientes(ClienteFisico c) {
         initComponents();
         jTextField1.setText(c.getNome());
         jTextField2.setText(c.getEndereço());
@@ -35,9 +35,11 @@ public class Clientes extends javax.swing.JFrame {
         jRadioButton1.setSelected(true);
         jTextField7.setText(c.getCpf());
         jFormattedTextField1.setText(c.getData_de_nascimento());
-        jRadioButton3.isSelected();    
+        jRadioButton3.isSelected();
+
     }
-    public Clientes(ClienteJuridico c){
+
+    public Clientes(ClienteJuridico c) {
         initComponents();
         jTextField1.setText(c.getNome());
         jTextField2.setText(c.getEndereço());
@@ -50,7 +52,7 @@ public class Clientes extends javax.swing.JFrame {
         jTextField7.setText(c.getCnpj());
         jTextField10.setText(c.getNomeFantasia());
         jFormattedTextField1.setText(c.getData_de_nascimento());
-        jRadioButton3.isSelected();    
+        jRadioButton3.isSelected();
     }
 
     /**
@@ -329,21 +331,38 @@ public class Clientes extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        if(jRadioButton1.isSelected()){
+        if (jRadioButton1.isSelected()) {
             ClienteFisico cf = new ClienteFisico();
-            cf.setNome(jTextField1.getText());
-            cf.setEndereço(jTextField2.getText());
-            cf.setCidade(jTextField3.getText());
-            cf.setEstado(jTextField4.getText());
-            cf.setTelefone(jTextField5.getText());
-            cf.setTelefone(jTextField8.getText());
-            cf.setEmail(jTextField6.getText());
-            cf.setCpf(jTextField7.getText());
-            cf.setData_de_nascimento(jFormattedTextField1.getText());
-            cf.setSituaçao_de_inadimplência(jRadioButton3.isSelected());        
-            cf.cadastraClienteFisico(cf);
-            JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
-        }else if(jRadioButton2.isSelected()){
+            // se existir cliente alterar direto na lista, caso não adicione um novo
+            int indice = cf.buscaClienteFisicoB(jTextField7.getText());
+            System.out.println(indice);
+            if (indice >= 0) {
+                cf.listaClienteFisico.get(indice).setNome(jTextField1.getText());
+                cf.listaClienteFisico.get(indice).setEndereço(jTextField2.getText());
+                cf.listaClienteFisico.get(indice).setCidade(jTextField3.getText());
+                cf.listaClienteFisico.get(indice).setEstado(jTextField4.getText());
+                cf.listaClienteFisico.get(indice).setTelefone(jTextField5.getText());
+                cf.listaClienteFisico.get(indice).setTelefone(jTextField8.getText());
+                cf.listaClienteFisico.get(indice).setEmail(jTextField6.getText());
+                cf.listaClienteFisico.get(indice).setCpf(jTextField7.getText());
+                cf.listaClienteFisico.get(indice).setData_de_nascimento(jFormattedTextField1.getText());
+                cf.listaClienteFisico.get(indice).setSituaçao_de_inadimplência(jRadioButton3.isSelected());
+                JOptionPane.showMessageDialog(null, "Editado com Sucesso");
+            } else {
+                cf.setNome(jTextField1.getText());
+                cf.setEndereço(jTextField2.getText());
+                cf.setCidade(jTextField3.getText());
+                cf.setEstado(jTextField4.getText());
+                cf.setTelefone(jTextField5.getText());
+                cf.setTelefone(jTextField8.getText());
+                cf.setEmail(jTextField6.getText());
+                cf.setCpf(jTextField7.getText());
+                cf.setData_de_nascimento(jFormattedTextField1.getText());
+                cf.setSituaçao_de_inadimplência(jRadioButton3.isSelected());
+                cf.cadastraClienteFisico(cf);
+                JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
+            }
+        } else if (jRadioButton2.isSelected()) {
             ClienteJuridico cj = new ClienteJuridico();
             cj.setNome(jTextField1.getText());
             cj.setEndereço(jTextField2.getText());
@@ -353,19 +372,19 @@ public class Clientes extends javax.swing.JFrame {
             cj.setTelefone(jTextField8.getText());
             cj.setEmail(jTextField6.getText());
             cj.setCnpj(jTextField9.getText());
-            cj.setNomeFantasia(jTextField10.getText());            
+            cj.setNomeFantasia(jTextField10.getText());
             cj.setData_de_nascimento(jFormattedTextField1.getText());
-            cj.setSituaçao_de_inadimplência(jRadioButton3.isSelected());        
+            cj.setSituaçao_de_inadimplência(jRadioButton3.isSelected());
             cj.cadastraClienteJuridico(cj);
             JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
-            
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione CPF ou CNPJ");
         }
-        
-        
-        
-        
+
+        new Menu().show();
+        dispose();
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
