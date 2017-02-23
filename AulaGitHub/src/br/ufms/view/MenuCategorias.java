@@ -5,19 +5,19 @@
  */
 package br.ufms.view;
 
-import br.ufms.bean.AcoesCatAutomoveis;
+import br.ufms.bean.Categorias;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Nicolas
  */
-public class MenuCatAutomoveis extends javax.swing.JFrame {
+public class MenuCategorias extends javax.swing.JFrame {
 
     /**
      * Creates new form MenuCatAutomoveis
      */
-    public MenuCatAutomoveis() {
+    public MenuCategorias() {
         initComponents();
     }
 
@@ -98,7 +98,7 @@ public class MenuCatAutomoveis extends javax.swing.JFrame {
     private void btnAddCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCatActionPerformed
         // TODO add your handling code here:
         
-        addCatAutomoveis add = new addCatAutomoveis();
+        CadastrarCategorias add = new CadastrarCategorias();
         add.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnAddCatActionPerformed
@@ -109,10 +109,10 @@ public class MenuCatAutomoveis extends javax.swing.JFrame {
         if(buscar == null){
             JOptionPane.showMessageDialog(null, "Nada digitado, tente novamente.");
         }else{
-            AcoesCatAutomoveis edit = new AcoesCatAutomoveis();
-            AcoesCatAutomoveis buscaCat = edit.buscarCatAutomoveis(buscar);
+            Categorias edit = new Categorias();
+            Categorias buscaCat = edit.buscarCatAutomoveis(buscar);
             
-            addCatAutomoveis show = new addCatAutomoveis(buscaCat);
+            CadastrarCategorias show = new CadastrarCategorias(buscaCat);
             show.setVisible(true);
             this.setVisible(false);
         }
@@ -121,7 +121,7 @@ public class MenuCatAutomoveis extends javax.swing.JFrame {
     private void btnDeleteCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCatActionPerformed
         // TODO add your handling code here:
         String buscar = JOptionPane.showInputDialog("Digite o código da categoria a ser deletada");
-        AcoesCatAutomoveis delete = new AcoesCatAutomoveis();
+        Categorias delete = new Categorias();
         if(delete.removerCatAutomoveis(buscar) == true){
             JOptionPane.showMessageDialog(null, "Categoria deletada com sucesso");
         }else{
@@ -146,20 +146,21 @@ public class MenuCatAutomoveis extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuCatAutomoveis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuCatAutomoveis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuCatAutomoveis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuCatAutomoveis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuCatAutomoveis().setVisible(true);
+                new MenuCategorias().setVisible(true);
             }
         });
     }

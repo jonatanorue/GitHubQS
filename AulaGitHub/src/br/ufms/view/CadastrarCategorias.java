@@ -5,7 +5,7 @@
  */
 package br.ufms.view;
 
-import br.ufms.bean.AcoesCatAutomoveis;
+import br.ufms.bean.Categorias;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -14,23 +14,23 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author Nicolas
  */
-public class addCatAutomoveis extends javax.swing.JFrame {
+public class CadastrarCategorias extends javax.swing.JFrame {
 
     /**
      * Creates new form addCatAutomoveis
      */
-    public addCatAutomoveis() {
+    public CadastrarCategorias() {
         initComponents();
     }
     
-    public addCatAutomoveis(AcoesCatAutomoveis a){
+    public CadastrarCategorias(Categorias a){
         initComponents();
         txtcodCategoria.setText(a.getcodCategoria());
         txtdescCategoria.setText(a.getdescCategoria());
-        jSpinner1.setValue(a.getvalorDiario());
-        txtvalorSemanal.setText(a.getvalorSemanal());
-        txtvalorMensal.setText(a.getvalorMensal());
-        txtvalorKM.setText(a.getvalorKM());
+        spValorDiario.setValue(a.getvalorDiario());
+        spValorSemanal.setValue(a.getvalorSemanal());
+        spValorMensal.setValue(a.getvalorMensal());
+        spValorKM.setValue(a.getvalorKM());
         txtqtdAutomoveis.setText(a.getqtdAutomoveis());      
     }
         
@@ -62,14 +62,15 @@ public class addCatAutomoveis extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
-        btnLimpar = new javax.swing.JButton();
-        txtvalorDiario = new javax.swing.JTextField();
-        txtvalorSemanal = new javax.swing.JTextField();
-        txtvalorMensal = new javax.swing.JTextField();
-        txtvalorKM = new javax.swing.JTextField();
         txtqtdAutomoveis = new javax.swing.JTextField();
-        SpinnerNumberModel model = new SpinnerNumberModel(100.0, 0.0, 5000.0, 0.5);
-        jSpinner1 = new javax.swing.JSpinner(model);
+        SpinnerNumberModel modelVD = new SpinnerNumberModel(0.0, 0.0, 5000.0, 0.5);
+        spValorDiario = new javax.swing.JSpinner(modelVD);
+        SpinnerNumberModel modelVS = new SpinnerNumberModel(0.0, 0.0, 5000.0, 0.5);
+        spValorSemanal = new javax.swing.JSpinner(modelVS);
+        SpinnerNumberModel modelVM = new SpinnerNumberModel(0.0, 0.0, 5000.0, 0.5);
+        spValorMensal = new javax.swing.JSpinner(modelVM);
+        SpinnerNumberModel modelVKM = new SpinnerNumberModel(0.0, 0.0, 5000.0, 0.5);
+        spValorKM = new javax.swing.JSpinner(modelVKM);
 
         jScrollPane1.setViewportView(jTree1);
 
@@ -130,16 +131,17 @@ public class addCatAutomoveis extends javax.swing.JFrame {
             }
         });
 
-        btnLimpar.setText("Limpar");
+        JSpinner.NumberEditor editorVD = new JSpinner.NumberEditor(spValorDiario) ;
+        spValorDiario.setEditor(editorVD);
 
-        txtvalorMensal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtvalorMensalActionPerformed(evt);
-            }
-        });
+        JSpinner.NumberEditor editorVS = new JSpinner.NumberEditor(spValorSemanal) ;
+        spValorSemanal.setEditor(editorVS);
 
-        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(jSpinner1) ;
-        jSpinner1.setEditor(editor);
+        JSpinner.NumberEditor editorVM = new JSpinner.NumberEditor(spValorMensal) ;
+        spValorMensal.setEditor(editorVM);
+
+        JSpinner.NumberEditor editorVKM = new JSpinner.NumberEditor(spValorKM) ;
+        spValorKM.setEditor(editorVKM);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,58 +149,56 @@ public class addCatAutomoveis extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtcodCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(spValorMensal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addGap(30, 30, 30))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel8))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(jLabel11)
-                                                    .addComponent(jLabel10)))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel9)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtqtdAutomoveis, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtvalorSemanal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtvalorMensal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtvalorKM, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtvalorDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtdescCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jSpinner1)
-                                .addGap(135, 135, 135)))
-                        .addGap(85, 85, 85))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel8))
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtqtdAutomoveis, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spValorKM, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spValorSemanal, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addComponent(jLabel1))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabel11)
+                                    .addGap(6, 6, 6)
+                                    .addComponent(spValorDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtcodCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(txtdescCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(85, 85, 85))))
                 .addContainerGap(140, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -218,34 +218,31 @@ public class addCatAutomoveis extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel11)
-                    .addComponent(txtvalorDiario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spValorDiario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel10)
-                    .addComponent(txtvalorSemanal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spValorSemanal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel9)
-                    .addComponent(txtvalorMensal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spValorMensal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8)
-                    .addComponent(txtvalorKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spValorKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(txtqtdAutomoveis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
-                    .addComponent(btnVoltar)
-                    .addComponent(btnLimpar))
-                .addContainerGap(123, Short.MAX_VALUE))
+                    .addComponent(btnVoltar))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         pack();
@@ -257,30 +254,40 @@ public class addCatAutomoveis extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
-        AcoesCatAutomoveis add = new AcoesCatAutomoveis();
+        Categorias categoria = new Categorias();
         
-        add.setcodCategoria(txtcodCategoria.getText());
-        add.setdescCategoria(txtdescCategoria.getText());
-        add.setvalorDiario(Double.parseDouble(jSpinner1.getValue().toString()));
-        add.setvalorSemanal(txtvalorSemanal.getText());
-        add.setvalorMensal(txtvalorMensal.getText());
-        add.setvalorKM(txtvalorKM.getText());
-        add.setqtdAutomoveis(txtqtdAutomoveis.getText());
-        add.cadastrarCatAutomoveis(add);
-        JOptionPane.showMessageDialog(null, "Categoria adicionada com sucesso");
+        int indice = categoria.buscaIndiceCategoria(txtcodCategoria.getText());
+            if (indice >= 0){
+                categoria.listaCategorias.get(indice).setcodCategoria(txtcodCategoria.getText());
+                categoria.listaCategorias.get(indice).setdescCategoria(txtdescCategoria.getText());
+                categoria.listaCategorias.get(indice).setvalorDiario(Double.parseDouble(spValorDiario.getValue().toString()));
+                categoria.listaCategorias.get(indice).setvalorSemanal(Double.parseDouble(spValorSemanal.getValue().toString()));
+                categoria.listaCategorias.get(indice).setvalorMensal(Double.parseDouble(spValorMensal.getValue().toString()));
+                categoria.listaCategorias.get(indice).setvalorKM(Double.parseDouble(spValorKM.getValue().toString()));
+                categoria.listaCategorias.get(indice).setqtdAutomoveis(txtqtdAutomoveis.getText());
+                JOptionPane.showMessageDialog(null, "Categoria editada com sucesso");
+            }else{
+                categoria.setcodCategoria(txtcodCategoria.getText());
+                categoria.setdescCategoria(txtdescCategoria.getText());
+                categoria.setvalorDiario(Double.parseDouble(spValorDiario.getValue().toString()));
+                categoria.setvalorSemanal(Double.parseDouble(spValorSemanal.getValue().toString()));
+                categoria.setvalorMensal(Double.parseDouble(spValorMensal.getValue().toString()));
+                categoria.setvalorKM(Double.parseDouble(spValorKM.getValue().toString()));
+                categoria.setqtdAutomoveis(txtqtdAutomoveis.getText());
+                categoria.cadastrarCatAutomoveis(categoria);
+                JOptionPane.showMessageDialog(null, "Categoria adicionada com sucesso");
+            }
+        new MenuCategorias().show();
+        dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void txtdescCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdescCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtdescCategoriaActionPerformed
 
-    private void txtvalorMensalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtvalorMensalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtvalorMensalActionPerformed
-
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         // TODO add your handling code here:
-        new MenuCatAutomoveis().show();
+        new MenuCategorias().show();
         dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
@@ -301,26 +308,26 @@ public class addCatAutomoveis extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(addCatAutomoveis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastrarCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(addCatAutomoveis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastrarCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(addCatAutomoveis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastrarCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(addCatAutomoveis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastrarCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new addCatAutomoveis().setVisible(true);
+                new CadastrarCategorias().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
@@ -336,14 +343,13 @@ public class addCatAutomoveis extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTree jTree1;
+    private javax.swing.JSpinner spValorDiario;
+    private javax.swing.JSpinner spValorKM;
+    private javax.swing.JSpinner spValorMensal;
+    private javax.swing.JSpinner spValorSemanal;
     private javax.swing.JTextField txtcodCategoria;
     private javax.swing.JTextField txtdescCategoria;
     private javax.swing.JTextField txtqtdAutomoveis;
-    private javax.swing.JTextField txtvalorDiario;
-    private javax.swing.JTextField txtvalorKM;
-    private javax.swing.JTextField txtvalorMensal;
-    private javax.swing.JTextField txtvalorSemanal;
     // End of variables declaration//GEN-END:variables
 }
