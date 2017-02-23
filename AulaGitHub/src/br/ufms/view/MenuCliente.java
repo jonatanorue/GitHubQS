@@ -14,12 +14,12 @@ import javax.swing.JOptionPane;
  *
  * @author HPC
  */
-public class Menu extends javax.swing.JFrame {
+public class MenuCliente extends javax.swing.JFrame {
 
     /**
      * Creates new form Menu
      */
-    public Menu() {
+    public MenuCliente() {
         initComponents();
     }
 
@@ -32,50 +32,50 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        novoclientebtn = new javax.swing.JButton();
+        editarClienteCpfbtn = new javax.swing.JButton();
+        excluirClienteCpfbtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        excluirclienteCnpjbtn = new javax.swing.JButton();
+        editarClienteCnpjbtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("NOVO");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        novoclientebtn.setText("NOVO");
+        novoclientebtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                novoclientebtnActionPerformed(evt);
             }
         });
 
-        jButton2.setText("EDITAR - FÍSICO");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        editarClienteCpfbtn.setText("EDITAR - FÍSICO");
+        editarClienteCpfbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                editarClienteCpfbtnActionPerformed(evt);
             }
         });
 
-        jButton3.setText("EXCLUIR - FÍSICO");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        excluirClienteCpfbtn.setText("EXCLUIR - FÍSICO");
+        excluirClienteCpfbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                excluirClienteCpfbtnActionPerformed(evt);
             }
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("LOCAÇÃO DE AUTOMÓVEIS");
 
-        jButton4.setText("EXCLUIR - JURÍDICO");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        excluirclienteCnpjbtn.setText("EXCLUIR - JURÍDICO");
+        excluirclienteCnpjbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                excluirclienteCnpjbtnActionPerformed(evt);
             }
         });
 
-        jButton5.setText("EDITAR - JURÍDICO");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        editarClienteCnpjbtn.setText("EDITAR - JURÍDICO");
+        editarClienteCnpjbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                editarClienteCnpjbtnActionPerformed(evt);
             }
         });
 
@@ -89,15 +89,15 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(78, 78, 78))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(novoclientebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(editarClienteCnpjbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editarClienteCpfbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(excluirClienteCpfbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(excluirclienteCnpjbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
@@ -108,48 +108,48 @@ public class Menu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
-                        .addComponent(jButton1))
+                        .addComponent(novoclientebtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2))))
+                            .addComponent(excluirClienteCpfbtn)
+                            .addComponent(editarClienteCpfbtn))))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(excluirclienteCnpjbtn)
+                    .addComponent(editarClienteCnpjbtn))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void editarClienteCpfbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarClienteCpfbtnActionPerformed
         // TODO add your handling code here:
-        String buscar = JOptionPane.showInputDialog("Digite o cliente a ser buscado");
+        String buscar = JOptionPane.showInputDialog("Digite o CPF do cliente a ser buscado");
          if(buscar == null){
             JOptionPane.showMessageDialog(null, "ERRO");
         }else{
             ClienteFisico c = new ClienteFisico();
             ClienteFisico buscaC = c.buscaClienteFisico(buscar);
 
-            Clientes cs = new Clientes(buscaC);
+            CadastroClientes cs = new CadastroClientes(buscaC);
             cs.setVisible(true);
             this.setVisible(false);
            
         }
         
                 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_editarClienteCpfbtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void novoclientebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoclientebtnActionPerformed
         // TODO add your handling code here:
-        Clientes c = new Clientes();
+        CadastroClientes c = new CadastroClientes();
         c.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_novoclientebtnActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void excluirClienteCpfbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirClienteCpfbtnActionPerformed
         // TODO add your handling code here:
         String buscar = JOptionPane.showInputDialog("Digite o CPF do cliente a ser buscado");
         ClienteFisico cf = new ClienteFisico();
@@ -159,9 +159,9 @@ public class Menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "ERRO");
         }
                
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_excluirClienteCpfbtnActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void excluirclienteCnpjbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirclienteCnpjbtnActionPerformed
         // TODO add your handling code here:
         String buscar = JOptionPane.showInputDialog("Digite o CNPJ do cliente a ser buscado");
         ClienteJuridico cj = new ClienteJuridico();
@@ -170,9 +170,9 @@ public class Menu extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "ERRO");
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_excluirclienteCnpjbtnActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void editarClienteCnpjbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarClienteCnpjbtnActionPerformed
         // TODO add your handling code here:
         String buscar = JOptionPane.showInputDialog("Digite o cliente a ser buscado");
         if(buscar == null){
@@ -183,11 +183,11 @@ public class Menu extends javax.swing.JFrame {
                 
                 
                 
-        Clientes cs = new Clientes(buscaC);
+        CadastroClientes cs = new CadastroClientes(buscaC);
         cs.setVisible(true);
         this.setVisible(false);
         }     
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_editarClienteCnpjbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,30 +206,33 @@ public class Menu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Menu().setVisible(true);
+                new MenuCliente().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton editarClienteCnpjbtn;
+    private javax.swing.JButton editarClienteCpfbtn;
+    private javax.swing.JButton excluirClienteCpfbtn;
+    private javax.swing.JButton excluirclienteCnpjbtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton novoclientebtn;
     // End of variables declaration//GEN-END:variables
 }

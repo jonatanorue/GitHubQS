@@ -14,45 +14,45 @@ import javax.swing.JOptionPane;
  *
  * @author HPC
  */
-public class Clientes extends javax.swing.JFrame {
+public class CadastroClientes extends javax.swing.JFrame {
 
     /**
      * Creates new form Clientes
      */
-    public Clientes() {
+    public CadastroClientes() {
         initComponents();
     }
 
-    public Clientes(ClienteFisico c) {
+    public CadastroClientes(ClienteFisico c) {
         initComponents();
-        jTextField1.setText(c.getNome());
-        jTextField2.setText(c.getEndereço());
-        jTextField3.setText(c.getCidade());
-        jTextField4.setText(c.getEstado());
-        jTextField5.setText(c.getTelefone());
-        jTextField8.setText(c.getTelefone());
-        jTextField6.setText(c.getEmail());
-        jRadioButton1.setSelected(true);
-        jTextField7.setText(c.getCpf());
-        jFormattedTextField1.setText(c.getData_de_nascimento());
-        jRadioButton3.isSelected();
+        nometxt.setText(c.getNome());
+        enderecotxt.setText(c.getEndereço());
+        cidadetxt.setText(c.getCidade());
+        estadotxt.setText(c.getEstado());
+        telefone1txt.setText(c.getTelefone());
+        telefone2txt.setText(c.getTelefone());
+        emailtxt.setText(c.getEmail());
+        cpfradio.setSelected(true);
+        cpftxt.setText(c.getCpf());
+        datanascimentotxt.setText(c.getData_de_nascimento());
+        inadimplenciaradio.isSelected();
 
     }
 
-    public Clientes(ClienteJuridico c) {
+    public CadastroClientes(ClienteJuridico c) {
         initComponents();
-        jTextField1.setText(c.getNome());
-        jTextField2.setText(c.getEndereço());
-        jTextField3.setText(c.getCidade());
-        jTextField4.setText(c.getEstado());
-        jTextField5.setText(c.getTelefone());
-        jTextField8.setText(c.getTelefone());
-        jTextField6.setText(c.getEmail());
-        jRadioButton1.setSelected(true);
-        jTextField7.setText(c.getCnpj());
-        jTextField10.setText(c.getNomeFantasia());
-        jFormattedTextField1.setText(c.getData_de_nascimento());
-        jRadioButton3.isSelected();
+        nometxt.setText(c.getNome());
+        enderecotxt.setText(c.getEndereço());
+        cidadetxt.setText(c.getCidade());
+        estadotxt.setText(c.getEstado());
+        telefone1txt.setText(c.getTelefone());
+        telefone2txt.setText(c.getTelefone());
+        emailtxt.setText(c.getEmail());
+        cnpjradio.setSelected(true);
+        cnpjtxt.setText(c.getCnpj());
+        nomeFantasiatxt.setText(c.getNomeFantasia());
+        datanascimentotxt.setText(c.getData_de_nascimento());
+        inadimplenciaradio.isSelected();
     }
 
     /**
@@ -75,24 +75,24 @@ public class Clientes extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jTextField8 = new javax.swing.JTextField();
+        nometxt = new javax.swing.JTextField();
+        enderecotxt = new javax.swing.JTextField();
+        cidadetxt = new javax.swing.JTextField();
+        estadotxt = new javax.swing.JTextField();
+        telefone1txt = new javax.swing.JTextField();
+        emailtxt = new javax.swing.JTextField();
+        cpftxt = new javax.swing.JTextField();
+        salvarbotao = new javax.swing.JButton();
+        datanascimentotxt = new javax.swing.JFormattedTextField();
+        telefone2txt = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
-        jTextField9 = new javax.swing.JTextField();
+        inadimplenciaradio = new javax.swing.JRadioButton();
+        cpfradio = new javax.swing.JRadioButton();
+        cnpjradio = new javax.swing.JRadioButton();
+        voltarBotao = new javax.swing.JButton();
+        cnpjtxt = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        nomeFantasiatxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,49 +126,72 @@ public class Clientes extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel10.setText("Situação de Inadimplência:");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        nometxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                nometxtActionPerformed(evt);
             }
         });
 
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        enderecotxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                enderecotxtActionPerformed(evt);
             }
         });
 
-        jButton4.setText("SALVAR");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        cidadetxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                cidadetxtActionPerformed(evt);
             }
         });
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        telefone1txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                telefone1txtActionPerformed(evt);
+            }
+        });
+
+        cpftxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cpftxtActionPerformed(evt);
+            }
+        });
+
+        salvarbotao.setText("SALVAR");
+        salvarbotao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarbotaoActionPerformed(evt);
+            }
+        });
+
+        datanascimentotxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel11.setText("CNPJ");
 
-        jRadioButton3.setText("APTO");
+        inadimplenciaradio.setText("APTO");
 
-        buttonGroup1.add(jRadioButton1);
+        buttonGroup1.add(cpfradio);
 
-        buttonGroup1.add(jRadioButton2);
-
-        jButton1.setText("VOLTAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(cnpjradio);
+        cnpjradio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cnpjradioActionPerformed(evt);
+            }
+        });
+
+        voltarBotao.setText("VOLTAR");
+        voltarBotao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarBotaoActionPerformed(evt);
             }
         });
 
         jLabel12.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel12.setText("Nome Fantasia");
 
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
+        nomeFantasiatxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
+                nomeFantasiatxtActionPerformed(evt);
             }
         });
 
@@ -188,18 +211,18 @@ public class Clientes extends javax.swing.JFrame {
                                         .addComponent(jLabel3))
                                     .addGap(8, 8, 8)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField2)
-                                        .addComponent(jTextField1)))
+                                        .addComponent(enderecotxt)
+                                        .addComponent(nometxt)))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                             .addComponent(jLabel9)
                                             .addGap(23, 23, 23)
-                                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(datanascimentotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                             .addComponent(jLabel10)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jRadioButton3))
+                                            .addComponent(inadimplenciaradio))
                                         .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,41 +230,41 @@ public class Clientes extends javax.swing.JFrame {
                                                 .addComponent(jLabel7))
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(emailtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGroup(layout.createSequentialGroup()
-                                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(telefone1txt, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addGap(18, 18, 18)
-                                                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                    .addComponent(telefone2txt, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                             .addComponent(jLabel12)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jTextField10))
+                                            .addComponent(nomeFantasiatxt))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                             .addComponent(jLabel11)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jRadioButton2)
+                                            .addComponent(cnpjradio)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jTextField9))
+                                            .addComponent(cnpjtxt))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                             .addComponent(jLabel8)
                                             .addGap(18, 18, 18)
-                                            .addComponent(jRadioButton1)
+                                            .addComponent(cpfradio)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(cpftxt, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGap(0, 252, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(23, 23, 23)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(estadotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cidadetxt, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(salvarbotao, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(voltarBotao, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(6, 6, 6))
                             .addComponent(jLabel1))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -255,126 +278,124 @@ public class Clientes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nometxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(enderecotxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cidadetxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(estadotxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(telefone1txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(telefone2txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(emailtxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(2, 2, 2)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(27, 27, 27)
                                 .addComponent(jLabel8))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jRadioButton1))
+                            .addComponent(cpftxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cpfradio))
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cnpjradio)
+                    .addComponent(cnpjtxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nomeFantasiatxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(datanascimentotxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jRadioButton3))
+                    .addComponent(inadimplenciaradio))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton1))
+                    .addComponent(salvarbotao)
+                    .addComponent(voltarBotao))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void cidadetxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cidadetxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_cidadetxtActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void cpftxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpftxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_cpftxtActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void voltarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarBotaoActionPerformed
         // TODO add your handling code here:
-        new Menu().show();
+        new MenuCliente().show();
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_voltarBotaoActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void salvarbotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarbotaoActionPerformed
         // TODO add your handling code here:
-        if (jRadioButton1.isSelected()) {
+        if (cpfradio.isSelected()) {
             ClienteFisico cf = new ClienteFisico();
             // se existir cliente alterar direto na lista, caso não adicione um novo
-            int indice = cf.buscaClienteFisicoB(jTextField7.getText());
+            int indice = cf.buscaClienteFisicoB(cpftxt.getText());
             System.out.println(indice);
             if (indice >= 0) {
-                cf.listaClienteFisico.get(indice).setNome(jTextField1.getText());
-                cf.listaClienteFisico.get(indice).setEndereço(jTextField2.getText());
-                cf.listaClienteFisico.get(indice).setCidade(jTextField3.getText());
-                cf.listaClienteFisico.get(indice).setEstado(jTextField4.getText());
-                cf.listaClienteFisico.get(indice).setTelefone(jTextField5.getText());
-                cf.listaClienteFisico.get(indice).setTelefone(jTextField8.getText());
-                cf.listaClienteFisico.get(indice).setEmail(jTextField6.getText());
-                cf.listaClienteFisico.get(indice).setCpf(jTextField7.getText());
-                cf.listaClienteFisico.get(indice).setData_de_nascimento(jFormattedTextField1.getText());
-                cf.listaClienteFisico.get(indice).setSituaçao_de_inadimplência(jRadioButton3.isSelected());
+                cf.listaClienteFisico.get(indice).setNome(nometxt.getText());
+                cf.listaClienteFisico.get(indice).setEndereço(enderecotxt.getText());
+                cf.listaClienteFisico.get(indice).setCidade(cidadetxt.getText());
+                cf.listaClienteFisico.get(indice).setEstado(estadotxt.getText());
+                cf.listaClienteFisico.get(indice).setTelefone(telefone1txt.getText());
+                cf.listaClienteFisico.get(indice).setTelefone(telefone2txt.getText());
+                cf.listaClienteFisico.get(indice).setEmail(emailtxt.getText());
+                cf.listaClienteFisico.get(indice).setCpf(cpftxt.getText());
+                cf.listaClienteFisico.get(indice).setData_de_nascimento(datanascimentotxt.getText());
+                cf.listaClienteFisico.get(indice).setSituaçao_de_inadimplência(inadimplenciaradio.isSelected());
                 JOptionPane.showMessageDialog(null, "Editado com Sucesso");
             } else {
-                cf.setNome(jTextField1.getText());
-                cf.setEndereço(jTextField2.getText());
-                cf.setCidade(jTextField3.getText());
-                cf.setEstado(jTextField4.getText());
-                cf.setTelefone(jTextField5.getText());
-                cf.setTelefone(jTextField8.getText());
-                cf.setEmail(jTextField6.getText());
-                cf.setCpf(jTextField7.getText());
-                cf.setData_de_nascimento(jFormattedTextField1.getText());
-                cf.setSituaçao_de_inadimplência(jRadioButton3.isSelected());
+                cf.setNome(nometxt.getText());
+                cf.setEndereço(enderecotxt.getText());
+                cf.setCidade(cidadetxt.getText());
+                cf.setEstado(estadotxt.getText());
+                cf.setTelefone(telefone1txt.getText());
+                cf.setTelefone(telefone2txt.getText());
+                cf.setEmail(emailtxt.getText());
+                cf.setCpf(cpftxt.getText());
+                cf.setData_de_nascimento(datanascimentotxt.getText());
+                cf.setSituaçao_de_inadimplência(inadimplenciaradio.isSelected());
                 cf.cadastraClienteFisico(cf);
                 JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
             }
-        } else if (jRadioButton2.isSelected()) {
+        } else if (cnpjradio.isSelected()) {
             ClienteJuridico cj = new ClienteJuridico();
-            cj.setNome(jTextField1.getText());
-            cj.setEndereço(jTextField2.getText());
-            cj.setCidade(jTextField3.getText());
-            cj.setEstado(jTextField4.getText());
-            cj.setTelefone(jTextField5.getText());
-            cj.setTelefone(jTextField8.getText());
-            cj.setEmail(jTextField6.getText());
-            cj.setCnpj(jTextField9.getText());
-            cj.setNomeFantasia(jTextField10.getText());
-            cj.setData_de_nascimento(jFormattedTextField1.getText());
-            cj.setSituaçao_de_inadimplência(jRadioButton3.isSelected());
+            cj.setNome(nometxt.getText());
+            cj.setEndereço(enderecotxt.getText());
+            cj.setCidade(cidadetxt.getText());
+            cj.setEstado(estadotxt.getText());
+            cj.setTelefone(telefone1txt.getText());
+            cj.setTelefone(telefone2txt.getText());
+            cj.setEmail(emailtxt.getText());
+            cj.setCnpj(cnpjtxt.getText());
+            cj.setNomeFantasia(nomeFantasiatxt.getText());
+            cj.setData_de_nascimento(datanascimentotxt.getText());
+            cj.setSituaçao_de_inadimplência(inadimplenciaradio.isSelected());
             cj.cadastraClienteJuridico(cj);
             JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
 
@@ -382,14 +403,30 @@ public class Clientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione CPF ou CNPJ");
         }
 
-        new Menu().show();
+        new MenuCliente().show();
         dispose();
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_salvarbotaoActionPerformed
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
+    private void nomeFantasiatxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeFantasiatxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
+    }//GEN-LAST:event_nomeFantasiatxtActionPerformed
+
+    private void nometxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nometxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nometxtActionPerformed
+
+    private void enderecotxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enderecotxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_enderecotxtActionPerformed
+
+    private void cnpjradioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cnpjradioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cnpjradioActionPerformed
+
+    private void telefone1txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telefone1txtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_telefone1txtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -408,29 +445,37 @@ public class Clientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Clientes().setVisible(true);
+                new CadastroClientes().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JTextField cidadetxt;
+    private javax.swing.JRadioButton cnpjradio;
+    private javax.swing.JTextField cnpjtxt;
+    private javax.swing.JRadioButton cpfradio;
+    private javax.swing.JTextField cpftxt;
+    private javax.swing.JFormattedTextField datanascimentotxt;
+    private javax.swing.JTextField emailtxt;
+    private javax.swing.JTextField enderecotxt;
+    private javax.swing.JTextField estadotxt;
+    private javax.swing.JRadioButton inadimplenciaradio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -443,18 +488,11 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField nomeFantasiatxt;
+    private javax.swing.JTextField nometxt;
+    private javax.swing.JButton salvarbotao;
+    private javax.swing.JTextField telefone1txt;
+    private javax.swing.JTextField telefone2txt;
+    private javax.swing.JButton voltarBotao;
     // End of variables declaration//GEN-END:variables
 }
