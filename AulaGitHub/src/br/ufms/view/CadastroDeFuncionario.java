@@ -131,13 +131,11 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
         estados.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         estados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acre\t\t ", "Alagoas\t\t ", "Amapá\t\t ", "Amazonas\t\t ", "Bahia\t\t ", "Ceará\t\t ", "Distrito Federal\t ", "Espírito Santo\t\t ", "Goiás\t\t ", "Maranhão\t\t ", "Mato Grosso\t\t ", "Mato Grosso do Sul\t ", "Minas Gerais\t\t ", "Pará\t\t ", "Paraíba\t\t ", "Paraná\t\t ", "Pernambuco\t\t ", "Piauí\t\t ", "Rio de Janeiro\t\t ", "Rio Grande do Norte\t\t ", "Rio Grande do Sul\t\t ", "Rondônia\t\t ", "Roraima\t\t ", "Santa Catarina\t\t ", "São Paulo\t\t ", "Sergipe\t\t ", "Tocantins" }));
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, new javax.swing.JList(), org.jdesktop.beansbinding.ObjectProperty.create(), estados, org.jdesktop.beansbinding.BeanProperty.create("elements"));
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, estados, org.jdesktop.beansbinding.ObjectProperty.create(), estados, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, estados, org.jdesktop.beansbinding.ObjectProperty.create(), estados, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         nivel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        nivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NIVEL 1", "NIVEL 2", "NIVEL 3", " " }));
+        nivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Gerente", "Funcionário", "" }));
 
         btCadastrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btCadastrar.setText("CADASTRAR");
@@ -184,9 +182,8 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

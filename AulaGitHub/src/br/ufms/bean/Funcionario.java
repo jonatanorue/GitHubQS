@@ -13,47 +13,47 @@ import java.util.Date;
  * @author RVM
  */
 public class Funcionario {
-    
-   private String nome;
-   private String endereco;
-   private String cidade;
-   private String estado;
-   private ArrayList<String> telefones;
-   private Date dataDeNascimento;
-   private String login;
-   private String senha;
-   private String nivelDeAcesso;
-   
-   public Funcionario(){
-       
-   }
-   
-   private static final ArrayList<Funcionario> listaDeFuncionarios = new ArrayList<>();
-   
-   public boolean CadastrarFuncionario(Funcionario funcionario){
-        if(! verificaFuncionarioLogin(funcionario.getLogin())){
-        listaDeFuncionarios.add(funcionario);
-        return true;
+
+    private String nome;
+    private String endereco;
+    private String cidade;
+    private String estado;
+    private ArrayList<String> telefones;
+    private Date dataDeNascimento;
+    private String login;
+    private String senha;
+    private String nivelDeAcesso;
+
+    public Funcionario() {
+
+    }
+
+    private static final ArrayList<Funcionario> listaDeFuncionarios = new ArrayList<>();
+
+    public boolean CadastrarFuncionario(Funcionario funcionario) {
+        if (!verificaFuncionarioLogin(funcionario.getLogin())) {
+            listaDeFuncionarios.add(funcionario);
+            return true;
         }
         return false;
-   }
-   
-   public boolean removeFuncionario(String Nome,String Login){
-       for(int x =0 ;x< listaDeFuncionarios.size();x++){
-           if(listaDeFuncionarios.get(x).getNome().equals(Nome)
-              && listaDeFuncionarios.get(x).getLogin().equals(Login)){
-               listaDeFuncionarios.remove(x);
-               return true;
-           }
-       }
-       return false;
-   }
-   
-   public boolean alteraFuncionario(Funcionario func,Funcionario funcionario){
-        for(int x = 0 ; x<listaDeFuncionarios.size();x++){
-            if(func.getLogin().equals(listaDeFuncionarios.get(x).getLogin())){
-                if(! verificaFuncionarioLogin(funcionario.getLogin())){
-              
+    }
+
+    public boolean removeFuncionario(String Nome, String Login) {
+        for (int x = 0; x < listaDeFuncionarios.size(); x++) {
+            if (listaDeFuncionarios.get(x).getNome().equals(Nome)
+                    && listaDeFuncionarios.get(x).getLogin().equals(Login)) {
+                listaDeFuncionarios.remove(x);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean alteraFuncionario(Funcionario func, Funcionario funcionario) {
+        for (int x = 0; x < listaDeFuncionarios.size(); x++) {
+            if (func.getLogin().equals(listaDeFuncionarios.get(x).getLogin())) {
+                if (!verificaFuncionarioLogin(funcionario.getLogin())) {
+
                     listaDeFuncionarios.get(x).setNome(funcionario.getNome());
                     listaDeFuncionarios.get(x).setEndereco(funcionario.getEndereco());
                     listaDeFuncionarios.get(x).setCidade(funcionario.getCidade());
@@ -62,37 +62,39 @@ public class Funcionario {
                     listaDeFuncionarios.get(x).setLogin(funcionario.getLogin());
                     listaDeFuncionarios.get(x).setSenha(funcionario.getSenha());
                     listaDeFuncionarios.get(x).setNivelDeAcesso(funcionario.getNivelDeAcesso());
-                    for(String tel : funcionario.getTelefones()){
-                         listaDeFuncionarios.get(x).getTelefones().add(tel);
+                    for (String tel : funcionario.getTelefones()) {
+                        listaDeFuncionarios.get(x).getTelefones().add(tel);
                     }
                     return true;
                 }
-              return false;
+                return false;
             }
         }
         return false;
-   }
-   
-   public boolean verificaFuncionarioLogin(String Login){
-       
-       return listaDeFuncionarios.stream().anyMatch((func) -> (func.getLogin().equals(Login)));      
-   }
-   
-   public Funcionario getFuncionario(String nome,String Login){
-       for(Funcionario x : listaDeFuncionarios){
-           if(x.getNome().equals(nome) && x.getNome().equals(Login))
-               return x;
-       }
-       return null;
-   }
+    }
+
+    public boolean verificaFuncionarioLogin(String Login) {
+
+        return listaDeFuncionarios.stream().anyMatch((func) -> (func.getLogin().equals(Login)));
+    }
+
+    public Funcionario getFuncionario(String nome, String Login) {
+        for (Funcionario x : listaDeFuncionarios) {
+            if (x.getNome().equals(nome) && x.getNome().equals(Login)) {
+                return x;
+            }
+        }
+        return null;
+    }
+
     /**
      * @return the nome
      */
     public String getNome() {
         return nome;
     }
-    
-    public void setNome(String nome){
+
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -207,6 +209,15 @@ public class Funcionario {
     public void setNivelDeAcesso(String nivelDeAcesso) {
         this.nivelDeAcesso = nivelDeAcesso;
     }
-   
-   
+
+    public Funcionario buscarFuncionario(String Login) {
+        for (Funcionario x : listaDeFuncionarios) {
+            if (x.getLogin().equals(Login)) {
+                return x;
+            }
+        }        
+        return null;
+    }
 }
+
+

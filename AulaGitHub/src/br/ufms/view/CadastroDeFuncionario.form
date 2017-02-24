@@ -33,10 +33,8 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel10" alignment="0" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLabel10" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel3" alignment="0" pref="123" max="32767" attributes="0"/>
                               <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
@@ -363,7 +361,6 @@
         </Property>
       </Properties>
       <BindingProperties>
-        <BindingProperty name="elements" source="Estados" target="estados" targetPath="elements" updateStrategy="0" immediately="false"/>
         <BindingProperty name="selectedItem" source="estados" target="estados" targetPath="selectedItem" updateStrategy="0" immediately="false"/>
       </BindingProperties>
       <AuxValues>
@@ -377,10 +374,10 @@
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="4">
-            <StringItem index="0" value="NIVEL 1"/>
-            <StringItem index="1" value="NIVEL 2"/>
-            <StringItem index="2" value="NIVEL 3"/>
-            <StringItem index="3" value=" "/>
+            <StringItem index="0" value="Administrador"/>
+            <StringItem index="1" value="Gerente"/>
+            <StringItem index="2" value="Funcion&#xe1;rio"/>
+            <StringItem index="3" value=""/>
           </StringArray>
         </Property>
       </Properties>
