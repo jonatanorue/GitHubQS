@@ -24,7 +24,7 @@ public class Categorias {
         
     }
     
-    public static final ArrayList<Categorias> listaCategorias = new ArrayList<>();
+    public static final ArrayList<Categorias> listaCategorias = new ArrayList<Categorias>();
     
     public void cadastrarCatAutomoveis(Categorias Categoria){
         listaCategorias.add(Categoria);

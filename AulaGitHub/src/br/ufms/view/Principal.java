@@ -38,7 +38,11 @@ public class Principal extends javax.swing.JFrame {
         headerClientes = new javax.swing.JMenu();
         menuClientes = new javax.swing.JMenuItem();
         headerAutomoveis = new javax.swing.JMenu();
+        menuAutomovel = new javax.swing.JMenuItem();
         menuCatAutomoveis = new javax.swing.JMenuItem();
+        headerFuncionario = new javax.swing.JMenu();
+        menuFuncionario = new javax.swing.JMenuItem();
+        menuNivelAcesso = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Janela Principal");
@@ -66,7 +70,7 @@ public class Principal extends javax.swing.JFrame {
 
         headerClientes.setText("Clientes");
 
-        menuClientes.setText("Menu");
+        menuClientes.setText("Cliente");
         menuClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuClientesActionPerformed(evt);
@@ -78,6 +82,14 @@ public class Principal extends javax.swing.JFrame {
 
         headerAutomoveis.setText("Automóveis");
 
+        menuAutomovel.setText("Automóvel");
+        menuAutomovel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAutomovelActionPerformed(evt);
+            }
+        });
+        headerAutomoveis.add(menuAutomovel);
+
         menuCatAutomoveis.setText("Categorias");
         menuCatAutomoveis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,6 +99,26 @@ public class Principal extends javax.swing.JFrame {
         headerAutomoveis.add(menuCatAutomoveis);
 
         topMenuBar.add(headerAutomoveis);
+
+        headerFuncionario.setText("Funcionários");
+
+        menuFuncionario.setText("Funcionário");
+        menuFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuFuncionarioActionPerformed(evt);
+            }
+        });
+        headerFuncionario.add(menuFuncionario);
+
+        menuNivelAcesso.setText("Nível de Acesso");
+        menuNivelAcesso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuNivelAcessoActionPerformed(evt);
+            }
+        });
+        headerFuncionario.add(menuNivelAcesso);
+
+        topMenuBar.add(headerFuncionario);
 
         setJMenuBar(topMenuBar);
 
@@ -111,7 +143,6 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuClientesActionPerformed
-        // TODO add your handling code here:
         System.out.println("Chamado > MenuCliente");
         this.addView(new MenuCliente());
     }//GEN-LAST:event_menuClientesActionPerformed
@@ -120,6 +151,21 @@ public class Principal extends javax.swing.JFrame {
         System.out.println("Chamado > MenuCategorias");
         this.addView(new MenuCategorias());
     }//GEN-LAST:event_menuCatAutomoveisActionPerformed
+
+    private void menuAutomovelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAutomovelActionPerformed
+        System.out.println("Chamado > MenuAutomovel");
+        this.addView(new MenuAutomovel());
+    }//GEN-LAST:event_menuAutomovelActionPerformed
+
+    private void menuNivelAcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNivelAcessoActionPerformed
+        System.out.println("Chamado > MenuAlterarNivelAcesso");
+        this.addView(new MenuAlterarNivelAcesso());
+    }//GEN-LAST:event_menuNivelAcessoActionPerformed
+
+    private void menuFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFuncionarioActionPerformed
+        System.out.println("Chamado > MenuFuncionario");
+        this.addView(new MenuFuncionario());
+    }//GEN-LAST:event_menuFuncionarioActionPerformed
 
     private void addView(JFrame window){
         Container interalContainer = internalFramePrincipal.getContentPane();
@@ -130,7 +176,6 @@ public class Principal extends javax.swing.JFrame {
         internalFramePrincipal.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         internalFramePrincipal.pack();
         //internalFramePrincipal.repaint();
-        
         //jDesktopPane1.add(window.getContentPane());
     }
     
@@ -172,9 +217,13 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu headerAutomoveis;
     private javax.swing.JMenu headerClientes;
+    private javax.swing.JMenu headerFuncionario;
     private javax.swing.JInternalFrame internalFramePrincipal;
+    private javax.swing.JMenuItem menuAutomovel;
     private javax.swing.JMenuItem menuCatAutomoveis;
     private javax.swing.JMenuItem menuClientes;
+    private javax.swing.JMenuItem menuFuncionario;
+    private javax.swing.JMenuItem menuNivelAcesso;
     private javax.swing.JMenuBar topMenuBar;
     // End of variables declaration//GEN-END:variables
 }
