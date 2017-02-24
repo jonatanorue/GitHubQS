@@ -34,8 +34,7 @@
               <Component id="novoclientebtn" min="-2" pref="114" max="-2" attributes="0"/>
               <EmptySpace pref="21" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btCadastrarFuncionario" max="32767" attributes="0"/>
-                  <Component id="editarClienteCnpjbtn" max="32767" attributes="0"/>
+                  <Component id="editarClienteCnpjbtn" pref="135" max="32767" attributes="0"/>
                   <Component id="editarClienteCpfbtn" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
@@ -70,9 +69,7 @@
                   <Component id="excluirclienteCnpjbtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="editarClienteCnpjbtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="btCadastrarFuncionario" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="51" max="32767" attributes="0"/>
+              <EmptySpace pref="102" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -124,14 +121,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editarClienteCnpjbtnActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btCadastrarFuncionario">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="CAD - FUNCIONARIO"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCadastrarFuncionarioActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
