@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
  *
  * @author Bruna
  */
-public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
+public class AlterarNivelAcesso extends javax.swing.JFrame {
     private Funcionario F;
     /**
      * Creates new form MenuAlterarNivelAcesso
      */
-    public MenuAlterarNivelAcesso() {
+    public AlterarNivelAcesso() {
         initComponents();
     }
 
@@ -229,7 +229,7 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
 
     private void SalvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarButtonActionPerformed
         F.setNivelDeAcesso(NivelCB.getSelectedIndex());
-        //F.alteraFuncionario(F, F)
+        F.alteraFuncionario(F.getLogin(), F);
                 
         JOptionPane.showMessageDialog(this, "Alterado com sucesso!");
         // TODO add your handling code here:
@@ -252,20 +252,21 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuAlterarNivelAcesso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlterarNivelAcesso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuAlterarNivelAcesso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlterarNivelAcesso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuAlterarNivelAcesso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlterarNivelAcesso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuAlterarNivelAcesso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AlterarNivelAcesso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuAlterarNivelAcesso().setVisible(true);
+                new AlterarNivelAcesso().setVisible(true);
             }
         });
     }
