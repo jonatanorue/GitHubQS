@@ -350,6 +350,8 @@ public class CadastroClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_voltarBotaoActionPerformed
 
     private void salvarbotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarbotaoActionPerformed
+        if (nometxt.getText() == null || enderecotxt.getText()== null || cidadetxt.getText() == null|| estadotxt.getText() == null|| telefone1txt.getText() == null|| telefone2txt.getText() == null || emailtxt.getText() == null || cpftxt.getText() == null || datanascimentotxt.getText() == null || inadimplenciaradio.isSelected() == false);
+        JOptionPane.showMessageDialog(null, "INFORMAR TODOS OS CAMPOS");
         // TODO add your handling code here:
         if (cpfradio.isSelected()) {
             ClienteFisico cf = new ClienteFisico();
