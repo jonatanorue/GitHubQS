@@ -94,7 +94,7 @@ public class CadastroClientes extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         nomeFantasiatxt = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("CADASTRO CLIENTE");
@@ -346,7 +346,6 @@ public class CadastroClientes extends javax.swing.JFrame {
 
     private void voltarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarBotaoActionPerformed
         // TODO add your handling code here:
-        new MenuCliente().show();
         dispose();
     }//GEN-LAST:event_voltarBotaoActionPerformed
 
@@ -403,7 +402,6 @@ public class CadastroClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione CPF ou CNPJ");
         }
 
-        new MenuCliente().show();
         dispose();
 
     }//GEN-LAST:event_salvarbotaoActionPerformed
