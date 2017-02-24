@@ -31,7 +31,7 @@ public class Funcionario {
    private static final ArrayList<Funcionario> listaDeFuncionarios = new ArrayList<>();
    
    public boolean CadastrarFuncionario(Funcionario funcionario){
-        if(verificaFuncionarioLogin(funcionario.getLogin())){
+        if(! verificaFuncionarioLogin(funcionario.getLogin())){
         listaDeFuncionarios.add(funcionario);
         return true;
         }
@@ -74,7 +74,8 @@ public class Funcionario {
    }
    
    public boolean verificaFuncionarioLogin(String Login){
-           return listaDeFuncionarios.stream().anyMatch((func) -> (func.getNome().equals(Login)));  
+       
+       return listaDeFuncionarios.stream().anyMatch((func) -> (func.getLogin().equals(Login)));      
    }
    
    public Funcionario getFuncionario(String nome,String Login){

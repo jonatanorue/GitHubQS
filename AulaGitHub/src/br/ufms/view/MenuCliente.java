@@ -38,7 +38,7 @@ public class MenuCliente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         excluirclienteCnpjbtn = new javax.swing.JButton();
         editarClienteCnpjbtn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btCadastrarFuncionario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,10 +80,10 @@ public class MenuCliente extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("CAD - FUNCIONARIO");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btCadastrarFuncionario.setText("CAD - FUNCIONARIO");
+        btCadastrarFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btCadastrarFuncionarioActionPerformed(evt);
             }
         });
 
@@ -100,10 +100,9 @@ public class MenuCliente extends javax.swing.JFrame {
                 .addComponent(novoclientebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(editarClienteCnpjbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(editarClienteCpfbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btCadastrarFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editarClienteCnpjbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editarClienteCpfbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(excluirClienteCpfbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -129,7 +128,7 @@ public class MenuCliente extends javax.swing.JFrame {
                     .addComponent(excluirclienteCnpjbtn)
                     .addComponent(editarClienteCnpjbtn))
                 .addGap(28, 28, 28)
-                .addComponent(jButton1)
+                .addComponent(btCadastrarFuncionario)
                 .addContainerGap(51, Short.MAX_VALUE))
         );
 
@@ -201,10 +200,10 @@ public class MenuCliente extends javax.swing.JFrame {
         }     
     }//GEN-LAST:event_editarClienteCnpjbtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btCadastrarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarFuncionarioActionPerformed
         CadastroDeFuncionario c = new CadastroDeFuncionario();
         c.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btCadastrarFuncionarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,11 +244,11 @@ public class MenuCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btCadastrarFuncionario;
     private javax.swing.JButton editarClienteCnpjbtn;
     private javax.swing.JButton editarClienteCpfbtn;
     private javax.swing.JButton excluirClienteCpfbtn;
     private javax.swing.JButton excluirclienteCnpjbtn;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton novoclientebtn;
     // End of variables declaration//GEN-END:variables
