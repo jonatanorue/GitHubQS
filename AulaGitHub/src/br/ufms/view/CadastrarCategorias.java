@@ -74,7 +74,7 @@ public class CadastrarCategorias extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jTree1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Adicionar Categoria de Automoveis");
@@ -277,7 +277,6 @@ public class CadastrarCategorias extends javax.swing.JFrame {
                 categoria.cadastrarCatAutomoveis(categoria);
                 JOptionPane.showMessageDialog(null, "Categoria adicionada com sucesso");
             }
-        new MenuCategorias().show();
         dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -287,7 +286,7 @@ public class CadastrarCategorias extends javax.swing.JFrame {
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         // TODO add your handling code here:
-        new MenuCategorias().show();
+        //new MenuCategorias().show();
         dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 

@@ -40,7 +40,8 @@ public class MenuCliente extends javax.swing.JFrame {
         editarClienteCnpjbtn = new javax.swing.JButton();
         btCadastrarFuncionario = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cliente");
 
         novoclientebtn.setText("NOVO");
         novoclientebtn.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +147,6 @@ public class MenuCliente extends javax.swing.JFrame {
 
             CadastroClientes cs = new CadastroClientes(buscaC);
             cs.setVisible(true);
-            this.setVisible(false);
            
         }
         
@@ -157,7 +157,6 @@ public class MenuCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         CadastroClientes c = new CadastroClientes();
         c.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_novoclientebtnActionPerformed
 
     private void excluirClienteCpfbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirClienteCpfbtnActionPerformed
@@ -196,7 +195,6 @@ public class MenuCliente extends javax.swing.JFrame {
                 
         CadastroClientes cs = new CadastroClientes(buscaC);
         cs.setVisible(true);
-        this.setVisible(false);
         }     
     }//GEN-LAST:event_editarClienteCnpjbtnActionPerformed
 

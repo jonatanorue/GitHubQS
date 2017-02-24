@@ -35,7 +35,8 @@ public class MenuCategorias extends javax.swing.JFrame {
         btnEditCat = new javax.swing.JButton();
         btnDeleteCat = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Categorias de Automóveis");
 
         jLabel1.setFont(new java.awt.Font("Roboto Bk", 1, 24)); // NOI18N
         jLabel1.setText("Categorias de Automóveis");
@@ -100,7 +101,6 @@ public class MenuCategorias extends javax.swing.JFrame {
         
         CadastrarCategorias add = new CadastrarCategorias();
         add.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_btnAddCatActionPerformed
 
     private void btnEditCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditCatActionPerformed
@@ -114,7 +114,6 @@ public class MenuCategorias extends javax.swing.JFrame {
             
             CadastrarCategorias show = new CadastrarCategorias(buscaCat);
             show.setVisible(true);
-            this.setVisible(false);
         }
     }//GEN-LAST:event_btnEditCatActionPerformed
 
