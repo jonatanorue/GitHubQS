@@ -6,13 +6,14 @@
 package br.ufms.view;
 
 import br.ufms.bean.Funcionario;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Bruna
  */
 public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
-
+    private Funcionario F;
     /**
      * Creates new form MenuAlterarNivelAcesso
      */
@@ -48,7 +49,8 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
         VoltarButton = new javax.swing.JButton();
         SalvarButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("ALTERAR NÍVEL DE ACESSO");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -216,19 +218,20 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
     }//GEN-LAST:event_NivelCBActionPerformed
 
     private void BuscarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarBTNActionPerformed
-        Funcionario F = new Funcionario().buscarFuncionario(Logintxt.getText());
+        F = new Funcionario().buscarFuncionario(Logintxt.getText());
 
         NomeFuncLabel.setText(F.getNome());
         EnderecoFuncLabel.setText(F.getEndereco());
         CidadeFuncLabel.setText(F.getCidade());
         EstadoFuncLabel.setText(F.getEstado());
-
+        NivelCB.setSelectedIndex(F.getNivelDeAcesso());
     }//GEN-LAST:event_BuscarBTNActionPerformed
 
     private void SalvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarButtonActionPerformed
-
-        NivelCB.getItemAt(NivelCB.getSelectedIndex());
-        System.out.println(NivelCB.getItemAt(NivelCB.getSelectedIndex()));
+        F.setNivelDeAcesso(NivelCB.getSelectedIndex());
+        //F.alteraFuncionario(F, F)
+                
+        JOptionPane.showMessageDialog(this, "Alterado com sucesso!");
         // TODO add your handling code here:
     }//GEN-LAST:event_SalvarButtonActionPerformed
 
