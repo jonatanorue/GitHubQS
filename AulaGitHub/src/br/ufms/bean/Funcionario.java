@@ -22,7 +22,7 @@ public class Funcionario {
     private Date dataDeNascimento;
     private String login;
     private String senha;
-    private String nivelDeAcesso;
+    private int nivelDeAcesso;
 
     public Funcionario() {
 
@@ -199,14 +199,14 @@ public class Funcionario {
     /**
      * @return the nivelDeAcesso
      */
-    public String getNivelDeAcesso() {
+    public int getNivelDeAcesso() {
         return nivelDeAcesso;
     }
 
     /**
      * @param nivelDeAcesso the nivelDeAcesso to set
      */
-    public void setNivelDeAcesso(String nivelDeAcesso) {
+    public void setNivelDeAcesso(int nivelDeAcesso) {
         this.nivelDeAcesso = nivelDeAcesso;
     }
 
