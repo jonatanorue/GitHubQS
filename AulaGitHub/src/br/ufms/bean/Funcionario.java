@@ -22,7 +22,7 @@ public class Funcionario {
     private Date dataDeNascimento;
     private String login;
     private String senha;
-    private String nivelDeAcesso;
+    private int nivelDeAcesso;
 
     public Funcionario() {
 
@@ -49,43 +49,32 @@ public class Funcionario {
         return false;
     }
 
-    public boolean alteraFuncionario(Funcionario func, Funcionario funcionario) {
+    public boolean alteraFuncionario(String login, Funcionario funcionario) {
         for (int x = 0; x < listaDeFuncionarios.size(); x++) {
-            if (func.getLogin().equals(listaDeFuncionarios.get(x).getLogin())) {
-                if (!verificaFuncionarioLogin(funcionario.getLogin())) {
-
-                    listaDeFuncionarios.get(x).setNome(funcionario.getNome());
-                    listaDeFuncionarios.get(x).setEndereco(funcionario.getEndereco());
-                    listaDeFuncionarios.get(x).setCidade(funcionario.getCidade());
-                    listaDeFuncionarios.get(x).setEstado(funcionario.getEstado());
-                    listaDeFuncionarios.get(x).setDataDeNascimento(funcionario.getDataDeNascimento());
-                    listaDeFuncionarios.get(x).setLogin(funcionario.getLogin());
-                    listaDeFuncionarios.get(x).setSenha(funcionario.getSenha());
-                    listaDeFuncionarios.get(x).setNivelDeAcesso(funcionario.getNivelDeAcesso());
-                    for (String tel : funcionario.getTelefones()) {
-                        listaDeFuncionarios.get(x).getTelefones().add(tel);
-                    }
-                    return true;
+            if (login.equals(listaDeFuncionarios.get(x).getLogin()) ) {
+                
+                listaDeFuncionarios.get(x).setNome(funcionario.getNome());
+                listaDeFuncionarios.get(x).setEndereco(funcionario.getEndereco());
+                listaDeFuncionarios.get(x).setCidade(funcionario.getCidade());
+                listaDeFuncionarios.get(x).setEstado(funcionario.getEstado());
+                listaDeFuncionarios.get(x).setDataDeNascimento(funcionario.getDataDeNascimento());                   listaDeFuncionarios.get(x).setLogin(funcionario.getLogin());
+                listaDeFuncionarios.get(x).setSenha(funcionario.getSenha());
+                listaDeFuncionarios.get(x).setNivelDeAcesso(funcionario.getNivelDeAcesso());
+                for (String tel : funcionario.getTelefones()) {
+                   listaDeFuncionarios.get(x).getTelefones().add(tel);
                 }
-                return false;
+                return true;
             }
         }
         return false;
     }
+    
+    
 
     public boolean verificaFuncionarioLogin(String Login) {
-
         return listaDeFuncionarios.stream().anyMatch((func) -> (func.getLogin().equals(Login)));
     }
 
-    public Funcionario getFuncionario(String nome, String Login) {
-        for (Funcionario x : listaDeFuncionarios) {
-            if (x.getNome().equals(nome) && x.getNome().equals(Login)) {
-                return x;
-            }
-        }
-        return null;
-    }
 
     /**
      * @return the nome
@@ -199,14 +188,14 @@ public class Funcionario {
     /**
      * @return the nivelDeAcesso
      */
-    public String getNivelDeAcesso() {
+    public int getNivelDeAcesso() {
         return nivelDeAcesso;
     }
 
     /**
      * @param nivelDeAcesso the nivelDeAcesso to set
      */
-    public void setNivelDeAcesso(String nivelDeAcesso) {
+    public void setNivelDeAcesso(int nivelDeAcesso) {
         this.nivelDeAcesso = nivelDeAcesso;
     }
 
