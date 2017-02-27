@@ -5,6 +5,9 @@
  */
 package br.ufms.view;
 
+import br.ufms.bean.Funcionario;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author rogerio.valdez
@@ -27,25 +30,105 @@ public class MenuFuncionario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cadFuncionario = new javax.swing.JButton();
+        excluirFuncionario = new javax.swing.JButton();
+        altFuncionario = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Menu Funcionário");
         setAlwaysOnTop(true);
         setMaximumSize(new java.awt.Dimension(600, 400));
         setMinimumSize(new java.awt.Dimension(600, 400));
+        setPreferredSize(new java.awt.Dimension(487, 315));
+
+        cadFuncionario.setText("CADASTRAR FUNCIONARIO");
+        cadFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadFuncionarioActionPerformed(evt);
+            }
+        });
+
+        excluirFuncionario.setText("EXCLUIR FUNCIONARIO");
+        excluirFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excluirFuncionarioActionPerformed(evt);
+            }
+        });
+
+        altFuncionario.setText("ALTERAR FUNCIONARIO");
+        altFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altFuncionarioActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText("Menu Funcionario");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(71, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(excluirFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(altFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cadFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(87, 87, 87))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(35, 35, 35)
+                .addComponent(cadFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(altFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(excluirFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cadFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadFuncionarioActionPerformed
+       CadastroDeFuncionario c = new CadastroDeFuncionario();
+       c.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_cadFuncionarioActionPerformed
+
+    private void altFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altFuncionarioActionPerformed
+      
+         String lg = JOptionPane.showInputDialog("Digite o login do funcionario");
+         if(lg != null){
+             Funcionario func = new Funcionario();
+             func = func.buscarFuncionario(lg);
+             if(func != null){
+               CadastroDeFuncionario c = new CadastroDeFuncionario(func);
+               c.setVisible(true);
+               this.dispose();
+             }else
+               JOptionPane.showMessageDialog(null, "login : não encontrado");
+         }
+    }//GEN-LAST:event_altFuncionarioActionPerformed
+
+    private void excluirFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirFuncionarioActionPerformed
+        
+        String lg = JOptionPane.showInputDialog("Digite o login do funcionario");
+        Funcionario f = new Funcionario();
+        if(lg != null){
+             if(f.removeFuncionario(lg)){
+                 JOptionPane.showMessageDialog(null,"Funcionário excluido com sucesso");            
+             }else{
+                JOptionPane.showMessageDialog(null,"Erro ao excluir funcionário\n login inválido");  
+             }
+        }
+    }//GEN-LAST:event_excluirFuncionarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -83,5 +166,9 @@ public class MenuFuncionario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton altFuncionario;
+    private javax.swing.JButton cadFuncionario;
+    private javax.swing.JButton excluirFuncionario;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

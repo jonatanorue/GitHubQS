@@ -7,6 +7,7 @@ package br.ufms.bean;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  *
@@ -18,7 +19,8 @@ public class Funcionario {
     private String endereco;
     private String cidade;
     private String estado;
-    private ArrayList<String> telefones;
+    private String telefone1;
+    private String telefone2;
     private Date dataDeNascimento;
     private String login;
     private String senha;
@@ -38,10 +40,9 @@ public class Funcionario {
         return false;
     }
 
-    public boolean removeFuncionario(String Nome, String Login) {
+    public boolean removeFuncionario(String Login) {
         for (int x = 0; x < listaDeFuncionarios.size(); x++) {
-            if (listaDeFuncionarios.get(x).getNome().equals(Nome)
-                    && listaDeFuncionarios.get(x).getLogin().equals(Login)) {
+            if(listaDeFuncionarios.get(x).getLogin().equals(Login)) {
                 listaDeFuncionarios.remove(x);
                 return true;
             }
@@ -57,12 +58,12 @@ public class Funcionario {
                 listaDeFuncionarios.get(x).setEndereco(funcionario.getEndereco());
                 listaDeFuncionarios.get(x).setCidade(funcionario.getCidade());
                 listaDeFuncionarios.get(x).setEstado(funcionario.getEstado());
-                listaDeFuncionarios.get(x).setDataDeNascimento(funcionario.getDataDeNascimento());                   listaDeFuncionarios.get(x).setLogin(funcionario.getLogin());
+                listaDeFuncionarios.get(x).setDataDeNascimento(funcionario.getDataDeNascimento()); 
+                listaDeFuncionarios.get(x).setLogin(funcionario.getLogin());
                 listaDeFuncionarios.get(x).setSenha(funcionario.getSenha());
                 listaDeFuncionarios.get(x).setNivelDeAcesso(funcionario.getNivelDeAcesso());
-                for (String tel : funcionario.getTelefones()) {
-                   listaDeFuncionarios.get(x).getTelefones().add(tel);
-                }
+                listaDeFuncionarios.get(x).setTelefone1(funcionario.getTelefone1());
+                listaDeFuncionarios.get(x).setTelefone2(funcionario.getTelefone2());
                 return true;
             }
         }
@@ -129,19 +130,7 @@ public class Funcionario {
         this.estado = estado;
     }
 
-    /**
-     * @return the telefones
-     */
-    public ArrayList<String> getTelefones() {
-        return telefones;
-    }
-
-    /**
-     * @param telefones the telefones to set
-     */
-    public void setTelefones(ArrayList<String> telefones) {
-        this.telefones = telefones;
-    }
+    
 
     /**
      * @return the dataDeNascimento
@@ -206,6 +195,34 @@ public class Funcionario {
             }
         }        
         return null;
+    }
+
+    /**
+     * @return the telefone1
+     */
+    public String getTelefone1() {
+        return telefone1;
+    }
+
+    /**
+     * @param telefone1 the telefone1 to set
+     */
+    public void setTelefone1(String telefone1) {
+        this.telefone1 = telefone1;
+    }
+
+    /**
+     * @return the telefone2
+     */
+    public String getTelefone2() {
+        return telefone2;
+    }
+
+    /**
+     * @param telefone2 the telefone2 to set
+     */
+    public void setTelefone2(String telefone2) {
+        this.telefone2 = telefone2;
     }
 }
 
