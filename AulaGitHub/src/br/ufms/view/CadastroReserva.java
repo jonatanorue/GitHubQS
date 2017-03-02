@@ -8,22 +8,34 @@ import br.ufms.bean.Reserva;
 import br.ufms.bean.ClienteFisico;
 import br.ufms.bean.ClienteJuridico;
 import br.ufms.bean.Categorias;
+import br.ufms.bean.Automovel;
+import br.ufms.bean.ServicosAdicionais;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 /**
  *
  * @author Plabiany
  */
 public class CadastroReserva extends javax.swing.JFrame {
-
+   private DefaultComboBoxModel modelCategorias;
+   private DefaultComboBoxModel modelServicosAdicionais;
+   private DefaultComboBoxModel modelAutomovel;
     /**
      * Creates new form CadastroReserva
      */
     public CadastroReserva() {
         initComponents();
     }
+    
+    
     public CadastroReserva(Reserva r){
         initComponents();
+        
+        
         SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
         Date d = r.getDataRetirada();
         dataRetirada.setText(dt.format(d));
@@ -53,11 +65,24 @@ public class CadastroReserva extends javax.swing.JFrame {
         idcliente.setText(juri.getNome());
         }
         
-        Categorias cat = new Categorias();
-        Categorias categoria = cat.buscarCatAutomoveis(catAutomovel.getText());
-        catAutomovel.setText(categoria.getcodCategoria());
         
-        valorlocacao.setAlignmentY(r.getLocacao());      
+        this.modelCategorias = new DefaultComboBoxModel();
+        this.Cat.setModel(this.modelCategorias);
+        this.atualizarCategorias();
+        
+        valorlocacao.setAlignmentY(r.getLocacao());     
+        
+        this.modelServicosAdicionais = new DefaultComboBoxModel();
+        this.jComboBoxServicosAdicionais.setModel(this.modelServicosAdicionais);
+        this.atualizarSA();
+        
+        this.modelAutomovel = new DefaultComboBoxModel();
+        this.Automóvel.setModel(this.modelAutomovel);
+        this.atualizarAutomovel();
+        
+        taxaMulta.setAlignmentY(r.getTaxaMulta());
+        cartaocliente.setText(r.getCartaoCliente());
+        desconto.setAlignmentY(r.getDesconto());
         
         
         
@@ -82,9 +107,6 @@ public class CadastroReserva extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        SIM = new javax.swing.JRadioButton();
-        NAO = new javax.swing.JRadioButton();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -95,15 +117,17 @@ public class CadastroReserva extends javax.swing.JFrame {
         horaRetirada = new javax.swing.JTextField();
         horaDev = new javax.swing.JTextField();
         idcliente = new javax.swing.JTextField();
-        catAutomovel = new javax.swing.JTextField();
         valorlocacao = new javax.swing.JTextField();
-        DescServ = new javax.swing.JTextField();
         taxaMulta = new javax.swing.JTextField();
         cartaocliente = new javax.swing.JTextField();
         desconto = new javax.swing.JTextField();
         CPF = new javax.swing.JRadioButton();
         CNPJ = new javax.swing.JRadioButton();
         jLabel14 = new javax.swing.JLabel();
+        Cat = new javax.swing.JComboBox<>();
+        jComboBoxServicosAdicionais = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        Automóvel = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,12 +150,6 @@ public class CadastroReserva extends javax.swing.JFrame {
 
         jLabel9.setText("Serviços Adicionais: ");
 
-        SIM.setText("SIM");
-
-        NAO.setText("NÃO");
-
-        jLabel10.setText("Descrição do Serviço Adicional:");
-
         jLabel11.setText("Taxa de Multa (Desistência em menos de 4 horas) :");
 
         jLabel12.setText("Cartão de Crédito (Cliente):");
@@ -139,6 +157,11 @@ public class CadastroReserva extends javax.swing.JFrame {
         jLabel13.setText("Desconto:");
 
         Save.setText("Salvar");
+        Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveActionPerformed(evt);
+            }
+        });
 
         Cancel.setText("Cancelar");
 
@@ -160,84 +183,23 @@ public class CadastroReserva extends javax.swing.JFrame {
 
         jLabel14.setText("CPF/CNPJ:");
 
+        Cat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Cat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CatActionPerformed(evt);
+            }
+        });
+
+        jComboBoxServicosAdicionais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel10.setText("Automóvel:");
+
+        Automóvel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(desconto))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(DescServ, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(jLabel6)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(CPF)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(CNPJ))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(jLabel3)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                        .addComponent(dataRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(jLabel4)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(dataDev, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel2)
-                                                    .addComponent(jLabel5))))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(horaDev, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(horaRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(catAutomovel))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cartaocliente))
-                                    .addComponent(jLabel10)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addComponent(jLabel8)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(valorlocacao))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel9)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(SIM)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(NAO)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(taxaMulta, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 5, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(idcliente)))
-                        .addGap(17, 17, 17))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -249,6 +211,80 @@ public class CadastroReserva extends javax.swing.JFrame {
                         .addGap(89, 89, 89)
                         .addComponent(Cancel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(desconto))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(CPF)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(CNPJ))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(dataRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel4)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(dataDev, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel5))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(horaDev, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(horaRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(idcliente))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel12)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cartaocliente))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(taxaMulta, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 5, Short.MAX_VALUE)))
+                        .addGap(17, 17, 17))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(18, 18, 18)
+                                .addComponent(Automóvel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Cat, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(valorlocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jComboBoxServicosAdicionais, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,24 +312,23 @@ public class CadastroReserva extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(idcliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(Automóvel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(catAutomovel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Cat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(valorlocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(SIM)
-                    .addComponent(NAO))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addGap(5, 5, 5)
-                .addComponent(DescServ, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                    .addComponent(jComboBoxServicosAdicionais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(taxaMulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -305,7 +340,7 @@ public class CadastroReserva extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(desconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Save)
                     .addComponent(Cancel))
@@ -322,6 +357,61 @@ public class CadastroReserva extends javax.swing.JFrame {
     private void horaDevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaDevActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_horaDevActionPerformed
+
+    private void CatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CatActionPerformed
+
+    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
+            Reserva reserva = new Reserva();
+            SimpleDateFormat st = new SimpleDateFormat("dd/MM/yyyy");
+            Date dt = new Date();
+       try {
+           dt = st.parse(this.dataRetirada.getText());
+       } catch (ParseException ex) {
+           Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
+       }
+            reserva.setDataRetirada(dt);
+           
+            
+            
+            SimpleDateFormat hr = new SimpleDateFormat("hh:mm");
+            Date HR = new Date();
+            
+       try {
+           HR = hr.parse(this.horaRetirada.getText());
+       } catch (ParseException ex) {
+           Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
+       }
+            reserva.setHoraRetirada(HR);
+            
+            
+            
+            
+            SimpleDateFormat dd = new SimpleDateFormat("dd/MM/yyyy");
+            Date datad = new Date();
+       try {
+           datad = dd.parse(this.dataDev.getText());
+       } catch (ParseException ex) {
+           Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
+       }
+            reserva.setDataDevolucao(datad);
+           
+            
+            SimpleDateFormat horad = new SimpleDateFormat("hh:mm");
+            Date hd = new Date();
+       try {
+           hd = horad.parse(this.horaDev.getText());
+       } catch (ParseException ex) {
+           Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
+       }
+            reserva.setHoraDevolucao(hd);
+          
+           
+            
+            
+            
+    }//GEN-LAST:event_SaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -357,23 +447,37 @@ public class CadastroReserva extends javax.swing.JFrame {
             }
         });
     }
+    private void atualizarCategorias() {
+        for (Categorias categoria : Categorias.listaCategorias) {
+            this.modelCategorias.addElement(categoria.getcodCategoria());
+        }
+    }
+    private void atualizarSA(){
+        for(ServicosAdicionais Servicos : ServicosAdicionais.listaServicos){
+            this.modelServicosAdicionais.addElement(Servicos.getServico());
+        }
+    }
+    private void atualizarAutomovel(){
+        for(Automovel auto : Automovel.listaAutomovel){
+            this.modelAutomovel.addElement(auto.getModelo());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Automóvel;
     private javax.swing.JRadioButton CNPJ;
     private javax.swing.JRadioButton CPF;
     private javax.swing.JButton Cancel;
-    private javax.swing.JTextField DescServ;
-    private javax.swing.JRadioButton NAO;
-    private javax.swing.JRadioButton SIM;
+    private javax.swing.JComboBox<String> Cat;
     private javax.swing.JButton Save;
     private javax.swing.JTextField cartaocliente;
-    private javax.swing.JTextField catAutomovel;
     private javax.swing.JTextField dataDev;
     private javax.swing.JTextField dataRetirada;
     private javax.swing.JTextField desconto;
     private javax.swing.JTextField horaDev;
     private javax.swing.JTextField horaRetirada;
     private javax.swing.JTextField idcliente;
+    private javax.swing.JComboBox<String> jComboBoxServicosAdicionais;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
