@@ -43,6 +43,8 @@ public class Principal extends javax.swing.JFrame {
         headerFuncionario = new javax.swing.JMenu();
         menuFuncionario = new javax.swing.JMenuItem();
         menuNivelAcesso = new javax.swing.JMenuItem();
+        headerSA = new javax.swing.JMenu();
+        menuSA = new javax.swing.JCheckBoxMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Janela Principal");
@@ -120,6 +122,19 @@ public class Principal extends javax.swing.JFrame {
 
         topMenuBar.add(headerFuncionario);
 
+        headerSA.setText("Serviços");
+
+        menuSA.setSelected(true);
+        menuSA.setText("Serviços Adicionais");
+        menuSA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSAActionPerformed(evt);
+            }
+        });
+        headerSA.add(menuSA);
+
+        topMenuBar.add(headerSA);
+
         setJMenuBar(topMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -166,6 +181,11 @@ public class Principal extends javax.swing.JFrame {
         System.out.println("Chamado > MenuFuncionario");
         this.addView(new MenuFuncionario());
     }//GEN-LAST:event_menuFuncionarioActionPerformed
+
+    private void menuSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSAActionPerformed
+        System.out.println("Chamado > MenuServicosAdicionais");
+        this.addView(new MenuServicosAdicionais());
+    }//GEN-LAST:event_menuSAActionPerformed
 
     private void addView(JFrame window){
         Container interalContainer = internalFramePrincipal.getContentPane();
@@ -218,12 +238,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu headerAutomoveis;
     private javax.swing.JMenu headerClientes;
     private javax.swing.JMenu headerFuncionario;
+    private javax.swing.JMenu headerSA;
     private javax.swing.JInternalFrame internalFramePrincipal;
     private javax.swing.JMenuItem menuAutomovel;
     private javax.swing.JMenuItem menuCatAutomoveis;
     private javax.swing.JMenuItem menuClientes;
     private javax.swing.JMenuItem menuFuncionario;
     private javax.swing.JMenuItem menuNivelAcesso;
+    private javax.swing.JCheckBoxMenuItem menuSA;
     private javax.swing.JMenuBar topMenuBar;
     // End of variables declaration//GEN-END:variables
 }

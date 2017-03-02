@@ -4,92 +4,86 @@
  * and open the template in the editor.
  */
 package br.ufms.bean;
+
+import br.ufms.view.MenuServicosAdicionais;
 import java.util.ArrayList;
 /**
  *
  * @author plabiany.acosta
  */
 public class ServicosAdicionais {
-    public static ArrayList<ServicosAdicionais> listaServicos = new ArrayList<>();
+    
     private String tipo_servico;
     private String descricao_servico;
-    private double preco_servico;
+    private String preco_servico;
     
+    public static final ArrayList<ServicosAdicionais> listaServicos = new ArrayList<ServicosAdicionais>();
     
-    
-    public ServicosAdicionais() {
-        
+    public ServicosAdicionais(String tiposerv,String descserv,String precoserv) {
+        this.tipo_servico = tiposerv;
+        this.descricao_servico = descserv;
+        this.preco_servico = precoserv;
        
     }
+
+    public ServicosAdicionais() {
+        
+    }
+    public void cadastrarServico(ServicosAdicionais SA){
+        listaServicos.add(SA);
+    }
+    
+
     
     public String getServico(){
         return tipo_servico;
     }
     
     
-    public void setServico(String tiposerv){
-        this.tipo_servico = tiposerv;
-    }
-    
     
     public String getDescricao(){
         return descricao_servico;
     }
+        
     
-    
+    public String getPreco(){
+        return preco_servico;
+    }  
+    public void setServico(String tiposerv){
+        this.tipo_servico = tiposerv;
+    }
     public void setDescricao(String descserv){
         this.descricao_servico = descserv;
     }
-    
-    
-    public double getPreco(){
-        return preco_servico;
-    }
-    
-    
-    public void setPreco(double precoserv){
+    public void setPreco(String precoserv){
         this.preco_servico = precoserv;
     }
     
-    public void addServAdicional(ServicosAdicionais SA){
-        listaServicos.add(SA);
+    public int buscaindiceSA(String Ind){
+        int indice = -1;
+        for(int i = 0; i<listaServicos.size(); i++){
+            if(listaServicos.get(i).getServico().equals(Ind)){
+                indice = i;
+            }
+        }return indice;
     }
-    
-    public ServicosAdicionais BuscaServAdicional(String TipoServico){
-        for(int i = 0; i<listaServicos.size();i++){
-            if(listaServicos.get(i).getServico().equals(TipoServico)){
+    public ServicosAdicionais buscarSA(String tiposerv){
+        for(int i = 0 ; i<listaServicos.size();i++){
+            if(listaServicos.get(i).getServico().equals(tiposerv)){
                 return listaServicos.get(i);
             }
         }
         return null;
+        
     }
-    
-    public boolean RemoveServAdicional(String TipoServico){
+    public boolean RemoverSA(String tiposerv){
         boolean status = false;
         for(int i = 0; i<listaServicos.size();i++){
-            if(listaServicos.get(i).getServico().equals(TipoServico)){
-                listaServicos.remove(i);
-            }
+        if(listaServicos.get(i).getServico().equals(tiposerv)){
+            listaServicos.remove(i);
+            status = true;
+        }
         }
         return status;
     }
-    
-    public boolean AlterarServAdicional(ServicosAdicionais Servico){
-        boolean status = false;
-        for(int i = 0; i<listaServicos.size();i++){
-            if(listaServicos.get(i).getServico().equals(Servico)){
-               listaServicos.get(i).setServico(Servico.getServico());
-               listaServicos.get(i).setDescricao(Servico.getDescricao());
-               listaServicos.get(i).setPreco(Servico.getPreco());
-               status = true;
-            }
-        }
-        return status;
-    }
-
-    public boolean removeServicoAdicional(String buscar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
 }
