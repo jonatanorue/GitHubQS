@@ -51,7 +51,7 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
         btCadastrar.setVisible(false);
         btAlt.setVisible(true);
         textoTitulo.setText("Alteraração de Funcionário");
-        this.setTitle("aterar Funcionário");
+        this.setTitle("Alteraração de Funcionário");
     }
 
     /**
@@ -371,7 +371,7 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
         return(vPlv(nome.getText())&&vPlv(endereco.getText())
                && vPlv(endereco.getText()) && vPlv(tel1.getText())
                && vPlv(data.getText()) && vPlv(login.getText())
-               && vPlv(senha.getText()));
+               && vPlv(senha.getPassword().toString()));
     }
     
     private boolean vPlv(String palavra){ 
@@ -400,7 +400,7 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
               }
               funcionario.setDataDeNascimento(dt);
               funcionario.setLogin(this.login.getText());
-              funcionario.setSenha(senha.getText());
+              funcionario.setSenha(senha.getPassword().toString());
         
               funcionario.setNivelDeAcesso(this.nivel.getSelectedIndex());
               
@@ -440,7 +440,7 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
               }
               funcionario.setDataDeNascimento(dt);
               funcionario.setLogin(this.login.getText());
-              funcionario.setSenha(senha.getText());
+              funcionario.setSenha(senha.getPassword().toString());
         
               funcionario.setNivelDeAcesso(this.nivel.getSelectedIndex());
               

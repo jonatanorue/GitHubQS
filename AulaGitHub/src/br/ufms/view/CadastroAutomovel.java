@@ -2,7 +2,10 @@ package br.ufms.view;
 
 import br.ufms.bean.Automovel;
 import br.ufms.bean.Categorias;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -10,7 +13,7 @@ import javax.swing.DefaultComboBoxModel;
  */
 public class CadastroAutomovel extends javax.swing.JFrame {
 
-    private DefaultComboBoxModel modelCategorias;
+    private final DefaultComboBoxModel modelCategorias;
 
     /**
      * Creates new form CadastroAutomovel
@@ -24,6 +27,19 @@ public class CadastroAutomovel extends javax.swing.JFrame {
         this.atualizarCategorias();
     }
 
+    public CadastroAutomovel(Automovel auto) {
+        this();
+        
+        this.textFieldAno.setText(Integer.toString(auto.getAno()));
+        this.textFieldChassi.setText(auto.getChassi());
+        this.textFieldFabricante.setText(auto.getFabricante());
+        this.textFieldMarca.setText(auto.getMarca());
+        this.textFieldModelo.setText(auto.getModelo());
+        this.textFieldPlaca.setText(auto.getPlaca());
+        this.comboBoxCategoria.setSelectedIndex(Categorias.buscaIndiceCategoria(auto.getCategoria().getcodCategoria()));
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,14 +58,14 @@ public class CadastroAutomovel extends javax.swing.JFrame {
         labelMarca = new javax.swing.JLabel();
         labelAno = new javax.swing.JLabel();
         labelModelo = new javax.swing.JLabel();
-        textFieldChassi = new javax.swing.JTextField();
         textFieldFabricante = new javax.swing.JTextField();
         textFieldMarca = new javax.swing.JTextField();
-        textFieldAno = new javax.swing.JTextField();
         textFieldModelo = new javax.swing.JTextField();
-        textFieldPlaca = new javax.swing.JTextField();
         comboBoxCategoria = new javax.swing.JComboBox<>();
         buttonSalvar = new javax.swing.JButton();
+        textFieldPlaca = new javax.swing.JFormattedTextField();
+        textFieldChassi = new javax.swing.JFormattedTextField();
+        textFieldAno = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Automóvel");
@@ -83,6 +99,29 @@ public class CadastroAutomovel extends javax.swing.JFrame {
 
         buttonSalvar.setText("Salvar");
         buttonSalvar.setPreferredSize(new java.awt.Dimension(67, 24));
+        buttonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSalvarActionPerformed(evt);
+            }
+        });
+
+        try {
+            textFieldPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("???-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            textFieldChassi.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("AAA AAAAAA AA AAAAAA")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            textFieldAno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,49 +131,49 @@ public class CadastroAutomovel extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(buttonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(labelCategoria)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelModelo)
-                                .addGap(35, 35, 35)
-                                .addComponent(textFieldModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelAno)
-                                .addGap(50, 50, 50)
-                                .addComponent(textFieldAno, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelMarca)
-                                .addGap(40, 40, 40)
-                                .addComponent(textFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(buttonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelMarca)
+                            .addComponent(labelAno)
+                            .addComponent(labelModelo))
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textFieldAno)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(textFieldModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(textFieldMarca)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addComponent(labelFabricante)
                                     .addGap(18, 18, 18))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(labelChassi)
                                     .addGap(38, 38, 38)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(textFieldFabricante)
-                                .addComponent(textFieldChassi, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                                .addComponent(comboBoxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelPlaca)
-                        .addGap(44, 44, 44)
-                        .addComponent(textFieldPlaca))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelPlaca)
+                                    .addComponent(labelCategoria))
+                                .addGap(22, 22, 22)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textFieldPlaca)
+                            .addComponent(textFieldChassi)
+                            .addComponent(comboBoxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(textFieldFabricante)))
                     .addComponent(menuTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(menuTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelPlaca)
                     .addComponent(textFieldPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -156,8 +195,8 @@ public class CadastroAutomovel extends javax.swing.JFrame {
                     .addComponent(labelMarca))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textFieldAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelAno))
+                    .addComponent(labelAno)
+                    .addComponent(textFieldAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textFieldModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -166,7 +205,7 @@ public class CadastroAutomovel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
@@ -176,6 +215,65 @@ public class CadastroAutomovel extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_buttonVoltarActionPerformed
 
+    private void buttonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSalvarActionPerformed
+        if(!this.checkInputFields()) return;
+        
+        Automovel auto = new Automovel();
+        auto.setAno(Integer.parseInt(this.textFieldAno.getText()));
+        Categorias categoria = Categorias.buscarCatAutomoveisLista(this.comboBoxCategoria.getSelectedIndex());
+        auto.setCategoria(categoria);
+        auto.setChassi(this.textFieldChassi.getText());
+        auto.setFabricante(this.textFieldFabricante.getText());
+        auto.setMarca(this.textFieldMarca.getText());
+        auto.setModelo(this.textFieldModelo.getText());
+        auto.setPlaca(this.textFieldPlaca.getText());
+        Automovel.cadastrarAutomovel(auto);
+        
+        JOptionPane.showMessageDialog(null, "Automóvel cadastrado com sucesso!", "Cadatro Realizado", JOptionPane.INFORMATION_MESSAGE);
+        
+        MenuAutomovel.atualizarList();
+        dispose();
+    }//GEN-LAST:event_buttonSalvarActionPerformed
+
+    private boolean checkInputFields(){
+        String regexPlaca = "^[a-zA-Z]{3}(-)?[0-9]{4}$";
+        String regexChassi = "^[a-zA-Z0-9]{3}( )?[a-zA-Z0-9]{6}( )?[a-zA-Z0-9]{2}( )?[a-zA-Z0-9]{6}$";
+        String regexTextoNome = "^([A-Za-zÀ-ú0-9]| )+$";
+        String regexAno = "^[0-9]{4}$";
+        
+        if(!Pattern.compile(regexPlaca).matcher(this.textFieldPlaca.getText()).find()){
+            JOptionPane.showMessageDialog(this, "Placa Incorreta!\n3 letras seguido por 4 números.", "Valor Incorreto", JOptionPane.ERROR_MESSAGE);
+            this.textFieldPlaca.requestFocus();
+            return false;
+        }
+        else if(!Pattern.compile(regexChassi).matcher(this.textFieldChassi.getText()).find()){
+            JOptionPane.showMessageDialog(this, "Chassi Incorreta!\nApenas caracteres alfanuméricos.", "Valor Incorreto", JOptionPane.ERROR_MESSAGE);
+            this.textFieldChassi.requestFocus();
+            return false;
+        }
+        else if(!Pattern.compile(regexTextoNome).matcher(this.textFieldFabricante.getText()).find()){
+            JOptionPane.showMessageDialog(this, "Fabricante Preenchimento Incorreto!\nApenas caracteres alfanuméricos.", "Valor Incorreto", JOptionPane.ERROR_MESSAGE);
+            this.textFieldFabricante.requestFocus();
+            return false;
+        }
+        else if(!Pattern.compile(regexTextoNome).matcher(this.textFieldMarca.getText()).find()){
+            JOptionPane.showMessageDialog(this, "Marca Preenchimento Incorreto!\nApenas caracteres alfanuméricos.", "Valor Incorreto", JOptionPane.ERROR_MESSAGE);
+            this.textFieldMarca.requestFocus();
+            return false;
+        }
+        else if(!Pattern.compile(regexAno).matcher(this.textFieldAno.getText()).find()){
+            JOptionPane.showMessageDialog(this, "Ano Preenchimento Incorreto!\nApenas 4 números.", "Valor Incorreto", JOptionPane.ERROR_MESSAGE);
+            this.textFieldAno.requestFocus();
+            return false;
+        }
+        else if(!Pattern.compile(regexTextoNome).matcher(this.textFieldModelo.getText()).find()){
+            JOptionPane.showMessageDialog(this, "Modelo Preenchimento Incorreto!\nApenas caracteres alfanuméricos.", "Valor Incorreto", JOptionPane.ERROR_MESSAGE);
+            this.textFieldModelo.requestFocus();
+            return false;
+        }
+        
+        return true;
+    }
     /**
      * @param args the command line arguments
      */
@@ -205,6 +303,7 @@ public class CadastroAutomovel extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new CadastroAutomovel().setVisible(true);
             }
@@ -212,8 +311,8 @@ public class CadastroAutomovel extends javax.swing.JFrame {
     }
 
     private void atualizarCategorias() {
-        for (Categorias categoria : Categorias.listaCategorias) {
-            this.modelCategorias.addElement(categoria.getcodCategoria());
+        for(Categorias categoria : Categorias.getListaCategorias()){
+            this.modelCategorias.addElement(categoria.getdescCategoria());
         }
     }
     
@@ -230,11 +329,11 @@ public class CadastroAutomovel extends javax.swing.JFrame {
     private javax.swing.JLabel labelModelo;
     private javax.swing.JLabel labelPlaca;
     private java.awt.Label menuTitulo;
-    private javax.swing.JTextField textFieldAno;
-    private javax.swing.JTextField textFieldChassi;
+    private javax.swing.JFormattedTextField textFieldAno;
+    private javax.swing.JFormattedTextField textFieldChassi;
     private javax.swing.JTextField textFieldFabricante;
     private javax.swing.JTextField textFieldMarca;
     private javax.swing.JTextField textFieldModelo;
-    private javax.swing.JTextField textFieldPlaca;
+    private javax.swing.JFormattedTextField textFieldPlaca;
     // End of variables declaration//GEN-END:variables
 }

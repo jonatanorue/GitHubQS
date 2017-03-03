@@ -44,7 +44,7 @@ public class Principal extends javax.swing.JFrame {
         menuFuncionario = new javax.swing.JMenuItem();
         menuNivelAcesso = new javax.swing.JMenuItem();
         headerSA = new javax.swing.JMenu();
-        menuSA = new javax.swing.JCheckBoxMenuItem();
+        menuServicosAdicionais = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Janela Principal");
@@ -124,14 +124,13 @@ public class Principal extends javax.swing.JFrame {
 
         headerSA.setText("Serviços");
 
-        menuSA.setSelected(true);
-        menuSA.setText("Serviços Adicionais");
-        menuSA.addActionListener(new java.awt.event.ActionListener() {
+        menuServicosAdicionais.setText("Serviços Adicionais");
+        menuServicosAdicionais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuSAActionPerformed(evt);
+                menuServicosAdicionaisActionPerformed(evt);
             }
         });
-        headerSA.add(menuSA);
+        headerSA.add(menuServicosAdicionais);
 
         topMenuBar.add(headerSA);
 
@@ -182,10 +181,10 @@ public class Principal extends javax.swing.JFrame {
         this.addView(new MenuFuncionario());
     }//GEN-LAST:event_menuFuncionarioActionPerformed
 
-    private void menuSAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSAActionPerformed
+    private void menuServicosAdicionaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuServicosAdicionaisActionPerformed
         System.out.println("Chamado > MenuServicosAdicionais");
         this.addView(new MenuServicosAdicionais());
-    }//GEN-LAST:event_menuSAActionPerformed
+    }//GEN-LAST:event_menuServicosAdicionaisActionPerformed
 
     private void addView(JFrame window){
         Container interalContainer = internalFramePrincipal.getContentPane();
@@ -245,7 +244,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuClientes;
     private javax.swing.JMenuItem menuFuncionario;
     private javax.swing.JMenuItem menuNivelAcesso;
-    private javax.swing.JCheckBoxMenuItem menuSA;
+    private javax.swing.JMenuItem menuServicosAdicionais;
     private javax.swing.JMenuBar topMenuBar;
     // End of variables declaration//GEN-END:variables
 }

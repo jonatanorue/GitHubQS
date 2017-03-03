@@ -480,7 +480,7 @@ public class CadastroReserva extends javax.swing.JFrame {
         }
     }
     private void atualizarAutomovel(){
-        for(Automovel auto : Automovel.listaAutomovel){
+        for(Automovel auto : Automovel.getListaAutomovel()){
             this.modelAutomovel.addElement(auto.getModelo());
         }
     }

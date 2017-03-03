@@ -6,8 +6,8 @@
 package br.ufms.view;
 
 import br.ufms.bean.Automovel;
-import br.ufms.bean.Categorias;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,9 +47,7 @@ public class MenuAutomovel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Menu Automóvel");
-        setMaximumSize(new java.awt.Dimension(600, 400));
         setMinimumSize(new java.awt.Dimension(600, 400));
-        setPreferredSize(new java.awt.Dimension(600, 400));
 
         menuTitulo.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
         menuTitulo.setText("Menu Automóvel");
@@ -69,9 +67,19 @@ public class MenuAutomovel extends javax.swing.JFrame {
 
         buttonEditar.setText("Editar");
         buttonEditar.setPreferredSize(new java.awt.Dimension(67, 24));
+        buttonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEditarActionPerformed(evt);
+            }
+        });
 
         buttonExcluir.setText("Excluir");
         buttonExcluir.setPreferredSize(new java.awt.Dimension(67, 24));
+        buttonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,21 +125,32 @@ public class MenuAutomovel extends javax.swing.JFrame {
     private void buttonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAdicionarActionPerformed
         CadastroAutomovel cadastro = new CadastroAutomovel();
         cadastro.setVisible(true);
-        /*
-        Automovel novo = new Automovel("ABC1020", "9BW ZZZ377 VT 004251", categoria, 
-                "Bobsvaguem", "BMW", 2010, "Carro");
-        Automovel.cadastrarAutomovel(novo);
-        this.placa = placa;
-        this.chassi = chassi;
-        this.categoria = categoria;
-        this.fabricante = fabricante;
-        this.marca = marca;
-        this.ano = ano;
-        this.modelo = modelo;
-        */
-    
     }//GEN-LAST:event_buttonAdicionarActionPerformed
 
+    private void buttonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExcluirActionPerformed
+        int ind = this.getIndexAutomovel();
+        if(ind == -1) return;
+
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Certeza que deseja excluir este Automóvel?", "Warning", JOptionPane.YES_NO_OPTION);
+        if(dialogResult == JOptionPane.YES_OPTION) Automovel.removeIndexListaAutomovel(ind);
+        MenuAutomovel.atualizarList();
+    }//GEN-LAST:event_buttonExcluirActionPerformed
+
+    private void buttonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarActionPerformed
+        int ind = this.getIndexAutomovel();
+        if(ind == -1) return;
+        
+        CadastroAutomovel cadastro = new CadastroAutomovel(Automovel.getAutomovel(ind));
+        cadastro.setVisible(true);
+    }//GEN-LAST:event_buttonEditarActionPerformed
+
+    private int getIndexAutomovel(){
+        int ind = this.listAutomovel.getSelectedIndex();
+        if(ind == -1) 
+            JOptionPane.showMessageDialog(this, "Selecione um veiculo.", "Error", JOptionPane.ERROR_MESSAGE);
+        return ind;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -161,6 +180,7 @@ public class MenuAutomovel extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new MenuAutomovel().setVisible(true);
             }
@@ -169,7 +189,7 @@ public class MenuAutomovel extends javax.swing.JFrame {
 
     public static void atualizarList(){
         MenuAutomovel.listModel.removeAllElements();
-        for (Automovel automovel : Automovel.listaAutomovel) {
+        for(Automovel automovel : Automovel.getListaAutomovel()){
             String aux = automovel.getModelo() + " - " + automovel.getPlaca();
             MenuAutomovel.listModel.addElement(aux);
             

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class Categorias {
     private String codCategoria;
     private String descCategoria;
+
     private double valorDiario;
     private double valorSemanal;
     private double valorMensal;
@@ -51,7 +52,7 @@ public class Categorias {
         return null;
     }
     
-    public int buscaIndiceCategoria(String codCategoriaBusca){
+    public static int buscaIndiceCategoria(String codCategoriaBusca){
         int indice = -1;
         for(int i = 0; i < listaCategorias.size(); i++){
             if(listaCategorias.get(i).getcodCategoria().equals(codCategoriaBusca)){
@@ -117,5 +118,11 @@ public class Categorias {
         this.qtdAutomoveis = qtdAutomoveis;
     }
     
+    public static ArrayList<Categorias> getListaCategorias() {
+        return listaCategorias;
+    }
     
+    public static Categorias buscarCatAutomoveisLista(int ind){
+        return listaCategorias.get(ind);
+    }
 }
