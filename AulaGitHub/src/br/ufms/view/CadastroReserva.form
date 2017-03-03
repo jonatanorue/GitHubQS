@@ -33,7 +33,7 @@
                       <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
                       <Component id="Save" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
-                      <Component id="Cancel" min="-2" max="-2" attributes="0"/>
+                      <Component id="Voltar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -209,7 +209,7 @@
               <EmptySpace pref="36" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="Save" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="Cancel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Voltar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
           </Group>
@@ -288,10 +288,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SaveActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="Cancel">
+    <Component class="javax.swing.JButton" name="Voltar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cancelar"/>
+        <Property name="text" type="java.lang.String" value="Voltar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="VoltarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="dataRetirada">
     </Component>

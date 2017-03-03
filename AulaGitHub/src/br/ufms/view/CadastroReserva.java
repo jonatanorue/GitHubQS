@@ -111,7 +111,7 @@ public class CadastroReserva extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         Save = new javax.swing.JButton();
-        Cancel = new javax.swing.JButton();
+        Voltar = new javax.swing.JButton();
         dataRetirada = new javax.swing.JTextField();
         dataDev = new javax.swing.JTextField();
         horaRetirada = new javax.swing.JTextField();
@@ -163,7 +163,12 @@ public class CadastroReserva extends javax.swing.JFrame {
             }
         });
 
-        Cancel.setText("Cancelar");
+        Voltar.setText("Voltar");
+        Voltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VoltarActionPerformed(evt);
+            }
+        });
 
         horaRetirada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,7 +214,7 @@ public class CadastroReserva extends javax.swing.JFrame {
                         .addGap(111, 111, 111)
                         .addComponent(Save)
                         .addGap(89, 89, 89)
-                        .addComponent(Cancel)))
+                        .addComponent(Voltar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
@@ -343,7 +348,7 @@ public class CadastroReserva extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Save)
-                    .addComponent(Cancel))
+                    .addComponent(Voltar))
                 .addGap(41, 41, 41))
         );
 
@@ -407,11 +412,28 @@ public class CadastroReserva extends javax.swing.JFrame {
        }
             reserva.setHoraDevolucao(hd);
           
-           
-            
-            
+          if(CPF.isSelected()){
+              ClienteFisico CF = new ClienteFisico();
+              ClienteFisico cf = CF.buscaClienteFisico(idcliente.getText());
+              reserva.setCliente(cf);
+          }
+          
+          if(CNPJ.isSelected()){
+              ClienteJuridico CJ = new ClienteJuridico();
+              ClienteJuridico cj = CJ.buscaClienteJuridico(idcliente.getText());
+              reserva.setCliente(cj);
+          }
+          
+          reserva.setLocacao(valorlocacao.getAlignmentX());
+          reserva.setTaxaMulta(taxaMulta.getAlignmentX());
+          reserva.setCartaoCliente(cartaocliente.getText());
+          reserva.setDesconto(desconto.getAlignmentX());
             
     }//GEN-LAST:event_SaveActionPerformed
+
+    private void VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarActionPerformed
+       dispose();
+    }//GEN-LAST:event_VoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -467,9 +489,9 @@ public class CadastroReserva extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> Automóvel;
     private javax.swing.JRadioButton CNPJ;
     private javax.swing.JRadioButton CPF;
-    private javax.swing.JButton Cancel;
     private javax.swing.JComboBox<String> Cat;
     private javax.swing.JButton Save;
+    private javax.swing.JButton Voltar;
     private javax.swing.JTextField cartaocliente;
     private javax.swing.JTextField dataDev;
     private javax.swing.JTextField dataRetirada;

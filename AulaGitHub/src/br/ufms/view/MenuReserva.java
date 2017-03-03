@@ -45,6 +45,11 @@ public class MenuReserva extends javax.swing.JFrame {
         });
 
         jButton2.setText("REMOVER");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("ALTERAR");
 
@@ -83,8 +88,13 @@ public class MenuReserva extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdicionarActionPerformed
-        // TODO add your handling code here:
+       CadastroReserva reserva = new CadastroReserva();
+       reserva.setVisible(true);
     }//GEN-LAST:event_AdicionarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+  
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

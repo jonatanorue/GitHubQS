@@ -24,6 +24,7 @@ public class Reserva {
     private float TaxaMulta;
     private String CartaoCliente;
     private float Desconto;
+   
     
     
     public Reserva(){
@@ -31,6 +32,7 @@ public class Reserva {
     }
     
     private static final ArrayList<Reserva> listaReservas = new ArrayList<>();
+    
     
     public Date getDataRetirada(){
         return DataRetirada;
@@ -101,4 +103,6 @@ public class Reserva {
     public static void cadastrarReserva(Reserva reserva){
         Reserva.listaReservas.add(reserva);
     }
+  
 }
+
