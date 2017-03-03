@@ -212,6 +212,7 @@ public class CadastroAutomovel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVoltarActionPerformed
+        MenuAutomovel.atualizarList();
         dispose();
     }//GEN-LAST:event_buttonVoltarActionPerformed
 

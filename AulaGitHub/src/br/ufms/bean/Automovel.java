@@ -24,7 +24,6 @@ public class Automovel {
     
     public static void cadastrarAutomovel(Automovel automovel){
         Automovel.listaAutomovel.add(automovel);
-        MenuAutomovel.atualizarList();
     }
 
     public String getPlaca() {

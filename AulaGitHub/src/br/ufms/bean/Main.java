@@ -11,6 +11,7 @@ public class Main {
 	System.out.println("--> Main.java");
         
         Main.valorInicialCategorias();
+        Main.valorInicialAutomovel();
         
         Principal janela = new Principal();
         janela.setVisible(true);
@@ -37,5 +38,28 @@ public class Main {
         cat2.setvalorKM(50);
         cat2.setqtdAutomoveis("45");
         cat2.cadastrarCatAutomoveis(cat2);
+    }
+
+    private static void valorInicialAutomovel() {
+        // Automovel 1
+        Automovel auto1 = new Automovel();
+        auto1.setAno(2010);
+        auto1.setChassi("111 111111 11 111111");
+        auto1.setFabricante("John Inc");
+        auto1.setMarca("Ford");
+        auto1.setModelo("Fordinho");
+        auto1.setPlaca("aaa-1221");
+        auto1.setCategoria(Categorias.buscarCatAutomoveisLista(0));
+        Automovel.cadastrarAutomovel(auto1);
+        // Automovel 2
+        Automovel auto2 = new Automovel();
+        auto2.setAno(2016);
+        auto2.setChassi("123 123123 12 312312");
+        auto2.setFabricante("John Inc");
+        auto2.setMarca("Ford");
+        auto2.setModelo("Fordão");
+        auto2.setPlaca("bca-3443");
+        auto2.setCategoria(Categorias.buscarCatAutomoveisLista(1));
+        Automovel.cadastrarAutomovel(auto2);
     }
 }

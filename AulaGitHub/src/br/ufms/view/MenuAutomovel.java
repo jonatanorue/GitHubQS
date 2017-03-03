@@ -192,7 +192,6 @@ public class MenuAutomovel extends javax.swing.JFrame {
         for(Automovel automovel : Automovel.getListaAutomovel()){
             String aux = automovel.getModelo() + " - " + automovel.getPlaca();
             MenuAutomovel.listModel.addElement(aux);
-            
         }
     }
     
