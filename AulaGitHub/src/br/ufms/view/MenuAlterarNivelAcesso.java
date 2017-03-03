@@ -13,7 +13,9 @@ import javax.swing.JOptionPane;
  * @author Bruna
  */
 public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
+
     private Funcionario F;
+
     /**
      * Creates new form MenuAlterarNivelAcesso
      */
@@ -66,6 +68,12 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
         CPFLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         CPFLabel.setText("LOGIN FUNCIONÁRIO");
 
+        Logintxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogintxtActionPerformed(evt);
+            }
+        });
+
         BuscarBTN.setText("BUSCAR");
         BuscarBTN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,17 +87,11 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
         EnderecoLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         EnderecoLabel.setText("Endereço:");
 
-        EnderecoFuncLabel.setText("jLabel4");
-
         CidadeLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         CidadeLabel.setText("Cidade:");
 
-        CidadeFuncLabel.setText("jLabel6");
-
         EstadoLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         EstadoLabel.setText("Estado:");
-
-        EstadoFuncLabel.setText("jLabel8");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("Nivel de Acesso:");
@@ -100,8 +102,6 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
                 NivelCBActionPerformed(evt);
             }
         });
-
-        NomeFuncLabel.setText("jLabel1");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("ALTERAR NÍVEL DE ACESSO");
@@ -218,22 +218,34 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
     }//GEN-LAST:event_NivelCBActionPerformed
 
     private void BuscarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarBTNActionPerformed
-        F = new Funcionario().buscarFuncionario(Logintxt.getText());
-
-        NomeFuncLabel.setText(F.getNome());
-        EnderecoFuncLabel.setText(F.getEndereco());
-        CidadeFuncLabel.setText(F.getCidade());
-        EstadoFuncLabel.setText(F.getEstado());
-        NivelCB.setSelectedIndex(F.getNivelDeAcesso());
+        if (CPFLabel.getText().isEmpty()) {
+            F = new Funcionario().buscarFuncionario(Logintxt.getText());
+            if (F != null) {
+                NomeFuncLabel.setText(F.getNome());
+                EnderecoFuncLabel.setText(F.getEndereco());
+                CidadeFuncLabel.setText(F.getCidade());
+                EstadoFuncLabel.setText(F.getEstado());
+                NivelCB.setSelectedIndex(F.getNivelDeAcesso());
+            } else {
+                JOptionPane.showMessageDialog(this, "Funcinario nao encontrado!");
+            }
+        }
     }//GEN-LAST:event_BuscarBTNActionPerformed
 
     private void SalvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarButtonActionPerformed
-        F.setNivelDeAcesso(NivelCB.getSelectedIndex());
-        F.alteraFuncionario(F.getLogin(), F);
-                
-        JOptionPane.showMessageDialog(this, "Alterado com sucesso!");
-        // TODO add your handling code here:
+        if (CPFLabel.getText().isEmpty()) {
+            F.setNivelDeAcesso(NivelCB.getSelectedIndex());
+            if (F.alteraFuncionario(F.getLogin(), F) == true) {
+                JOptionPane.showMessageDialog(this, "Alterado com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Não alterado!");
+            }
+        }   // TODO add your handling code here:
     }//GEN-LAST:event_SalvarButtonActionPerformed
+
+    private void LogintxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogintxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LogintxtActionPerformed
 
     /**
      * @param args the command line arguments

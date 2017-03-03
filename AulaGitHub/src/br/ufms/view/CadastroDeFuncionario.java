@@ -42,7 +42,7 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
         estados.setSelectedIndex(i);
         tel1.setText(func.getTelefone1());
         tel2.setText(func.getTelefone2());
-        SimpleDateFormat st = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat st = new SimpleDateFormat("M/d/yy");
         Date d = func.getDataDeNascimento();
         data.setText(st.format(d));
         login.setText(func.getLogin());
@@ -183,7 +183,7 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
             }
         });
 
-        data.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        data.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
         tel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tel1.addActionListener(new java.awt.event.ActionListener() {
@@ -257,12 +257,11 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(tel2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(nome)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(btCadastrar)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(btAlt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addComponent(nivel, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(btCadastrar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btAlt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(nivel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(21, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -390,7 +389,7 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
               funcionario.setEstado(estados.getItemAt(aux));
               funcionario.setTelefone1(tel1.getText());
               funcionario.setTelefone2(tel2.getText()+"");
-              SimpleDateFormat st = new SimpleDateFormat("dd/MM/yyyy");
+              SimpleDateFormat st = new SimpleDateFormat("M/d/yy");
               
               Date dt = new Date();
               try {
@@ -430,7 +429,7 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
               funcionario.setEstado(estados.getItemAt(aux));
               funcionario.setTelefone1(tel1.getText());
               funcionario.setTelefone2(tel2.getText());
-              SimpleDateFormat st = new SimpleDateFormat("dd/MM/yyyy");
+              SimpleDateFormat st = new SimpleDateFormat("M/d/yy");
               
               Date dt = new Date();
               try {
