@@ -90,6 +90,15 @@ public class Automovel {
         return listaAutomovel.get(ind);
     }
     
+    public static Automovel getAutomovelPorChassi(String chassi){
+        for(Automovel auto : listaAutomovel){
+            if(auto.getChassi().equals(chassi))
+                return auto;
+        }
+        return null;
+    }
+    
+    
     public static void removeIndexListaAutomovel(int ind){
         listaAutomovel.remove(ind);
     }
