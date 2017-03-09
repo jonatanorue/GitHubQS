@@ -106,6 +106,11 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
         jLabel1.setText("ALTERAR NÍVEL DE ACESSO");
 
         VoltarButton.setText("VOLTAR");
+        VoltarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VoltarButtonActionPerformed(evt);
+            }
+        });
 
         SalvarButton.setText("SALVAR");
         SalvarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -213,24 +218,24 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
     }//GEN-LAST:event_NivelCBActionPerformed
 
     private void BuscarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarBTNActionPerformed
-        if (!Logintxt.getText().isEmpty()) { //CPFLabel
-            F = new Funcionario().buscarFuncionario(Logintxt.getText());
-            if (F != null) {
+        if (!Logintxt.getText().isEmpty()) { // Se o campo de login não estiver vazio
+            F = new Funcionario().buscarFuncionario(Logintxt.getText());//verifica login
+            if (F != null) { //Se achar login
                 NomeFuncLabel.setText(F.getNome());
                 EnderecoFuncLabel.setText(F.getEndereco());
                 CidadeFuncLabel.setText(F.getCidade());
                 EstadoFuncLabel.setText(F.getEstado());
                 NivelCB.setSelectedIndex(F.getNivelDeAcesso());
-            } else {
+            } else {//se não achar
                 JOptionPane.showMessageDialog(this, "Funcinario não encontrado!");
             }
-        } else {
+        } else {//se campo estiver vazio
             JOptionPane.showMessageDialog(this, "Campo vazio!");
         }
     }//GEN-LAST:event_BuscarBTNActionPerformed
 
     private void SalvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarButtonActionPerformed
-        if (Logintxt.getText().isEmpty()) { //CPFLabel
+        if (!Logintxt.getText().isEmpty()) { //CPFLabel
             F.setNivelDeAcesso(NivelCB.getSelectedIndex());
             if (F.alteraFuncionario(F.getLogin(), F) == true) {
                 JOptionPane.showMessageDialog(this, "Alterado com sucesso!");
@@ -243,6 +248,11 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
     private void LogintxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogintxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_LogintxtActionPerformed
+
+    private void VoltarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarButtonActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_VoltarButtonActionPerformed
 
     /**
      * @param args the command line arguments
