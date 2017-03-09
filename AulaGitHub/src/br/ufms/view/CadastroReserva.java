@@ -51,55 +51,58 @@ public class CadastroReserva extends javax.swing.JFrame {
     public CadastroReserva(Reserva r){
         initComponents();
         IniciaCombos();
+       SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
+        Date retirada = r.getDataRetirada();
+        dataRetirada.setText(dt.format(retirada));
         
-        SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");        
-        Date dataR = r.getDataRetirada();
-        dataRetirada.setText(dt.format(dataR.getDate()));
+        Date devolucao = r.getDataDevolucao();
+        dataDevolucao.setText(dt.format(devolucao));
         
-        SimpleDateFormat hr = new SimpleDateFormat("HH:mm");
-        Date horaR = r.getDataRetirada();
-        horaRetirada.setText(hr.format(horaR.getHours()));
-       
-        Date dataD = r.getDataDevolucao();
-        dataDevolucao.setText(dt.format(dataD.getDate()));
+        String hR = retirada.getHours() + ";"+ retirada.getMinutes();
+        horaRetirada.setText(hR);
+        String hD = devolucao.getHours() + ":"+ devolucao.getMinutes();
+        horaDevolucao.setText(hD);
         
-        Date horaD = r.getDataDevolucao();
-        horaDevolucao.setText(hr.format(horaD.getHours()));
-        
-        if(CPF.isSelected()){
+        String ct = r.getCategoria().getcodCategoria();
+        int i;
+        for (i = 0; i < categoria.getMaximumRowCount(); i++) {
+            if (ct.equals(categoria.getItemAt(i))) {
+                break;
+            }
+        }
+        categoria.setSelectedIndex(i);
+        if (r.getCarro() != null) {
+            String placa = r.getCarro().getPlaca();
+            combosCarros(ct, placa);
+        } else {
+            combosCarros(ct, null);
+        }
+        if (r.getServico() != null) {
+            for (i = 0; i < comboServicos.getMaximumRowCount(); i++) {
+                if (r.getServico().getDescricao().equals(comboServicos.getItemAt(i))) {
+                    comboServicos.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+        String cpfCnpj = r.getCpfCnpj();
         ClienteFisico c = new ClienteFisico();
-        ClienteFisico cpf = c.buscaClienteFisico(idcliente.getText());
-        idcliente.setText(cpf.getCpf());
-        
+        c = c.buscaClienteFisico(cpfCnpj);
+        if(c != null){
+            idcliente.setText(cpfCnpj);
+            CPF.setSelected(true);
         }
-        
-        if (CNPJ.isSelected()){
-        ClienteJuridico j = new ClienteJuridico();
-        ClienteJuridico juri = j.buscaClienteJuridico(idcliente.getText());
-        idcliente.setText(juri.getCnpj());
+        else{
+           idcliente.setText(cpfCnpj);
+           CPF.setSelected(true);
         }
-        
-                
-        this.modelCategorias = new DefaultComboBoxModel();
-        this.categoria.setModel(this.modelCategorias);
-        this.atualizarCategorias();
-        
-            
-        
-        this.modelServicosAdicionais = new DefaultComboBoxModel();
-        this.comboServicos.setModel(this.modelServicosAdicionais);
-        this.atualizarSA();
-        
-        this.modelAutomovel = new DefaultComboBoxModel();
-        this.comboAutomovel.setModel(this.modelAutomovel);
-        this.atualizarAutomovel();
-        
-        idcliente.setText(r.getCpfCnpj());
         cartaocliente.setText(r.getCartaoCliente());
-        descontoPorcentagem.setAlignmentY(r.getDesconto());
+        String desc = Double.toString((r.getDesconto() * 100)/r.getLocacao());
+        descontoPorcentagem.setText(desc);
         
-        
-        
+           if(calculaValorTotalReserva()){
+            prencheTabela();
+         }
         
     }
 
@@ -109,13 +112,32 @@ public class CadastroReserva extends javax.swing.JFrame {
      */
     private void IniciaCombos(){
         ArrayList<Categorias> lista = Categorias.listaCategorias;
-        for(int i =0; i< lista.size();i++){
-          categoria.addItem(lista.get(i).getcodCategoria());
+        for (int i = 0; i < lista.size(); i++) {
+            categoria.addItem(lista.get(i).getcodCategoria());
         }
         ArrayList<ServicosAdicionais> lista2 = ServicosAdicionais.listaServicos;
-        for(int i =1; i< lista.size();i++){
-          comboServicos.addItem(lista2.get(i).getServico());
+        for (int i = 1; i < lista.size(); i++) {
+            comboServicos.addItem(lista2.get(i).getServico());
         }
+    }
+     private void combosCarros(String codCategoria,String placa){
+         ArrayList<Automovel> lista = Automovel.getListaAutomovel();
+         for (Automovel aux : lista) {
+             if (aux.getCategoria().getcodCategoria().equals(codCategoria)) {
+                 comboAutomovel.addItem(aux.getMarca() + "/" + aux.getModelo());
+             }
+         }
+         if (placa != null) {
+             int x = 0;
+             for (Automovel aux : lista) {
+                 if (aux.getCategoria().getcodCategoria().equals(codCategoria)
+                         && placa.equals(aux.getPlaca())) {
+                     comboAutomovel.setSelectedIndex(x);
+                     break;
+                 }
+                 x++;
+             }
+         }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -152,7 +174,6 @@ public class CadastroReserva extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         btCalcular = new javax.swing.JButton();
@@ -240,6 +261,13 @@ public class CadastroReserva extends javax.swing.JFrame {
 
         jLabel10.setText("Automóvel:");
 
+        comboAutomovel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--" }));
+        comboAutomovel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboAutomovelActionPerformed(evt);
+            }
+        });
+
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel15.setText("%");
 
@@ -248,8 +276,6 @@ public class CadastroReserva extends javax.swing.JFrame {
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel17.setText("DD/MM/AAAA");
-
-        jLabel8.setText("HH:MM");
 
         jLabel11.setText("HH:MM");
 
@@ -348,10 +374,7 @@ public class CadastroReserva extends javax.swing.JFrame {
                                                             .addComponent(jLabel3)
                                                             .addGap(10, 10, 10)
                                                             .addComponent(dataRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(jLabel4)
-                                                        .addGap(14, 14, 14)
-                                                        .addComponent(jLabel8)))
+                                                    .addComponent(jLabel4))
                                                 .addGap(18, 18, 18)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jLabel16)
@@ -396,9 +419,7 @@ public class CadastroReserva extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel8)))
+                        .addComponent(jLabel4))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -454,86 +475,146 @@ public class CadastroReserva extends javax.swing.JFrame {
     private boolean calcValorResDatas(){
         Categorias c = new Categorias();
         c = c.buscarCatAutomoveis(categoria.getToolTipText());
-        if(c != null){
-             String dataR = dataRetirada.getText();
-             String dataD = dataDevolucao.getText();
-             if(dataR !=null && dataD != null){
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+        if (c != null) {
+            String dataR = dataRetirada.getText();
+            String dataD = dataDevolucao.getText();
+            if (dataR != null && dataD != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Calendar data1 = Calendar.getInstance();
                 Calendar data2 = Calendar.getInstance();
                 try {
                     data1.setTime(sdf.parse(dataR));
-                    data2.setTime(sdf.parse(dataD)); 
-                } catch (java.text.ParseException e ) {
-                  }
+                    data2.setTime(sdf.parse(dataD));
+                } catch (java.text.ParseException e) {
+                }
                 int dias = data2.get(Calendar.DAY_OF_YEAR) - data1.get(Calendar.DAY_OF_YEAR);
                 System.out.println(dias);
-                
-                        int mes = dias/30;
-                        int semanas = (dias - (mes * 30))/7;
-                        int d = (dias - (mes*30)) % 7;
-                        valorReservaData = (c.getvalorMensal()*mes)+(c.getvalorSemanal()*semanas)+(c.getvalorDiario()*d);                    
-                        return true;
-             }else{
-                 JOptionPane.showMessageDialog(null,"Prencha as datas de retirada e devolução");
-             }
-        }return false;     
+
+                int mes = dias / 30;
+                int semanas = (dias - (mes * 30)) / 7;
+                int d = (dias - (mes * 30)) % 7;
+                valorReservaData = (c.getvalorMensal() * mes) + (c.getvalorSemanal() * semanas) + (c.getvalorDiario() * d);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Prencha as datas de retirada e devolução");
+            }
+        }
+        return false;  
     }
     
     private void categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_categoriaActionPerformed
-
+    private Categorias verificaCarroDisponivel(String codigo){
+        Categorias c = new Categorias();
+        c = c.buscarCatAutomoveis(codigo);
+        ArrayList<Reserva> lista = Reserva.listaReservas;
+        int aux =0, aux2;
+        aux2 = Integer.parseInt(c.getqtdAutomoveis());
+        for (Reserva x : lista) {
+            if (x.getCategoria().getcodCategoria().equals(codigo)) {
+                aux++;
+            }
+        }
+        if (aux < aux2) {
+            return c;
+        }
+        return null;
+    }
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+            
+            if (calculaValorTotalReserva() && idcliente.getText() != null) {
             Reserva reserva = new Reserva();
-            SimpleDateFormat st = new SimpleDateFormat("dd/MM/yyyy");
-            Date dataRetirada = new Date();
-            Date dataDevolucao = new Date();
-            try {
-              dataRetirada = st.parse(this.dataRetirada.getText());
-              dataDevolucao = st.parse(this.dataDevolucao.getText());
-              dataRetirada.setHours(Integer.parseInt(horaRetirada.getText().substring(0,2)));
-              dataRetirada.setHours(Integer.parseInt(horaRetirada.getText().substring(3,5)));
-            } catch (ParseException ex) {
-              Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
+            int x = categoria.getSelectedIndex();
+            String cdgCategoria = categoria.getItemAt(x);
+            Categorias c = verificaCarroDisponivel(cdgCategoria);
+            if (c != null) {
+                reserva.setCategoria(c);
+                SimpleDateFormat st = new SimpleDateFormat("dd/MM/yyyy");
+                Date dataR = new Date();
+                Date dataD = new Date();
+                try {
+                    dataR = st.parse(this.dataRetirada.getText());
+                    dataD = st.parse(this.dataDevolucao.getText());
+                    dataR.setHours(Integer.parseInt(horaRetirada.getText().substring(0, 2)));
+                    dataR.setMinutes(Integer.parseInt(horaRetirada.getText().substring(3, 5)));
+                    dataD.setHours(Integer.parseInt(horaDevolucao.getText().substring(0, 2)));
+                    dataD.setMinutes(Integer.parseInt(horaDevolucao.getText().substring(3, 5)));
+                } catch (ParseException ex) {
+                    Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                reserva.setDataDevolucao(dataD);
+                reserva.setDataRetirada(dataR);
+                
+                String serv = comboServicos.getItemAt(comboServicos.getSelectedIndex());
+                if(serv.equals("--"));
+                else{
+                    reserva.setServicoAdc(new ServicosAdicionais().buscarSA(serv));
+                }
+                String modelo = comboAutomovel.getItemAt(comboAutomovel.getSelectedIndex());
+                if (modelo.equals("--")); else {
+                    String[] d = modelo.split("/");
+                    ArrayList<Automovel> lista = Automovel.getListaAutomovel();
+                    ArrayList<Reserva> lista2 = Reserva.listaReservas;
+                    for (Automovel carro : lista) {
+                        if (cdgCategoria.equals(carro.getCategoria().getcodCategoria())) {
+                            if (d[0].equals(carro.getFabricante()) && d[1].equals(carro.getModelo())) {
+                                boolean state = true;
+                                for(Reserva res : lista2){
+                                    if(res.getCarro().equals(carro)){
+                                        state = false;
+                                        break;
+                                    }
+                                }
+                                if(state){
+                                    reserva.setCarro(carro);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (CPF.isSelected()) {
+                    ClienteFisico CF = new ClienteFisico();
+                    ClienteFisico cf = CF.buscaClienteFisico(idcliente.getText());
+                    reserva.setClienteFisico(cf);
+                }
+                if (CNPJ.isSelected()) {
+                    ClienteJuridico CJ = new ClienteJuridico();
+                    ClienteJuridico cj = CJ.buscaClienteJuridico(idcliente.getText());
+                    reserva.setClienteJuridico(cj);
+                }
+                
+                reserva.setCpfCnpj(idcliente.getText());
+                reserva.setCartaoCliente(cartaocliente.getText());
+                reserva.setDesconto(valorDesconto);
+                reserva.setLocacao(valorTotal);
+            } else {
+                JOptionPane.showMessageDialog(null, "Automovel da categoria não disponivel");
             }
-            
-            reserva.setDataDevolucao(dataDevolucao);
-            reserva.setDataRetirada(dataRetirada);
-            
-            if(CPF.isSelected()){
-                 ClienteFisico CF = new ClienteFisico();
-                 ClienteFisico cf = CF.buscaClienteFisico(idcliente.getText());
-                 reserva.setClienteFisico(cf);
-            }
-            if(CNPJ.isSelected()){
-                 ClienteJuridico CJ = new ClienteJuridico();
-                 ClienteJuridico cj = CJ.buscaClienteJuridico(idcliente.getText());
-                 reserva.setClienteJuridico(cj);
-            }
-            
-            reserva.setCpfCnpj(idcliente.getText());
-            reserva.setCartaoCliente(cartaocliente.getText());
-            reserva.setDesconto(descontoPorcentagem.getAlignmentX());
-            
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar");
+        }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
     /**
      * metodo para setar no combo automovel todos os automoveis da categoria
-     * @param evt 
+     *
+     * @param evt
      */
     private void categoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categoriaItemStateChanged
-          int x = categoria.getSelectedIndex();
-          Categorias c = new Categorias();
-          ArrayList<Automovel> lista = Automovel.getListaAutomovel();
-          for(Automovel aux : lista){
-              if(aux.getCategoria().getcodCategoria().equals(categoria.getItemAt(x))){
-                  comboAutomovel.addItem(aux.getMarca() + "/"+ aux.getModelo());
-              }
-          }
+        int x = categoria.getSelectedIndex();
+        Categorias c = new Categorias();
+        ArrayList<Automovel> lista = Automovel.getListaAutomovel();
+        for (Automovel aux : lista) {
+            if (aux.getCategoria().getcodCategoria().equals(categoria.getItemAt(x))) {
+                comboAutomovel.addItem(aux.getMarca() + "/" + aux.getModelo());
+            }
+        }
     }//GEN-LAST:event_categoriaItemStateChanged
 
     private void descontoPorcentagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descontoPorcentagemActionPerformed
@@ -578,9 +659,8 @@ public class CadastroReserva extends javax.swing.JFrame {
         }
         return false;
     }
-    private void btCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalcularActionPerformed
-        if(calculaValorTotalReserva()){
-            valores[0][0] = valorReservaData;
+    private void prencheTabela(){
+         valores[0][0] = valorReservaData;
             valores[0][1] = valorServico;
             valores[0][2] = valorDesconto;
             valores[0][3] = valorTotal;
@@ -591,12 +671,20 @@ public class CadastroReserva extends javax.swing.JFrame {
             painelTabela.setLayout(new BorderLayout());
             painelTabela.add(p,BorderLayout.CENTER);
             this.revalidate();
+    }
+    private void btCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalcularActionPerformed
+        if(calculaValorTotalReserva()){
+            prencheTabela();
         }
     }//GEN-LAST:event_btCalcularActionPerformed
 
     private void idclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idclienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idclienteActionPerformed
+
+    private void comboAutomovelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAutomovelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboAutomovelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -681,7 +769,6 @@ public class CadastroReserva extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel painelTabela;
     // End of variables declaration//GEN-END:variables

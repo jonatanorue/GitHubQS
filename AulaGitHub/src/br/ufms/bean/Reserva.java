@@ -19,11 +19,11 @@ public class Reserva {
     private ClienteJuridico clienteJ;
     private String cpfCnpj;
     private Categorias CatAutomovel;
-    private float Locacao;
+    private double Locacao;
     private ServicosAdicionais Servico;
-    private float TaxaMulta;
+    private double TaxaMulta;
     private String CartaoCliente;
-    private float Desconto;
+    private double Desconto;
     private Automovel carro;
    
     
@@ -32,7 +32,7 @@ public class Reserva {
         
     }
     
-    private static final ArrayList<Reserva> listaReservas = new ArrayList<>();
+    public static final ArrayList<Reserva> listaReservas = new ArrayList<>();
     
     public ClienteFisico getClienteFisico(){
         return clienteF;
@@ -70,10 +70,10 @@ public class Reserva {
     public void setCategoria(Categorias categoria){
         this.CatAutomovel = categoria;
     }
-    public float getLocacao(){
+    public double getLocacao(){
         return Locacao;
     }
-    public void setLocacao(float locacao){
+    public void setLocacao(double locacao){
         this.Locacao = locacao;
     }
     public ServicosAdicionais getServico(){
@@ -82,7 +82,7 @@ public class Reserva {
     public void setServicoAdc(ServicosAdicionais servico){
         this.Servico = servico;
     }
-    public float getTaxaMulta(){
+    public double getTaxaMulta(){
         return TaxaMulta;
     }
     public void setTaxaMulta(float taxa){
@@ -94,26 +94,20 @@ public class Reserva {
     public void setCartaoCliente(String cartaocliente){
         this.CartaoCliente = cartaocliente;
     }
-    public float getDesconto(){
+    public double getDesconto(){
         return Desconto;
     }
-    public void setDesconto(float desconto){
+    public void setDesconto(double desconto){
         this.Desconto = desconto;
     }
     public static void cadastrarReserva(Reserva reserva){
         Reserva.listaReservas.add(reserva);
     }
 
-    /**
-     * @return the cpfCnpj
-     */
     public String getCpfCnpj() {
         return cpfCnpj;
     }
-
-    /**
-     * @param cpfCnpj the cpfCnpj to set
-     */
+    
     public void setCpfCnpj(String cpfCnpj) {
         this.cpfCnpj = cpfCnpj;
     }
@@ -146,6 +140,23 @@ public class Reserva {
             }
         }
         return indice;
+    }
+
+    public Automovel getCarro() {
+        return carro;
+    }
+
+    public void setCarro(Automovel carro) {
+        this.carro = carro;
+    }
+    public ArrayList<Reserva> buscaReservasCliente(String cpf){
+        ArrayList<Reserva> lista = new ArrayList<>();
+        for(Reserva x : this.buscaReservasCliente(cpf)){
+            if(x.cpfCnpj.equals(cpf)){
+                lista.add(x);
+            }
+        }
+        return lista;
     }
 }
 

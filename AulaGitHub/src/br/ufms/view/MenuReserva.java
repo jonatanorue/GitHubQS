@@ -7,6 +7,7 @@ package br.ufms.view;
 
 import javax.swing.JOptionPane;
 import br.ufms.bean.Reserva;
+import java.util.ArrayList;
 /**
  *
  * @author Plabiany
@@ -39,21 +40,21 @@ public class MenuReserva extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setText("RESERVAS");
 
-        Adicionar.setText("ADICIONAR");
+        Adicionar.setText("ADICIONAR RESERVA");
         Adicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AdicionarActionPerformed(evt);
             }
         });
 
-        Remover.setText("REMOVER");
+        Remover.setText("REMOVER RESERVA");
         Remover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RemoverActionPerformed(evt);
             }
         });
 
-        Alterar.setText("ALTERAR");
+        Alterar.setText("ALTERAR RESERVA");
         Alterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AlterarActionPerformed(evt);
@@ -75,7 +76,7 @@ public class MenuReserva extends javax.swing.JFrame {
                             .addComponent(Adicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Alterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Remover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,13 +101,17 @@ public class MenuReserva extends javax.swing.JFrame {
     }//GEN-LAST:event_AdicionarActionPerformed
 
     private void RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoverActionPerformed
-        String buscar = JOptionPane.showInputDialog("Digite o CPF ou CNPJ do cliente que realizou a reserva que deseja deletar");
-        Reserva delete = new Reserva();
-        if(delete.removerReserva(buscar) == true){
-            JOptionPane.showMessageDialog(null, "Reserva deletada com sucesso");
-        }else{
-            JOptionPane.showMessageDialog(null, "Erro ao deletar Reserva, tente novamente");
-        }
+        String buscar = JOptionPane.showInputDialog("Digite o CPF ou CNPJ do cliente");
+        if (buscar != null) {
+            Reserva delete = new Reserva().buscarReserva(buscar);
+            if(delete != null){
+                ArrayList<Reserva> lista = delete.buscaReservasCliente(buscar);
+                TelaListaReserva t = new TelaListaReserva(lista);
+                t.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Reservas não encontradas");
+            }
+        } 
     }//GEN-LAST:event_RemoverActionPerformed
 
     private void AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterarActionPerformed
