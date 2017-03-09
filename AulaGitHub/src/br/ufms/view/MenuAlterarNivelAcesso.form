@@ -38,13 +38,9 @@
                                           <Component id="CidadeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="EstadoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="NomeFuncLabel" min="-2" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="NomeFuncLabel" min="-2" max="-2" attributes="0"/>
                                           <Component id="EnderecoFuncLabel" min="-2" max="-2" attributes="0"/>
                                           <Component id="CidadeFuncLabel" min="-2" max="-2" attributes="0"/>
                                           <Component id="EstadoFuncLabel" min="-2" max="-2" attributes="0"/>
@@ -110,7 +106,6 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="NomeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="NomeFuncLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -190,7 +185,7 @@
         <Property name="text" type="java.lang.String" value="Nome:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="NomeFuncLabel">
     </Component>
     <Component class="javax.swing.JLabel" name="EnderecoLabel">
       <Properties>
@@ -246,8 +241,6 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="NomeFuncLabel">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>

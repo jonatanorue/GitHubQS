@@ -37,7 +37,7 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
         Logintxt = new javax.swing.JTextField();
         BuscarBTN = new javax.swing.JButton();
         NomeLabel = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        NomeFuncLabel = new javax.swing.JLabel();
         EnderecoLabel = new javax.swing.JLabel();
         EnderecoFuncLabel = new javax.swing.JLabel();
         CidadeLabel = new javax.swing.JLabel();
@@ -46,7 +46,6 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
         EstadoFuncLabel = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         NivelCB = new javax.swing.JComboBox<>();
-        NomeFuncLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         VoltarButton = new javax.swing.JButton();
         SalvarButton = new javax.swing.JButton();
@@ -132,12 +131,9 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
                                             .addComponent(EnderecoLabel)
                                             .addComponent(CidadeLabel)
                                             .addComponent(EstadoLabel))
-                                        .addGap(36, 36, 36)
+                                        .addGap(42, 42, 42)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel2)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(NomeFuncLabel))
+                                            .addComponent(NomeFuncLabel)
                                             .addComponent(EnderecoFuncLabel)
                                             .addComponent(CidadeFuncLabel)
                                             .addComponent(EstadoFuncLabel)))
@@ -185,7 +181,6 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(NomeLabel)
-                            .addComponent(jLabel2)
                             .addComponent(NomeFuncLabel))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -218,7 +213,7 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
     }//GEN-LAST:event_NivelCBActionPerformed
 
     private void BuscarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarBTNActionPerformed
-        if (CPFLabel.getText().isEmpty()) {
+        if (!Logintxt.getText().isEmpty()) { //CPFLabel
             F = new Funcionario().buscarFuncionario(Logintxt.getText());
             if (F != null) {
                 NomeFuncLabel.setText(F.getNome());
@@ -227,13 +222,15 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
                 EstadoFuncLabel.setText(F.getEstado());
                 NivelCB.setSelectedIndex(F.getNivelDeAcesso());
             } else {
-                JOptionPane.showMessageDialog(this, "Funcinario nao encontrado!");
+                JOptionPane.showMessageDialog(this, "Funcinario não encontrado!");
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "Campo vazio!");
         }
     }//GEN-LAST:event_BuscarBTNActionPerformed
 
     private void SalvarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarButtonActionPerformed
-        if (CPFLabel.getText().isEmpty()) {
+        if (Logintxt.getText().isEmpty()) { //CPFLabel
             F.setNivelDeAcesso(NivelCB.getSelectedIndex());
             if (F.alteraFuncionario(F.getLogin(), F) == true) {
                 JOptionPane.showMessageDialog(this, "Alterado com sucesso!");
@@ -301,7 +298,6 @@ public class MenuAlterarNivelAcesso extends javax.swing.JFrame {
     private javax.swing.JButton SalvarButton;
     private javax.swing.JButton VoltarButton;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
