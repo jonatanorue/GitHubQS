@@ -5,6 +5,8 @@
  */
 package br.ufms.view;
 
+import javax.swing.JOptionPane;
+import br.ufms.bean.Reserva;
 /**
  *
  * @author Plabiany
@@ -29,8 +31,8 @@ public class MenuReserva extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         Adicionar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Remover = new javax.swing.JButton();
+        Alterar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,14 +46,19 @@ public class MenuReserva extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("REMOVER");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Remover.setText("REMOVER");
+        Remover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                RemoverActionPerformed(evt);
             }
         });
 
-        jButton3.setText("ALTERAR");
+        Alterar.setText("ALTERAR");
+        Alterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AlterarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,8 +73,8 @@ public class MenuReserva extends javax.swing.JFrame {
                         .addGap(146, 146, 146)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Adicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(Alterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Remover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(163, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -78,9 +85,9 @@ public class MenuReserva extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addComponent(Adicionar)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(Remover)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(Alterar)
                 .addContainerGap(91, Short.MAX_VALUE))
         );
 
@@ -92,9 +99,28 @@ public class MenuReserva extends javax.swing.JFrame {
        reserva.setVisible(true);
     }//GEN-LAST:event_AdicionarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-  
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoverActionPerformed
+        String buscar = JOptionPane.showInputDialog("Digite o CPF ou CNPJ do cliente que realizou a reserva que deseja deletar");
+        Reserva delete = new Reserva();
+        if(delete.removerReserva(buscar) == true){
+            JOptionPane.showMessageDialog(null, "Reserva deletada com sucesso");
+        }else{
+            JOptionPane.showMessageDialog(null, "Erro ao deletar Reserva, tente novamente");
+        }
+    }//GEN-LAST:event_RemoverActionPerformed
+
+    private void AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterarActionPerformed
+        String busca = JOptionPane.showInputDialog("Digite o CPF ou CNPJ do cliente que realizou a reserva que deseja buscar");
+        if(busca == null){
+            JOptionPane.showInputDialog(null,"Nada digitado, tente novamente!");
+        }else{
+            Reserva reserva = new Reserva();
+            Reserva r = reserva.buscarReserva(busca);
+            
+            CadastroReserva show = new CadastroReserva(r);
+            show.setVisible(true);
+        }
+    }//GEN-LAST:event_AlterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,8 +159,8 @@ public class MenuReserva extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Adicionar;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton Alterar;
+    private javax.swing.JButton Remover;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,16 +14,17 @@ import java.util.Date;
  */
 public class Reserva {
     private Date DataRetirada;
-    private Date HoraRetirada;
     private Date DataDevolucao;
-    private Date HoraDevolucao;
-    private Cliente IDCliente;
+    private ClienteFisico clienteF;
+    private ClienteJuridico clienteJ;
+    private String cpfCnpj;
     private Categorias CatAutomovel;
     private float Locacao;
     private ServicosAdicionais Servico;
     private float TaxaMulta;
     private String CartaoCliente;
     private float Desconto;
+    private Automovel carro;
    
     
     
@@ -33,6 +34,21 @@ public class Reserva {
     
     private static final ArrayList<Reserva> listaReservas = new ArrayList<>();
     
+    public ClienteFisico getClienteFisico(){
+        return clienteF;
+    }
+    public void setClienteFisico(ClienteFisico CF){
+        this.clienteF = CF;
+    }
+    
+    public ClienteJuridico getClienteJuridico(){
+        return clienteJ;
+    }
+    
+    public void setClienteJuridico(ClienteJuridico CJ){
+        this.clienteJ = CJ;
+    }
+    
     
     public Date getDataRetirada(){
         return DataRetirada;
@@ -40,30 +56,14 @@ public class Reserva {
     public void setDataRetirada(Date dataretirada){
         this.DataRetirada = dataretirada;
     }
-    public void setHoraRetirada(Date horaretirada){
-        this.HoraRetirada = horaretirada;
-    }
-    public Date getHoraRetirada(){
-        return HoraRetirada;
-    }
+    
     public Date getDataDevolucao(){
         return DataDevolucao;
     }
     public void setDataDevolucao(Date datadevolucao){
         this.DataDevolucao = datadevolucao;
     }
-    public Date getHoraDevolucao(){
-        return HoraDevolucao;
-    }
-    public void setHoraDevolucao(Date horadevolucao){
-        this.HoraDevolucao = horadevolucao;
-    }
-    public Cliente getCliente(){
-        return IDCliente;
-    }
-    public void setCliente(Cliente cliente){
-        this.IDCliente = cliente;
-    }
+    
     public Categorias getCategoria(){
         return CatAutomovel;
     }
@@ -103,6 +103,49 @@ public class Reserva {
     public static void cadastrarReserva(Reserva reserva){
         Reserva.listaReservas.add(reserva);
     }
+
+    /**
+     * @return the cpfCnpj
+     */
+    public String getCpfCnpj() {
+        return cpfCnpj;
+    }
+
+    /**
+     * @param cpfCnpj the cpfCnpj to set
+     */
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
+    }
+    public Reserva buscarReserva(String cpfcnpj){
+        for(int i = 0; i < listaReservas.size(); i++){
+            if(listaReservas.get(i).getCpfCnpj().equals(cpfcnpj)){
+                return listaReservas.get(i);
+            }
+        }
+        
+        return null;
+    }
+    
+    public boolean removerReserva(String cpfcnpj){
+        boolean status = false;
+        for(int i = 0; i < listaReservas.size(); i++){
+            if(listaReservas.get(i).getCpfCnpj().equals(cpfcnpj)){
+               listaReservas.remove(i);
+                status = true;
+            }
+        }
+        return status;
+    }
   
+    public static int buscaIndiceReserva(String IndiceReserva){
+        int indice = -1;
+        for(int i = 0; i < listaReservas.size(); i++){
+            if(listaReservas.get(i).getCpfCnpj().equals(IndiceReserva)){
+                indice = i;
+            }
+        }
+        return indice;
+    }
 }
 
