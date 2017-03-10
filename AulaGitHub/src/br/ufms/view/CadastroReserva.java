@@ -10,12 +10,20 @@ import br.ufms.bean.ClienteJuridico;
 import br.ufms.bean.Categorias;
 import br.ufms.bean.Automovel;
 import br.ufms.bean.ServicosAdicionais;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 /**
  *
  * @author Plabiany
@@ -24,71 +32,97 @@ public class CadastroReserva extends javax.swing.JFrame {
    private DefaultComboBoxModel modelCategorias;
    private DefaultComboBoxModel modelServicosAdicionais;
    private DefaultComboBoxModel modelAutomovel;
+   private JTable tabela;
+   private String[] titulo = {"valor reserva","valor serviços adicionais","valor desconto","valor total"};
+   private Object[][] valores = new Object[1][4] ;
+   private double valorReservaData;
+   private double valorServico;
+   private double valorDesconto;
+   private double valorTotal;
     /**
      * Creates new form CadastroReserva
      */
     public CadastroReserva() {
         initComponents();
+        //painelTabela.setLayout(new BorderLayout());
+       // painelTabela.setVisible(true);
+        IniciaCombos();
+        
     }
-    
     
     public CadastroReserva(Reserva r){
         initComponents();
+        IniciaCombos();
+       SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
+        Date retirada = r.getDataRetirada();
+        dataRetirada.setText(dt.format(retirada));
         
+        Date devolucao = r.getDataDevolucao();
+        dataDevolucao.setText(dt.format(devolucao));
         
-        SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
-        Date d = r.getDataRetirada();
-        dataRetirada.setText(dt.format(d));
+        String hR = retirada.getHours() + ";"+ retirada.getMinutes();
+        horaRetirada.setText(hR);
+        String hD = devolucao.getHours() + ":"+ devolucao.getMinutes();
+        horaDevolucao.setText(hD);
         
-        SimpleDateFormat hr = new SimpleDateFormat("hh:mm");
-        Date h = r.getHoraRetirada();
-        horaRetirada.setText(hr.format(h));
+        String ct = r.getCategoria().getcodCategoria();
+        int i;
+        for (i = 0; i < categoria.getMaximumRowCount(); i++) {
+            if (ct.equals(categoria.getItemAt(i))) {
+                break;
+            }
+        }
+        categoria.setSelectedIndex(i);
+        if (r.getCarro() != null) {
+            CarroSelecionado.setText(r.getCarro().getMarca()+"/"+r.getCarro().getModelo());
+        } 
         
-        SimpleDateFormat dtd = new SimpleDateFormat("dd/MM/yyyy");
-        Date dev = r.getDataDevolucao();
-        dataDev.setText(dtd.format(dev));
-        
-        SimpleDateFormat hrd = new SimpleDateFormat("hh:mm");
-        Date hd = r.getHoraDevolucao();
-        horaDev.setText(hrd.format(hd));
-        
-        if(CPF.isSelected()){
+        if (r.getServico() != null) {
+            for (i = 0; i < comboServicos.getMaximumRowCount(); i++) {
+                if (r.getServico().getDescricao().equals(comboServicos.getItemAt(i))) {
+                    comboServicos.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+        String cpfCnpj = r.getCpfCnpj();
         ClienteFisico c = new ClienteFisico();
-        ClienteFisico cpf = c.buscaClienteFisico(idcliente.getText());
-        idcliente.setText(cpf.getNome());
-        
+        c = c.buscaClienteFisico(cpfCnpj);
+        if(c != null){
+            idcliente.setText(cpfCnpj);
+            CPF.setSelected(true);
         }
-        
-        if (CNPJ.isSelected()){
-        ClienteJuridico j = new ClienteJuridico();
-        ClienteJuridico juri = j.buscaClienteJuridico(idcliente.getText());
-        idcliente.setText(juri.getNome());
+        else{
+           idcliente.setText(cpfCnpj);
+           CPF.setSelected(true);
         }
-        
-        
-        this.modelCategorias = new DefaultComboBoxModel();
-        this.Cat.setModel(this.modelCategorias);
-        this.atualizarCategorias();
-        
-        valorlocacao.setAlignmentY(r.getLocacao());     
-        
-        this.modelServicosAdicionais = new DefaultComboBoxModel();
-        this.jComboBoxServicosAdicionais.setModel(this.modelServicosAdicionais);
-        this.atualizarSA();
-        
-        this.modelAutomovel = new DefaultComboBoxModel();
-        this.Automóvel.setModel(this.modelAutomovel);
-        this.atualizarAutomovel();
-        
-        taxaMulta.setAlignmentY(r.getTaxaMulta());
         cartaocliente.setText(r.getCartaoCliente());
-        desconto.setAlignmentY(r.getDesconto());
+        String desc = Double.toString((r.getDesconto() * 100)/r.getLocacao());
+        descontoPorcentagem.setText(desc);
         
-        
-        
+           if(calculaValorTotalReserva()){
+            prencheTabela();
+         }
         
     }
 
+    /**
+     * metodo que prenche os combos categoria e serviços
+     *  
+     */
+    private void IniciaCombos(){
+        ArrayList<Categorias> lista = Categorias.listaCategorias;
+        for (int i = 0; i < lista.size(); i++) {
+            categoria.addItem(lista.get(i).getcodCategoria());
+        }
+        ArrayList<ServicosAdicionais> lista2 = ServicosAdicionais.listaServicos;
+        if(!lista2.isEmpty()){
+           for (int i = 1; i < lista.size(); i++) {
+               comboServicos.addItem(lista2.get(i).getServico());
+            }
+        }
+    }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,6 +132,7 @@ public class CadastroReserva extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -105,31 +140,39 @@ public class CadastroReserva extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        Save = new javax.swing.JButton();
-        Voltar = new javax.swing.JButton();
-        dataRetirada = new javax.swing.JTextField();
-        dataDev = new javax.swing.JTextField();
-        horaRetirada = new javax.swing.JTextField();
-        horaDev = new javax.swing.JTextField();
+        btSalvar = new javax.swing.JButton();
+        btVoltar = new javax.swing.JButton();
         idcliente = new javax.swing.JTextField();
-        valorlocacao = new javax.swing.JTextField();
-        taxaMulta = new javax.swing.JTextField();
         cartaocliente = new javax.swing.JTextField();
-        desconto = new javax.swing.JTextField();
+        descontoPorcentagem = new javax.swing.JTextField();
         CPF = new javax.swing.JRadioButton();
         CNPJ = new javax.swing.JRadioButton();
         jLabel14 = new javax.swing.JLabel();
-        Cat = new javax.swing.JComboBox<>();
-        jComboBoxServicosAdicionais = new javax.swing.JComboBox<>();
+        categoria = new javax.swing.JComboBox<>();
+        comboServicos = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        Automóvel = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        btCalcular = new javax.swing.JButton();
+        painelTabela = new javax.swing.JPanel();
+        dataRetirada = new javax.swing.JFormattedTextField();
+        dataDevolucao = new javax.swing.JFormattedTextField();
+        horaRetirada = new javax.swing.JFormattedTextField();
+        horaDevolucao = new javax.swing.JFormattedTextField();
+        jLabel8 = new javax.swing.JLabel();
+        taxaMulta = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        CarroSelecionado = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setText("RESERVA");
@@ -146,60 +189,132 @@ public class CadastroReserva extends javax.swing.JFrame {
 
         jLabel7.setText("Categoria do Automóvel:");
 
-        jLabel8.setText("Valor da Locação:          R$");
-
         jLabel9.setText("Serviços Adicionais: ");
-
-        jLabel11.setText("Taxa de Multa (Desistência em menos de 4 horas) :");
 
         jLabel12.setText("Cartão de Crédito (Cliente):");
 
         jLabel13.setText("Desconto:");
 
-        Save.setText("Salvar");
-        Save.addActionListener(new java.awt.event.ActionListener() {
+        btSalvar.setText("Efetuar Reserva");
+        btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveActionPerformed(evt);
+                btSalvarActionPerformed(evt);
             }
         });
 
-        Voltar.setText("Voltar");
-        Voltar.addActionListener(new java.awt.event.ActionListener() {
+        btVoltar.setText("Cancelar");
+        btVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VoltarActionPerformed(evt);
+                btVoltarActionPerformed(evt);
             }
         });
 
-        horaRetirada.addActionListener(new java.awt.event.ActionListener() {
+        idcliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                horaRetiradaActionPerformed(evt);
+                idclienteActionPerformed(evt);
             }
         });
 
-        horaDev.addActionListener(new java.awt.event.ActionListener() {
+        descontoPorcentagem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                horaDevActionPerformed(evt);
+                descontoPorcentagemActionPerformed(evt);
             }
         });
 
+        buttonGroup1.add(CPF);
         CPF.setText("Cliente Físico");
+        CPF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CPFActionPerformed(evt);
+            }
+        });
 
+        buttonGroup1.add(CNPJ);
         CNPJ.setText("Cliente Jurídico");
 
         jLabel14.setText("CPF/CNPJ:");
 
-        Cat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        Cat.addActionListener(new java.awt.event.ActionListener() {
+        categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        categoria.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                categoriaItemStateChanged(evt);
+            }
+        });
+        categoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CatActionPerformed(evt);
+                categoriaActionPerformed(evt);
             }
         });
 
-        jComboBoxServicosAdicionais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboServicos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--" }));
 
         jLabel10.setText("Automóvel:");
 
-        Automóvel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel15.setText("%");
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel16.setText("DD/MM/AAAA");
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel17.setText("DD/MM/AAAA");
+
+        jLabel11.setText("HH:MM");
+
+        jLabel18.setText("HH:MM");
+
+        btCalcular.setText("CALCULAR VALOR DA RESERVA");
+        btCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCalcularActionPerformed(evt);
+            }
+        });
+
+        painelTabela.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout painelTabelaLayout = new javax.swing.GroupLayout(painelTabela);
+        painelTabela.setLayout(painelTabelaLayout);
+        painelTabelaLayout.setHorizontalGroup(
+            painelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 604, Short.MAX_VALUE)
+        );
+        painelTabelaLayout.setVerticalGroup(
+            painelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 72, Short.MAX_VALUE)
+        );
+
+        dataRetirada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        dataRetirada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataRetiradaActionPerformed(evt);
+            }
+        });
+
+        dataDevolucao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        dataDevolucao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataDevolucaoActionPerformed(evt);
+            }
+        });
+
+        horaRetirada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
+
+        horaDevolucao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
+
+        jLabel8.setText("Taxa de Multa ");
+
+        jButton1.setText("Selecionar Veiculo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        CarroSelecionado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        CarroSelecionado.setText("--");
+        CarroSelecionado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel20.setText("Descriçaõ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -207,233 +322,418 @@ public class CadastroReserva extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(189, 189, 189)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(Save)
-                        .addGap(89, 89, 89)
-                        .addComponent(Voltar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(desconto))
+                                .addGap(189, 189, 189)
+                                .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(CPF)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(CNPJ))
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(painelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel9)
+                                            .addComponent(jLabel14)
+                                            .addComponent(jLabel6)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel7))
+                                            .addComponent(jLabel8))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel3)
+                                                .addComponent(cartaocliente, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel13)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(dataRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(descontoPorcentagem, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel15))
+                                            .addComponent(taxaMulta, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel4)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(dataDev, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(CPF)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(CNPJ))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(comboServicos, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(39, 39, 39)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel19)
+                                                    .addComponent(jLabel10)
+                                                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(idcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(dataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                    .addComponent(jLabel3)
+                                                    .addGap(10, 10, 10)
+                                                    .addComponent(dataRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(jLabel4))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel16)
+                                            .addComponent(jLabel17))
+                                        .addGap(27, 27, 27)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel2)
-                                            .addComponent(jLabel5))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(horaDev, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(horaRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(idcliente))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cartaocliente))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(taxaMulta, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 5, Short.MAX_VALUE)))
-                        .addGap(17, 17, 17))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(Automóvel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Cat, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(valorlocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBoxServicosAdicionais, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                            .addComponent(jLabel5))
+                                        .addGap(26, 26, 26)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButton1)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(horaRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(horaDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel11)
+                                                    .addComponent(jLabel18)))
+                                            .addComponent(CarroSelecionado, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(0, 9, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addGap(42, 42, 42)
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(horaRetirada, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel16)
+                        .addComponent(dataRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel11)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dataDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel5)
+                            .addComponent(horaDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18))))
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(dataRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(horaRetirada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addComponent(jLabel7)
+                    .addComponent(categoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(dataDev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(horaDev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel9)
+                    .addComponent(comboServicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CarroSelecionado)
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel20))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(CPF)
                     .addComponent(CNPJ))
-                .addGap(7, 7, 7)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(idcliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(Automóvel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(Cat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(valorlocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jComboBoxServicosAdicionais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel14)
+                    .addComponent(idcliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(taxaMulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel12)
+                    .addComponent(cartaocliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13)
+                    .addComponent(descontoPorcentagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(cartaocliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel8)
+                    .addComponent(taxaMulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(painelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(btCalcular)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(desconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Save)
-                    .addComponent(Voltar))
-                .addGap(41, 41, 41))
+                    .addComponent(btSalvar)
+                    .addComponent(btVoltar))
+                .addGap(24, 24, 24))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    /**
+     * metodo que calcula os valor da reserva apartir das datas
+     *  
+     */
+    private boolean calcValorResDatas(){
+        Categorias c = new Categorias();
+        c = c.buscarCatAutomoveis(categoria.getItemAt(categoria.getSelectedIndex()));
+        if (c != null) {
+            String dataR = dataRetirada.getText();
+            String dataD = dataDevolucao.getText();
+            
+            if (dataR != null && dataD != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Calendar data1 = Calendar.getInstance();
+                Calendar data2 = Calendar.getInstance();
+                try {
+                    data1.setTime(sdf.parse(dataR));
+                    data2.setTime(sdf.parse(dataD));
+                } catch (java.text.ParseException e) {
+                }
+                int dias = data2.get(Calendar.DAY_OF_YEAR) - data1.get(Calendar.DAY_OF_YEAR);
 
-    private void horaRetiradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaRetiradaActionPerformed
+                int mes = dias / 30;
+                int semanas = (dias - (mes * 30)) / 7;
+                int d = (dias - (mes * 30)) % 7;
+                valorReservaData = (c.getvalorMensal() * mes) + (c.getvalorSemanal() * semanas) + (c.getvalorDiario() * d);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Prencha as datas de retirada e devolução");
+            }
+        }
+        return false;  
+    }
+    
+    private void categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoriaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_horaRetiradaActionPerformed
-
-    private void horaDevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaDevActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_horaDevActionPerformed
-
-    private void CatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CatActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CatActionPerformed
-
-    private void SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveActionPerformed
+    }//GEN-LAST:event_categoriaActionPerformed
+    private boolean VerificaCarroDisponivel(Reserva reserva,String modelo){
+         if (modelo.equals("--"))
+               return true;
+              else {
+                    String[] d = modelo.split("/");
+                    ArrayList<Automovel> lista = Automovel.getListaAutomovel();
+                    ArrayList<Reserva> lista2 = Reserva.listaReservas;
+                    String cdgCat = categoria.getItemAt(categoria.getSelectedIndex());
+                    for (Automovel carro : lista) {
+                        if (cdgCat.equals(carro.getCategoria().getcodCategoria())) {
+                            if (d[0].equals(carro.getMarca()) && d[1].equals(carro.getModelo())) {
+                                boolean state = true;
+                                for (Reserva res : lista2) {
+                                    if (res.getCarro().getPlaca().equals(carro.getPlaca())){
+                                        state = false;
+                                        break;
+                                    }
+                                }
+                                if (state) {
+                                    reserva.setCarro(carro);
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+        return false;
+    }
+    
+    private boolean verificaCliente(Reserva reserva, String cpf) {
+        if (CPF.isSelected()) {
+            ClienteFisico cf = new ClienteFisico();
+            cf = cf.buscaClienteFisico(idcliente.getText());
+            if (cf != null) {
+                reserva.setClienteFisico(cf);
+                reserva.setCpfCnpj(idcliente.getText());
+                return true;
+            } else {
+                return false;
+            }
+        } else if (CNPJ.isSelected()) {
+            ClienteJuridico CJ = new ClienteJuridico();
+            ClienteJuridico cj = CJ.buscaClienteJuridico(idcliente.getText());
+            if (cj != null) {
+                reserva.setClienteJuridico(cj);
+                reserva.setCpfCnpj(idcliente.getText());
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+    
+    private Categorias verificaCategoriaCarroDisponivel(String codigo){
+        Categorias c = new Categorias();
+        c = c.buscarCatAutomoveis(codigo);
+        ArrayList<Reserva> lista = Reserva.listaReservas;
+        int aux =0, aux2;
+        aux2 = Integer.parseInt(c.getqtdAutomoveis());
+        for (Reserva x : lista) {
+            if (x.getCategoria().getcodCategoria().equals(codigo)) {
+                aux++;
+            }
+        }
+        if (aux < aux2) {
+            return c;
+        }
+        return null;
+    }
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+            
+           if (calculaValorTotalReserva() && idcliente.getText() != null
+                && !idcliente.getText().isEmpty() && !horaDevolucao.getText().isEmpty()
+                && !horaRetirada.getText().isEmpty()
+                && !taxaMulta.getText().isEmpty()) {
             Reserva reserva = new Reserva();
-            SimpleDateFormat st = new SimpleDateFormat("dd/MM/yyyy");
-            Date dt = new Date();
-       try {
-           dt = st.parse(this.dataRetirada.getText());
-       } catch (ParseException ex) {
-           Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
-       }
-            reserva.setDataRetirada(dt);
-           
-            
-            
-            SimpleDateFormat hr = new SimpleDateFormat("hh:mm");
-            Date HR = new Date();
-            
-       try {
-           HR = hr.parse(this.horaRetirada.getText());
-       } catch (ParseException ex) {
-           Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
-       }
-            reserva.setHoraRetirada(HR);
-            
-            
-            
-            
-            SimpleDateFormat dd = new SimpleDateFormat("dd/MM/yyyy");
-            Date datad = new Date();
-       try {
-           datad = dd.parse(this.dataDev.getText());
-       } catch (ParseException ex) {
-           Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
-       }
-            reserva.setDataDevolucao(datad);
-           
-            
-            SimpleDateFormat horad = new SimpleDateFormat("hh:mm");
-            Date hd = new Date();
-       try {
-           hd = horad.parse(this.horaDev.getText());
-       } catch (ParseException ex) {
-           Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
-       }
-            reserva.setHoraDevolucao(hd);
-          
-          if(CPF.isSelected()){
-              ClienteFisico CF = new ClienteFisico();
-              ClienteFisico cf = CF.buscaClienteFisico(idcliente.getText());
-              reserva.setCliente(cf);
-          }
-          
-          if(CNPJ.isSelected()){
-              ClienteJuridico CJ = new ClienteJuridico();
-              ClienteJuridico cj = CJ.buscaClienteJuridico(idcliente.getText());
-              reserva.setCliente(cj);
-          }
-          
-          reserva.setLocacao(valorlocacao.getAlignmentX());
-          reserva.setTaxaMulta(taxaMulta.getAlignmentX());
-          reserva.setCartaoCliente(cartaocliente.getText());
-          reserva.setDesconto(desconto.getAlignmentX());
-            
-    }//GEN-LAST:event_SaveActionPerformed
+            int x = categoria.getSelectedIndex();
+            String cdgCategoria = categoria.getItemAt(x);
+            Categorias c = verificaCategoriaCarroDisponivel(cdgCategoria);
+            if (c != null) {
+                if(verificaCliente(reserva, cdgCategoria)){
+                    String modelo = CarroSelecionado.getText();
+                    if(VerificaCarroDisponivel(reserva, modelo)){
+                        reserva.setCategoria(c);
+                        SimpleDateFormat st = new SimpleDateFormat("dd/MM/yyyy");
+                        Date dataR = new Date();
+                        Date dataD = new Date();
+                        try {
+                            dataR = st.parse(this.dataRetirada.getText());
+                            dataD = st.parse(this.dataDevolucao.getText());
+                            dataR.setHours(Integer.parseInt(horaRetirada.getText().substring(0, 2)));
+                            dataR.setMinutes(Integer.parseInt(horaRetirada.getText().substring(3, 5)));
+                            dataD.setHours(Integer.parseInt(horaDevolucao.getText().substring(0, 2)));
+                            dataD.setMinutes(Integer.parseInt(horaDevolucao.getText().substring(3, 5)));
+                        } catch (ParseException ex) {
+                            Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        reserva.setDataDevolucao(dataD);
+                        reserva.setDataRetirada(dataR);
+                        
+                        String serv = comboServicos.getItemAt(comboServicos.getSelectedIndex());
+                        if (serv.equals("--")); else {
+                            reserva.setServicoAdc(new ServicosAdicionais().buscarSA(serv));
+                        }
+                        
+                        reserva.setCartaoCliente(cartaocliente.getText());
+                        reserva.setTaxaMulta(Double.parseDouble(taxaMulta.getText()));
+                        reserva.setDesconto(valorDesconto);
+                        reserva.setLocacao(valorTotal);
+                        if (reserva.insereReserva(reserva)) {
+                            JOptionPane.showMessageDialog(null, "reserva efetuada");
+                            this.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Erro ao cadastrar");
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Carro indisponivel");
+                    }
+                }else{
+                   JOptionPane.showMessageDialog(null, "CPF ou CNPJ inválido");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Automovel da categoria não disponivel");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar prencha os campos obrigatorios");
+        }
+    }//GEN-LAST:event_btSalvarActionPerformed
 
-    private void VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VoltarActionPerformed
-       dispose();
-    }//GEN-LAST:event_VoltarActionPerformed
+    private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btVoltarActionPerformed
+    /**
+     * metodo para setar no combo automovel todos os automoveis da categoria
+     *
+     * @param evt
+     */
+    private void categoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categoriaItemStateChanged
+
+    }//GEN-LAST:event_categoriaItemStateChanged
+
+    private void descontoPorcentagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descontoPorcentagemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_descontoPorcentagemActionPerformed
+
+    private void CPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CPFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CPFActionPerformed
+
+    private void dataRetiradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataRetiradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dataRetiradaActionPerformed
+
+    private void dataDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataDevolucaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dataDevolucaoActionPerformed
+    /**
+     * metodo que calcula Valor total da reserva
+     *  
+     */
+    private boolean calculaValorTotalReserva(){
+        if(calcValorResDatas()){
+        int x = comboServicos.getSelectedIndex();
+        String tipo_servico = comboServicos.getItemAt(x);
+        if(tipo_servico.equals("--")){
+            valorDesconto = 0;
+        }else{    
+            ServicosAdicionais c =new ServicosAdicionais();
+            valorServico = Double.parseDouble(c.getPreco());
+        }
+        valorTotal = valorReservaData + valorServico;
+        String desconto = descontoPorcentagem.getText();
+        if(desconto != null && !desconto.isEmpty()){
+            double aux = (Double.parseDouble(desconto))/100;
+            valorDesconto = valorTotal*aux;
+            valorTotal = valorTotal - valorDesconto;
+        }else{
+          valorDesconto = 0;   
+        }
+        return true;
+        }
+        return false;
+    }
+    private void prencheTabela(){
+            valores[0][0] = valorReservaData;
+            valores[0][1] = valorServico;
+            valores[0][2] = valorDesconto;
+            valores[0][3] = valorTotal;
+            
+            tabela = new JTable(valores, titulo);
+            JScrollPane p = new JScrollPane(tabela);
+            p.setPreferredSize(new Dimension(604, 70));
+            painelTabela.setLayout(new BorderLayout());
+            painelTabela.add(p,BorderLayout.CENTER);
+            this.revalidate();
+    }
+    private void btCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCalcularActionPerformed
+        if(calculaValorTotalReserva()){
+            prencheTabela();
+        }
+    }//GEN-LAST:event_btCalcularActionPerformed
+
+    private void idclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idclienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idclienteActionPerformed
+    public  void prencheCampoCarro(String modelo){
+       this.CarroSelecionado.setText(modelo);
+    }
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(categoria.getSelectedIndex() != 0){
+        TelaSelecaoAutomovel t = new TelaSelecaoAutomovel(categoria.getItemAt(categoria.getSelectedIndex()),this);
+        t.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null,"selecione a categoria ");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -484,29 +784,42 @@ public class CadastroReserva extends javax.swing.JFrame {
             this.modelAutomovel.addElement(auto.getModelo());
         }
     }
+    
+    private void verificaIna(){
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> Automóvel;
     private javax.swing.JRadioButton CNPJ;
     private javax.swing.JRadioButton CPF;
-    private javax.swing.JComboBox<String> Cat;
-    private javax.swing.JButton Save;
-    private javax.swing.JButton Voltar;
+    private javax.swing.JLabel CarroSelecionado;
+    private javax.swing.JButton btCalcular;
+    private javax.swing.JButton btSalvar;
+    private javax.swing.JButton btVoltar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField cartaocliente;
-    private javax.swing.JTextField dataDev;
-    private javax.swing.JTextField dataRetirada;
-    private javax.swing.JTextField desconto;
-    private javax.swing.JTextField horaDev;
-    private javax.swing.JTextField horaRetirada;
+    private javax.swing.JComboBox<String> categoria;
+    private javax.swing.JComboBox<String> comboServicos;
+    private javax.swing.JFormattedTextField dataDevolucao;
+    private javax.swing.JFormattedTextField dataRetirada;
+    private javax.swing.JTextField descontoPorcentagem;
+    private javax.swing.JFormattedTextField horaDevolucao;
+    private javax.swing.JFormattedTextField horaRetirada;
     private javax.swing.JTextField idcliente;
-    private javax.swing.JComboBox<String> jComboBoxServicosAdicionais;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -514,7 +827,7 @@ public class CadastroReserva extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel painelTabela;
     private javax.swing.JTextField taxaMulta;
-    private javax.swing.JTextField valorlocacao;
     // End of variables declaration//GEN-END:variables
 }

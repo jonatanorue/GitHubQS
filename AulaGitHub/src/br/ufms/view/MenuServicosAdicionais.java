@@ -109,10 +109,10 @@ public class MenuServicosAdicionais extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nada digitado, tente novamente.");
         }else{
             ServicosAdicionais edit = new ServicosAdicionais();
-            ServicosAdicionais buscaSA = edit.buscarSA(buscar);
+            ServicosAdicionais busca = edit.buscarSA(buscar);
+            CadastroServicosAdicionais show = new CadastroServicosAdicionais(busca);
+            show.setVisible(true);
             
-            CadastroServicosAdicionais Buscasa = new CadastroServicosAdicionais(buscaSA);
-            Buscasa.setVisible(true);
         }
     }//GEN-LAST:event_AlterarActionPerformed
 
