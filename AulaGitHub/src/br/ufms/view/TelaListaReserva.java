@@ -5,10 +5,12 @@
  */
 package br.ufms.view;
 
+import br.ufms.bean.Automovel;
 import br.ufms.bean.Reserva;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,27 +29,7 @@ public class TelaListaReserva extends javax.swing.JFrame {
     public TelaListaReserva(ArrayList<Reserva> lista) {
         initComponents();
         this.lista = lista;
-        
-        DefaultTableModel model =(DefaultTableModel) tabela.getModel();
-        model.setNumRows(0);
-        for(Reserva x : this.lista){
-            String cpf;
-        if(x.getClienteFisico() != null){
-            cpf = x.getClienteFisico().getNome();
-        }else{
-            cpf = x.getClienteJuridico().getNome();
-        }
-        SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
-        Date retirada = x.getDataRetirada();
-        Date devolucao = x.getDataDevolucao();
-        String dR = dt.format(retirada);  String dD = dt.format(devolucao);
-        model.addRow(new Object[]{  
-             cpf,x.getCpfCnpj(),dR,dD,x.getCarro().getModelo(),
-             x.getCategoria().getcodCategoria(),x.getDesconto(),
-             x.getTaxaMulta(),x.getLocacao()}
-        );
-        }
-        
+        atualizaTabela();
     }
 
     /**
@@ -66,8 +48,8 @@ public class TelaListaReserva extends javax.swing.JFrame {
         tabela = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         btExcluir = new javax.swing.JToggleButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
+        btCancelar = new javax.swing.JToggleButton();
+        jLabel2 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -95,7 +77,7 @@ public class TelaListaReserva extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "CPF/CNPJ", "Data Retirada", "Data Devolução", "Descrição Automovel", "Categoria Automovel", "Valor desconto", "Valor Multas", "Valor Total"
+                "Nome", "CPF/CNPJ", "Data Retirada", "Data Devolução", "Descrição Automovel", "Categoria Automovel", "Valor desconto", "Taxa de Multa", "Valor Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -127,6 +109,7 @@ public class TelaListaReserva extends javax.swing.JFrame {
                 .addGap(0, 74, Short.MAX_VALUE))
         );
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Reservas");
 
         btExcluir.setText("Deletar");
@@ -136,57 +119,200 @@ public class TelaListaReserva extends javax.swing.JFrame {
             }
         });
 
-        jToggleButton1.setText("Alterar");
+        btCancelar.setText("Cancelar");
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelarActionPerformed(evt);
+            }
+        });
 
-        jToggleButton2.setText("Cancelar");
+        jLabel2.setText("Selecione a reserva");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(btCancelar)
+                .addGap(149, 149, 149))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jToggleButton2)
-                .addGap(66, 66, 66))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btExcluir)
-                    .addComponent(jToggleButton1)
-                    .addComponent(jToggleButton2))
+                    .addComponent(btCancelar))
                 .addGap(47, 47, 47))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void atualizaTabela(){
+        DefaultTableModel model =(DefaultTableModel) tabela.getModel();
+        model.setNumRows(0);
+        for(Reserva x : this.lista){
+            String nome;
+        if(x.getClienteFisico() != null){
+            nome = x.getClienteFisico().getNome();
+        }else{
+            nome = x.getClienteJuridico().getNome();
+        }
+        SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy");
+        Date retirada = x.getDataRetirada();
+        Date devolucao = x.getDataDevolucao();
+        String dR = dt.format(retirada);  String dD = dt.format(devolucao);
+        Automovel carro = x.getCarro();
+        String descricaoCarro;
+        if(carro != null)
+            descricaoCarro = carro.getMarca() + " / "+ carro.getModelo();
+        else
+            descricaoCarro = " ";
+        model.addRow(new Object[]{  
+             nome,
+             x.getCpfCnpj(),
+             dR,
+             dD,
+             descricaoCarro,
+             x.getCategoria().getcodCategoria(),
+             x.getDesconto(),
+             x.getTaxaMulta(),
+             x.getLocacao()}
+        );
+        }
+    }
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-                  
+         if(reservaSelecionada != null){
+             int linha = tabela.getSelectedRow();
+             Reserva x = lista.get(linha);
+             //data e hora atuais
+             Date data = new Date();
+             int hrAtual = data.getHours();
+             int minAtual = data.getMinutes();
+             int diaAtual = data.getDay();
+             int mesAtual = data.getMonth();
+             int anoAtual = data.getYear();
+             //data e hora da Devolução
+             data = x.getDataRetirada();
+             int hrRet = data.getHours();
+             int minRet = data.getMinutes();
+             int diaRet = data.getDay();
+             int mesRet = data.getMonth();
+             int anoRet = data.getYear();
+             if (diaAtual == diaRet && mesAtual == mesRet && anoAtual == anoRet) {
+                if (hrRet < hrAtual) {
+                    int res = JOptionPane.showConfirmDialog(null, "Cancelamento fora do prazo : horario\ncobrar multa do cliente\ndeseja excluir a reserva");
+                    if (res == 0) {
+                        if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
+                            lista.remove(reservaSelecionada);
+                            JOptionPane.showMessageDialog(null, "Reserva Excluida");
+                            this.atualizaTabela();
+                            this.revalidate();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "erro ao excluir");
+                        }
+                    }
+                } else {
+                    int diferenca = ((hrRet * 60) + minRet) - ((hrAtual * 60) + minAtual);
+                    if (diferenca <= 240) {
+                        int res = JOptionPane.showConfirmDialog(null, "Cancelamento fora do prazo : horario\ncobrar multa do cliente\ndeseja excluir a reserva");
+                        if (res == 0) {
+                            if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
+                                lista.remove(reservaSelecionada);
+                                JOptionPane.showMessageDialog(null, "Reserva Excluida");
+                                this.atualizaTabela();
+                                this.revalidate();
+                            } else {
+                                JOptionPane.showMessageDialog(null, "erro ao excluir");
+                            }
+                        }
+                    } else if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
+                        lista.remove(reservaSelecionada);
+                        JOptionPane.showMessageDialog(null, "Reserva Excluida");
+                        this.atualizaTabela();
+                        this.revalidate();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "erro ao excluir");
+                    }
+                }
+            } else if (diaRet < diaAtual && mesRet == mesAtual && anoRet == anoAtual) {
+                int res = JOptionPane.showConfirmDialog(null, "Cancelamento fora do prazo : vencido dia\ncobrar multa do cliente\ndeseja excluir a reserva");
+                if (res == 0) {
+                    if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
+                        lista.remove(reservaSelecionada);
+                        JOptionPane.showMessageDialog(null, "Reserva Excluida");
+                        this.atualizaTabela();
+                        this.revalidate();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "erro ao excluir");
+                    }
+                }
+            } else if (anoRet < anoAtual) {
+                int res = JOptionPane.showConfirmDialog(null, "Cancelamento fora do prazo : vencido ano\ncobrar multa do cliente\ndeseja excluir a reserva");
+                if (res == 0) {
+                    if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
+                        lista.remove(reservaSelecionada);
+                        JOptionPane.showMessageDialog(null, "Reserva Excluida");
+                        this.atualizaTabela();
+                        this.revalidate();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "erro ao excluir");
+                    }
+                }
+            } else if (mesRet < mesAtual && anoRet == anoAtual) {
+                int res = JOptionPane.showConfirmDialog(null, "Cancelamento fora do prazo: vencido mes\ncobrar multa do cliente\ndeseja excluir a reserva");
+                if (res == 0) {
+                    if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
+                        lista.remove(reservaSelecionada);
+                        JOptionPane.showMessageDialog(null, "Reserva Excluida");
+                        this.atualizaTabela();
+                        this.revalidate();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "erro ao excluir");
+                    }
+                }
+            } else if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
+                lista.remove(reservaSelecionada);
+                JOptionPane.showMessageDialog(null, "Reserva Excluida");
+                this.atualizaTabela();
+                this.revalidate();
+            } else {
+                JOptionPane.showMessageDialog(null, "erro ao excluir");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "selecione a reserva");
+        }
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
         int linha = tabela.getSelectedRow(); // retorna a linha selecionada pelo usuario
         this.reservaSelecionada = this.lista.get(linha);
     }//GEN-LAST:event_tabelaMouseClicked
+
+    private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,14 +350,14 @@ public class TelaListaReserva extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btCancelar;
     private javax.swing.JToggleButton btExcluir;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

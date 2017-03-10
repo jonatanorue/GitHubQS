@@ -45,6 +45,8 @@ public class Principal extends javax.swing.JFrame {
         menuNivelAcesso = new javax.swing.JMenuItem();
         headerSA = new javax.swing.JMenu();
         menuServicosAdicionais = new javax.swing.JMenuItem();
+        headerReserva = new javax.swing.JMenu();
+        MenuReserva = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Janela Principal");
@@ -134,6 +136,18 @@ public class Principal extends javax.swing.JFrame {
 
         topMenuBar.add(headerSA);
 
+        headerReserva.setText("Reservas");
+
+        MenuReserva.setText("Reserva");
+        MenuReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuReservaActionPerformed(evt);
+            }
+        });
+        headerReserva.add(MenuReserva);
+
+        topMenuBar.add(headerReserva);
+
         setJMenuBar(topMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,6 +200,11 @@ public class Principal extends javax.swing.JFrame {
         this.addView(new MenuServicosAdicionais());
     }//GEN-LAST:event_menuServicosAdicionaisActionPerformed
 
+    private void MenuReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuReservaActionPerformed
+        System.out.println("Chamado > MenuReserva");
+        this.addView(new MenuReserva());
+    }//GEN-LAST:event_MenuReservaActionPerformed
+
     private void addView(JFrame window){
         Container interalContainer = internalFramePrincipal.getContentPane();
         interalContainer.removeAll();
@@ -234,9 +253,11 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MenuReserva;
     private javax.swing.JMenu headerAutomoveis;
     private javax.swing.JMenu headerClientes;
     private javax.swing.JMenu headerFuncionario;
+    private javax.swing.JMenu headerReserva;
     private javax.swing.JMenu headerSA;
     private javax.swing.JInternalFrame internalFramePrincipal;
     private javax.swing.JMenuItem menuAutomovel;

@@ -102,7 +102,7 @@ public class MenuReserva extends javax.swing.JFrame {
 
     private void RemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoverActionPerformed
         String buscar = JOptionPane.showInputDialog("Digite o CPF ou CNPJ do cliente");
-        if (buscar != null) {
+        if (buscar != null){
             Reserva delete = new Reserva().buscarReserva(buscar);
             if(delete != null){
                 ArrayList<Reserva> lista = delete.buscaReservasCliente(buscar);

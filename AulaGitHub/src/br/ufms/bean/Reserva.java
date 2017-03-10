@@ -34,6 +34,14 @@ public class Reserva {
     
     public static final ArrayList<Reserva> listaReservas = new ArrayList<>();
     
+    public boolean insereReserva(Reserva reserva){
+        if(reserva != null){
+            listaReservas.add(reserva);
+            return true;
+        }
+        return false;
+    }
+    
     public ClienteFisico getClienteFisico(){
         return clienteF;
     }
@@ -85,7 +93,7 @@ public class Reserva {
     public double getTaxaMulta(){
         return TaxaMulta;
     }
-    public void setTaxaMulta(float taxa){
+    public void setTaxaMulta(double taxa){
         this.TaxaMulta = taxa;
     }
     public String getCartaoCliente(){
@@ -151,7 +159,7 @@ public class Reserva {
     }
     public ArrayList<Reserva> buscaReservasCliente(String cpf){
         ArrayList<Reserva> lista = new ArrayList<>();
-        for(Reserva x : this.buscaReservasCliente(cpf)){
+        for(Reserva x : listaReservas){
             if(x.cpfCnpj.equals(cpf)){
                 lista.add(x);
             }
