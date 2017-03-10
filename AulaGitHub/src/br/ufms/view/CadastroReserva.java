@@ -784,6 +784,10 @@ public class CadastroReserva extends javax.swing.JFrame {
             this.modelAutomovel.addElement(auto.getModelo());
         }
     }
+    
+    private void verificaIna(){
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton CNPJ;
