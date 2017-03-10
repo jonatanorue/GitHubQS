@@ -14,16 +14,16 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author Nicolas
  */
-public class CadastrarCategorias extends javax.swing.JFrame {
+public class CadastroCategorias extends javax.swing.JFrame {
 
     /**
      * Creates new form addCatAutomoveis
      */
-    public CadastrarCategorias() {
+    public CadastroCategorias() {
         initComponents();
     }
     
-    public CadastrarCategorias(Categorias a){
+    public CadastroCategorias(Categorias a){
         initComponents();
         txtcodCategoria.setText(a.getcodCategoria());
         txtdescCategoria.setText(a.getdescCategoria());
@@ -128,6 +128,12 @@ public class CadastrarCategorias extends javax.swing.JFrame {
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoltarActionPerformed(evt);
+            }
+        });
+
+        txtqtdAutomoveis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtqtdAutomoveisActionPerformed(evt);
             }
         });
 
@@ -265,7 +271,7 @@ public class CadastrarCategorias extends javax.swing.JFrame {
                 categoria.listaCategorias.get(indice).setvalorMensal(Double.parseDouble(spValorMensal.getValue().toString()));
                 categoria.listaCategorias.get(indice).setvalorKM(Double.parseDouble(spValorKM.getValue().toString()));
                 categoria.listaCategorias.get(indice).setqtdAutomoveis(txtqtdAutomoveis.getText());
-                JOptionPane.showMessageDialog(null, "Categoria editada com sucesso");
+                JOptionPane.showMessageDialog(this, "Categoria editada com sucesso");
             }else{
                 categoria.setcodCategoria(txtcodCategoria.getText());
                 categoria.setdescCategoria(txtdescCategoria.getText());
@@ -275,7 +281,7 @@ public class CadastrarCategorias extends javax.swing.JFrame {
                 categoria.setvalorKM(Double.parseDouble(spValorKM.getValue().toString()));
                 categoria.setqtdAutomoveis(txtqtdAutomoveis.getText());
                 categoria.cadastrarCatAutomoveis(categoria);
-                JOptionPane.showMessageDialog(null, "Categoria adicionada com sucesso");
+                JOptionPane.showMessageDialog(this, "Categoria adicionada com sucesso");
             }
         dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -289,6 +295,10 @@ public class CadastrarCategorias extends javax.swing.JFrame {
         //new MenuCategorias().show();
         dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void txtqtdAutomoveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtqtdAutomoveisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtqtdAutomoveisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -307,21 +317,23 @@ public class CadastrarCategorias extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastrarCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastrarCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastrarCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastrarCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastrarCategorias().setVisible(true);
+                new CadastroCategorias().setVisible(true);
             }
         });
     }

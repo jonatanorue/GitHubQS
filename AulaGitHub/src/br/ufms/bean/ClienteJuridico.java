@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class ClienteJuridico extends Cliente{
     
-    private static ArrayList<ClienteJuridico> listaClienteJuridico = new ArrayList<ClienteJuridico>();
+    public static ArrayList<ClienteJuridico> listaClienteJuridico = new ArrayList<ClienteJuridico>();
     private String nomeFantasia;
     private String cnpj;
     

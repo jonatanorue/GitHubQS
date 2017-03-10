@@ -5,6 +5,8 @@
  */
 package br.ufms.view;
 
+import br.ufms.bean.Automovel;
+import br.ufms.bean.ClienteFisico;
 import br.ufms.bean.ServicosAdicionais;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,12 +35,23 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
      */
     public CadastroRetiradaAutomovel() {
         ServicosAdicionais sa = new ServicosAdicionais();
-        sa.setDescricao("Lavagem");
+        sa.setPreco(22.50);
+        sa.setDescricao("Lavagem" + " - R$" + sa.getPreco());
         sa.cadastrarServico(sa);
 
         ServicosAdicionais sb = new ServicosAdicionais();
-        sb.setDescricao("Alinhamento");
+        sb.setPreco(47.50);
+        sb.setDescricao("Alinhamento" + " - R$" + sb.getPreco());
         sb.cadastrarServico(sb);
+
+        ServicosAdicionais sc = new ServicosAdicionais();
+        sc.setPreco(30);
+        sc.setDescricao("Não Sei" + " - R$" + sc.getPreco());
+        sc.cadastrarServico(sc);
+
+        ClienteFisico cf = new ClienteFisico();
+        cf.setCpf("05654888560");
+        cf.cadastraClienteFisico(cf);
 
         initComponents();
 
@@ -48,7 +61,6 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
 
         this.listModel = new DefaultListModel();
         this.servicosAdicionaisList.setModel(this.listModel);
-        this.atualizarList();
     }
 
     /**
@@ -165,9 +177,14 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
 
         valorTotalLbl.setText("Valor Total:");
 
-        valorTotalTxt.setText("R$500.00");
+        valorTotalTxt.setText("R$");
 
         salvarBtn.setText("Salvar");
+        salvarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarBtnActionPerformed(evt);
+            }
+        });
 
         voltarBtn.setText("Voltar");
         voltarBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -210,55 +227,58 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(dataRetiradaTxt)
-                                            .addComponent(dataLocacaoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(clienteFisicoRadio)
                                                 .addGap(29, 29, 29)
-                                                .addComponent(clienteJuridicoRadio))))))
+                                                .addComponent(clienteJuridicoRadio))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(dataRetiradaTxt)
+                                                    .addComponent(dataLocacaoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(32, 32, 32)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(horaRetiradaLbl)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(horaRetiradaTxt))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(horaLocacaoLbl)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(horaLocacaoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(salvarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(voltarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(calcularTotalBtn)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(identificacaoClienteLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(identificacaoClienteTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(horaRetiradaLbl)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(horaRetiradaTxt))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(horaLocacaoLbl)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(horaLocacaoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(identificacaoClienteLbl)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(identificacaoClienteTxt))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(chassisAutomovelLbl)
-                                            .addComponent(kmRetiradaLbl)
-                                            .addComponent(servicosAdicionaisLbl)
-                                            .addComponent(descontoLbl))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(chassisAutomovelLbl)
+                                    .addComponent(kmRetiradaLbl)
+                                    .addComponent(servicosAdicionaisLbl)
+                                    .addComponent(descontoLbl))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(kmRetiradaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(descontoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(funcionarioRespTxt)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                             .addComponent(valorTotalTxt)
-                                            .addComponent(kmRetiradaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(descontoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(funcionarioRespTxt)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(adicionarServicoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                                                    .addComponent(removerServicoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(servicosAdicionaisCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(chassisAutomovelTxt)))
-                                    .addComponent(valorTotalLbl))))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 240, Short.MAX_VALUE)
+                                            .addComponent(calcularTotalBtn))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(adicionarServicoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                                .addComponent(removerServicoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(servicosAdicionaisCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                        .addComponent(chassisAutomovelTxt))))
+                            .addComponent(valorTotalLbl))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -325,7 +345,7 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(voltarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(salvarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -334,31 +354,31 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
     private void adicionarServicoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarServicoBtnActionPerformed
         //if (listServicosAdicionais.size() > 0) {
         int flag = 0;
-            for (int i = 0; i < listServicosAdicionais.size(); i++) {
-                if (listServicosAdicionais.get(i).equals(servicosAdicionaisCombo.getSelectedItem().toString())) {
-                    flag = 1;
-                }
+        for (int i = 0; i < listServicosAdicionais.size(); i++) {
+            if (listServicosAdicionais.get(i).equals(servicosAdicionaisCombo.getSelectedItem().toString())) {
+                flag = 1;
             }
-            if(flag == 0){
-                String aux = servicosAdicionaisCombo.getSelectedItem().toString();
-                listServicosAdicionais.add(aux);
-            }else{
-                JOptionPane.showMessageDialog(this, "O serviço '" + servicosAdicionaisCombo.getSelectedItem().toString() + "' já foi adicionado.");
-            }
-            
+        }
+        if (flag == 0) {
+            String aux = servicosAdicionaisCombo.getSelectedItem().toString();
+            listServicosAdicionais.add(aux);
+        } else {
+            JOptionPane.showMessageDialog(this, "O serviço '" + servicosAdicionaisCombo.getSelectedItem().toString() + "' já foi adicionado.");
+        }
+
         listModel.removeAllElements();
-        
-        for(int i = 0; i < listServicosAdicionais.size(); i++){
+
+        for (int i = 0; i < listServicosAdicionais.size(); i++) {
             listModel.addElement(listServicosAdicionais.get(i));
         }
     }//GEN-LAST:event_adicionarServicoBtnActionPerformed
 
     private void voltarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarBtnActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_voltarBtnActionPerformed
 
     private void calcularTotalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularTotalBtnActionPerformed
-        // TODO add your handling code here:
+        this.calcularTotal();
     }//GEN-LAST:event_calcularTotalBtnActionPerformed
 
     private void servicosAdicionaisComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servicosAdicionaisComboActionPerformed
@@ -367,27 +387,46 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
 
     private void removerServicoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerServicoBtnActionPerformed
         int ind = this.getIndexServicos();
-        if(ind == -1) return;
+        if (ind == -1) {
+            return;
+        }
 
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Certeza que deseja excluir este serviço?", "Warning", JOptionPane.YES_NO_OPTION);
-        if(dialogResult == JOptionPane.YES_OPTION){
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Certeza que deseja excluir este serviço?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (dialogResult == JOptionPane.YES_OPTION) {
             listServicosAdicionais.remove(ind);
         }
-        
+
         listModel.removeAllElements();
-        
-        for(int i = 0; i < listServicosAdicionais.size(); i++){
+
+        for (int i = 0; i < listServicosAdicionais.size(); i++) {
             listModel.addElement(listServicosAdicionais.get(i));
         }
-        
+
     }//GEN-LAST:event_removerServicoBtnActionPerformed
-    
-    private int getIndexServicos(){
+
+    private void salvarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarBtnActionPerformed
+        if (tipoClienteBtnGrp.isSelected(null)) {
+            JOptionPane.showMessageDialog(this, "Selecione o tipo de cliente.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (clienteFisicoRadio.isSelected()) {
+                int i = 0;
+                if (identificacaoClienteTxt.getText().equals(ClienteFisico.listaClienteFisico.get(i).getCpf())) {
+                    JOptionPane.showMessageDialog(this, "CPF: " + identificacaoClienteTxt.getText(), "ABC", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else if (clienteJuridicoRadio.isSelected()) {
+                System.out.println("Cliente Juridico");
+            }
+        }
+    }//GEN-LAST:event_salvarBtnActionPerformed
+
+    private int getIndexServicos() {
         int ind = this.servicosAdicionaisList.getSelectedIndex();
-        if(ind == -1) 
-            JOptionPane.showMessageDialog(this, "Selecione um serviço.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (ind == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um serviço.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
         return ind;
     }
+
     /**
      * @param args the command line arguments
      */
@@ -429,8 +468,27 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
         }
     }
 
-    public static void atualizarList() {
+    public void calcularTotal() {
+        double total = 0;
+        int i = 0;
+        
+        for (i = 0; i < listServicosAdicionais.size(); i++) {
+            ServicosAdicionais sa = ServicosAdicionais.buscarDescricao(listServicosAdicionais.get(i));
+            total += sa.getPreco();
+        }
+        
+        for(i = 0; i < Automovel.getListaAutomovel().size(); i++){
+            Automovel auto = Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText());
+            System.out.println(auto.getCategoria());
+        }
 
+        if (descontoTxt.getText().equals("")) {
+            valorTotalTxt.setText("R$" + total);
+        } else {
+            double desconto = Double.parseDouble(descontoTxt.getText());
+            total -= (total * desconto) / 100;
+            valorTotalTxt.setText("R$" + total);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

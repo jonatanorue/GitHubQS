@@ -40,6 +40,7 @@ public class Principal extends javax.swing.JFrame {
         headerAutomoveis = new javax.swing.JMenu();
         menuAutomovel = new javax.swing.JMenuItem();
         menuCatAutomoveis = new javax.swing.JMenuItem();
+        menuRetiradaAutomovel = new javax.swing.JMenuItem();
         headerFuncionario = new javax.swing.JMenu();
         menuFuncionario = new javax.swing.JMenuItem();
         menuNivelAcesso = new javax.swing.JMenuItem();
@@ -99,6 +100,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         headerAutomoveis.add(menuCatAutomoveis);
+
+        menuRetiradaAutomovel.setText("Retirada");
+        menuRetiradaAutomovel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRetiradaAutomovelActionPerformed(evt);
+            }
+        });
+        headerAutomoveis.add(menuRetiradaAutomovel);
 
         topMenuBar.add(headerAutomoveis);
 
@@ -186,6 +195,11 @@ public class Principal extends javax.swing.JFrame {
         this.addView(new MenuServicosAdicionais());
     }//GEN-LAST:event_menuServicosAdicionaisActionPerformed
 
+    private void menuRetiradaAutomovelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRetiradaAutomovelActionPerformed
+        System.out.println("Chamado > MenuRetiradaAutomovel");
+        this.addView(new MenuRetiradaAutomovel());
+    }//GEN-LAST:event_menuRetiradaAutomovelActionPerformed
+
     private void addView(JFrame window){
         Container interalContainer = internalFramePrincipal.getContentPane();
         interalContainer.removeAll();
@@ -244,6 +258,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuClientes;
     private javax.swing.JMenuItem menuFuncionario;
     private javax.swing.JMenuItem menuNivelAcesso;
+    private javax.swing.JMenuItem menuRetiradaAutomovel;
     private javax.swing.JMenuItem menuServicosAdicionais;
     private javax.swing.JMenuBar topMenuBar;
     // End of variables declaration//GEN-END:variables
