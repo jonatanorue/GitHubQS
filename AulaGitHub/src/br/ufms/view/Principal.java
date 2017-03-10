@@ -157,6 +157,18 @@ public class Principal extends javax.swing.JFrame {
 
         topMenuBar.add(headerReserva);
 
+        headerReserva.setText("Reservas");
+
+        MenuReserva.setText("Reserva");
+        MenuReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuReservaActionPerformed(evt);
+            }
+        });
+        headerReserva.add(MenuReserva);
+
+        topMenuBar.add(headerReserva);
+
         setJMenuBar(topMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
