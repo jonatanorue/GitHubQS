@@ -585,65 +585,93 @@ public class CadastroReserva extends javax.swing.JFrame {
         }
         return null;
     }
-    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+    
+    public boolean verificaInadimplencia(String CpfCnpj) {
+       if(CPF.isSelected()){//verificar se 'e cliente fisico ou juridico com o radiobutton{
+            ClienteFisico c = new ClienteFisico();
+            c = c.buscaClienteFisico(CpfCnpj);
             
-           if (calculaValorTotalReserva() && idcliente.getText() != null
-                && !idcliente.getText().isEmpty() && !horaDevolucao.getText().isEmpty()
-                && !horaRetirada.getText().isEmpty()
-                && !taxaMulta.getText().isEmpty()) {
-            Reserva reserva = new Reserva();
-            int x = categoria.getSelectedIndex();
-            String cdgCategoria = categoria.getItemAt(x);
-            Categorias c = verificaCategoriaCarroDisponivel(cdgCategoria);
-            if (c != null) {
-                if(verificaCliente(reserva, cdgCategoria)){
-                    String modelo = CarroSelecionado.getText();
-                    if(VerificaCarroDisponivel(reserva, modelo)){
-                        reserva.setCategoria(c);
-                        SimpleDateFormat st = new SimpleDateFormat("dd/MM/yyyy");
-                        Date dataR = new Date();
-                        Date dataD = new Date();
-                        try {
-                            dataR = st.parse(this.dataRetirada.getText());
-                            dataD = st.parse(this.dataDevolucao.getText());
-                            dataR.setHours(Integer.parseInt(horaRetirada.getText().substring(0, 2)));
-                            dataR.setMinutes(Integer.parseInt(horaRetirada.getText().substring(3, 5)));
-                            dataD.setHours(Integer.parseInt(horaDevolucao.getText().substring(0, 2)));
-                            dataD.setMinutes(Integer.parseInt(horaDevolucao.getText().substring(3, 5)));
-                        } catch (ParseException ex) {
-                            Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        
-                        reserva.setDataDevolucao(dataD);
-                        reserva.setDataRetirada(dataR);
-                        
-                        String serv = comboServicos.getItemAt(comboServicos.getSelectedIndex());
-                        if (serv.equals("--")); else {
-                            reserva.setServicoAdc(new ServicosAdicionais().buscarSA(serv));
-                        }
-                        
-                        reserva.setCartaoCliente(cartaocliente.getText());
-                        reserva.setTaxaMulta(Double.parseDouble(taxaMulta.getText()));
-                        reserva.setDesconto(valorDesconto);
-                        reserva.setLocacao(valorTotal);
-                        if (reserva.insereReserva(reserva)) {
-                            JOptionPane.showMessageDialog(null, "reserva efetuada");
-                            this.dispose();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Erro ao cadastrar");
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Carro indisponivel");
-                    }
-                }else{
-                   JOptionPane.showMessageDialog(null, "CPF ou CNPJ inválido");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Automovel da categoria não disponivel");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar prencha os campos obrigatorios");
+                if(c.getSituaçao_de_inadimplência() == true){
+                        return true;   
+                }else{  
+                    return false;
+               }
+        }else if(CNPJ.isSelected()){
+             ClienteJuridico c = new ClienteJuridico();
+              c = c.buscaClienteJuridico(CpfCnpj);
+           
+                if(c.getSituaçao_de_inadimplência() == true){ 
+                        return true;   
+                }else{  
+                    return false;
+               }
+        }else{
+           return false;
         }
+    }
+    
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+         if(verificaInadimplencia(idcliente.getText())){     
+                if (calculaValorTotalReserva() && idcliente.getText() != null
+                     && !idcliente.getText().isEmpty() && !horaDevolucao.getText().isEmpty()
+                     && !horaRetirada.getText().isEmpty()
+                     && !taxaMulta.getText().isEmpty()) {
+                 Reserva reserva = new Reserva();
+                 int x = categoria.getSelectedIndex();
+                 String cdgCategoria = categoria.getItemAt(x);
+                 Categorias c = verificaCategoriaCarroDisponivel(cdgCategoria);
+                 if (c != null) {
+                     if(verificaCliente(reserva, cdgCategoria)){
+                         String modelo = CarroSelecionado.getText();
+                         if(VerificaCarroDisponivel(reserva, modelo)){
+                             reserva.setCategoria(c);
+                             SimpleDateFormat st = new SimpleDateFormat("dd/MM/yyyy");
+                             Date dataR = new Date();
+                             Date dataD = new Date();
+                             try {
+                                 dataR = st.parse(this.dataRetirada.getText());
+                                 dataD = st.parse(this.dataDevolucao.getText());
+                                 dataR.setHours(Integer.parseInt(horaRetirada.getText().substring(0, 2)));
+                                 dataR.setMinutes(Integer.parseInt(horaRetirada.getText().substring(3, 5)));
+                                 dataD.setHours(Integer.parseInt(horaDevolucao.getText().substring(0, 2)));
+                                 dataD.setMinutes(Integer.parseInt(horaDevolucao.getText().substring(3, 5)));
+                             } catch (ParseException ex) {
+                                 Logger.getLogger(CadastroReserva.class.getName()).log(Level.SEVERE, null, ex);
+                             }
+
+                             reserva.setDataDevolucao(dataD);
+                             reserva.setDataRetirada(dataR);
+
+                             String serv = comboServicos.getItemAt(comboServicos.getSelectedIndex());
+                             if (serv.equals("--")); else {
+                                 reserva.setServicoAdc(new ServicosAdicionais().buscarSA(serv));
+                             }
+
+                             reserva.setCartaoCliente(cartaocliente.getText());
+                             reserva.setTaxaMulta(Double.parseDouble(taxaMulta.getText()));
+                             reserva.setDesconto(valorDesconto);
+                             reserva.setLocacao(valorTotal);
+                             if (reserva.insereReserva(reserva)) {
+                                 JOptionPane.showMessageDialog(null, "reserva efetuada");
+                                 this.dispose();
+                             } else {
+                                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar");
+                             }
+                         }else{
+                             JOptionPane.showMessageDialog(null, "Carro indisponivel");
+                         }
+                     }else{
+                        JOptionPane.showMessageDialog(null, "CPF ou CNPJ inválido");
+                     }
+                 } else {
+                     JOptionPane.showMessageDialog(null, "Automovel da categoria não disponivel");
+                 }
+             } else {
+                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar prencha os campos obrigatorios");
+             }
+         }else{
+             JOptionPane.showMessageDialog(this, "Situação de inadimplência em Risco");
+         }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
@@ -685,7 +713,7 @@ public class CadastroReserva extends javax.swing.JFrame {
             valorDesconto = 0;
         }else{    
             ServicosAdicionais c =new ServicosAdicionais();
-            valorServico = Double.parseDouble(c.getPreco());
+            valorServico = c.getPreco();
         }
         valorTotal = valorReservaData + valorServico;
         String desconto = descontoPorcentagem.getText();
