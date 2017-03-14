@@ -14,10 +14,15 @@ import javax.swing.JOptionPane;
  */
 public class ClienteJuridico extends Cliente{
     
-    private static ArrayList<ClienteJuridico> listaClienteJuridico = new ArrayList<ClienteJuridico>();
+    public static ArrayList<ClienteJuridico> listaClienteJuridico = new ArrayList<ClienteJuridico>();
     private String nomeFantasia;
     private String cnpj;
     
+    public ClienteJuridico(){
+        super();
+        this.nomeFantasia = "";
+        this.cnpj = "";
+    }
     
     public String getCnpj() {
         return cnpj;
@@ -50,14 +55,14 @@ public class ClienteJuridico extends Cliente{
         }
         return status;
     }
-    public ClienteJuridico buscaClienteJuridico(String cnpjBusca){
+    public  ClienteJuridico buscaClienteJuridico(String cnpjBusca){
         boolean status = false;
         for(int i = 0; i < listaClienteJuridico.size(); i++){
             if(listaClienteJuridico.get(i).getCnpj().equals(cnpjBusca)){
                 return listaClienteJuridico.get(i);
             }
         }
-        return null;
+        return new ClienteJuridico();
     }
     
     

@@ -115,7 +115,7 @@ public class CadastroReserva extends javax.swing.JFrame {
         cartaocliente.setText(r.getCartaoCliente());
         taxaMulta.setText(Double.toString(r.getTaxaMulta()));
         if (r.getServico() != null) {
-            String desc = Double.toString((r.getDesconto() * 100) / (r.getLocacao() + r.getDesconto() + Double.parseDouble(r.getServico().getPreco())));
+            String desc = Double.toString((r.getDesconto() * 100) / (r.getLocacao() + r.getDesconto() + r.getServico().getPreco()));
         } else {
             String desc = Double.toString((r.getDesconto() * 100) / (r.getLocacao() + r.getDesconto()));
             descontoPorcentagem.setText(desc);
@@ -631,9 +631,10 @@ public class CadastroReserva extends javax.swing.JFrame {
         }
         return null;
     }
-    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
             
-           if (calculaValorTotalReserva() && idcliente.getText() != null
+    
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+             if (calculaValorTotalReserva() && idcliente.getText() != null
                 && !idcliente.getText().isEmpty() && !horaDevolucao.getText().isEmpty()
                 && !horaRetirada.getText().isEmpty()
                 && !taxaMulta.getText().isEmpty()) {
@@ -740,7 +741,7 @@ public class CadastroReserva extends javax.swing.JFrame {
         }else{    
             ServicosAdicionais c =new ServicosAdicionais();
             c = c.buscarServicoDes(tipo_servico);
-            valorServico = Double.parseDouble(c.getPreco());
+            valorServico = c.getPreco();
         }
         valorTotal = valorReservaData + valorServico;
         String desconto = descontoPorcentagem.getText();

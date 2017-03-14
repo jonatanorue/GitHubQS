@@ -23,7 +23,14 @@ public class Cliente {
     private Boolean situaçao_de_inadimplência;
     
     public Cliente(){
-        
+        this.nome = "";
+        this.endereço = "";
+        this.cidade = "";
+        this.estado = "";
+        this.telefone = "";
+        this.email = "";
+        this.data_de_nascimento = "";
+        this.situaçao_de_inadimplência = false;
     }
 
     public String getNome() {

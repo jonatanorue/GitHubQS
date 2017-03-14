@@ -25,7 +25,7 @@ public class CadastroServicosAdicionais extends javax.swing.JFrame {
         initComponents();
         TipoServ.setText(sa.getServico());
         DescServ.setText(sa.getDescricao());
-        PrecoServ.setText(sa.getPreco());
+        PrecoServ.setText(""+ sa.getPreco());
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -176,6 +176,12 @@ public class CadastroServicosAdicionais extends javax.swing.JFrame {
 
     private void SalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarActionPerformed
         ServicosAdicionais serva = new ServicosAdicionais();
+
+        serva.setServico(TipoServ.getText());
+        serva.setDescricao(DescServ.getText());
+        serva.setPreco(Double.parseDouble(PrecoServ.getText()));
+        JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
+
         
         int indice = serva.buscaindiceSA(TipoServ.getText());
         
@@ -189,7 +195,24 @@ public class CadastroServicosAdicionais extends javax.swing.JFrame {
             
             serva.setServico(TipoServ.getText());
             serva.setDescricao(DescServ.getText());
-            serva.setPreco(PrecoServ.getText());
+            serva.setPreco(Double.parseDouble(PrecoServ.getText()));
+            JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
+        }
+
+        
+        indice = serva.buscaindiceSA(TipoServ.getText());
+        
+        if(indice >= 0){
+            serva.listaServicos.get(indice).setServico(TipoServ.getText());
+            serva.listaServicos.get(indice).setServico(DescServ.getText());
+            serva.listaServicos.get(indice).setServico(PrecoServ.getText());
+            JOptionPane.showMessageDialog(null,"Servico Editado com sucesso!");
+        
+        }else{
+            
+            serva.setServico(TipoServ.getText());
+            serva.setDescricao(DescServ.getText());
+            serva.setPreco(Double.parseDouble(PrecoServ.getText()));
             JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
         }
         

@@ -10,6 +10,11 @@ public class Main {
     public static void main(String[] args) {
 	System.out.println("--> Main.java");
         
+        //ClienteFisico c = ClienteFisico.buscaClienteFisico("11");
+        
+         ClienteFisico c = new ClienteFisico();
+         c = c.buscaClienteFisico("11");
+        
         Main.valorInicialCategorias();
         Main.valorInicialAutomovel();
         
