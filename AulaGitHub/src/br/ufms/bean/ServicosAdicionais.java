@@ -76,6 +76,17 @@ public class ServicosAdicionais {
         return null;
         
     }
+    
+     public ServicosAdicionais buscarServicoDes(String desc){
+        for(int i = 0 ; i<listaServicos.size();i++){
+            if(listaServicos.get(i).getDescricao().equals(desc)){
+                return listaServicos.get(i);
+            }
+        }
+        return null;
+        
+    }
+    
     public boolean RemoverSA(String tiposerv){
         boolean status = false;
         for(int i = 0; i<listaServicos.size();i++){

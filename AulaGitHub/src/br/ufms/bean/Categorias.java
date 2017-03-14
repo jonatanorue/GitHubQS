@@ -125,4 +125,12 @@ public class Categorias {
     public static Categorias buscarCatAutomoveisLista(int ind){
         return listaCategorias.get(ind);
     }
+    public static Categorias buscaCatDesCat(String descricao){
+        for(int i = 0; i < listaCategorias.size(); i++){
+            if(listaCategorias.get(i).getdescCategoria().equals(descricao)){
+                return listaCategorias.get(i);
+            }
+        }
+        return null;
+    }
 }

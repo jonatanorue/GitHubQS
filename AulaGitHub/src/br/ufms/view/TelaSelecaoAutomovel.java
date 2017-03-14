@@ -9,6 +9,7 @@ import br.ufms.bean.Automovel;
 import br.ufms.bean.Categorias;
 import br.ufms.bean.Reserva;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,23 +29,25 @@ private CadastroReserva t;
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setNumRows(0);
     }
-    public TelaSelecaoAutomovel(String codCategoria, CadastroReserva tela){
+    public TelaSelecaoAutomovel(String descricao, CadastroReserva tela){
         initComponents();
         this.t = tela;
-        Categorias c = new Categorias();
+        Categorias c = Categorias.buscaCatDesCat(descricao);
         ArrayList<Categorias> lista = Categorias.listaCategorias;
-        int x = Categorias.buscaIndiceCategoria(codCategoria);
+        int x = Categorias.buscaIndiceCategoria(c.getcodCategoria());
         if(x != -1){
-            c = lista.get(x);
             ArrayList<Automovel> listaAutomovel = Automovel.getListaAutomovel();
             ArrayList<Reserva> listaReserva = Reserva.listaReservas;
             DefaultTableModel model = (DefaultTableModel) tabela.getModel();
             model.setNumRows(0);
             for (Automovel carro : listaAutomovel) {
-                if (carro.getCategoria().getcodCategoria().equals(codCategoria)) {
+                if (carro.getCategoria().getdescCategoria().equals(descricao)) {
                     boolean state = true;
                     if(! listaReserva.isEmpty()){
                         for (Reserva res : listaReserva) {
+                           if(this.t.getReservaAux() == res){
+                               break;
+                           }
                             if (res.getCarro().getPlaca().equals(carro.getPlaca())) {
                                 state = false;
                                 break;
@@ -56,7 +59,7 @@ private CadastroReserva t;
                             model.addRow(new Object[]{
                                 carro.getPlaca(),
                                 carro.getChassi(),
-                                carro.getCategoria(),
+                                carro.getCategoria().getdescCategoria(),
                                 carro.getFabricante(),
                                 carro.getMarca(),
                                 carro.getModelo(),
@@ -189,6 +192,8 @@ private CadastroReserva t;
         this.carroEscolhido = carroSelecionado.getMarca()+"/"+carroSelecionado.getModelo();
         this.t.prencheCampoCarro(carroEscolhido);
         this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null,"Selecione um altomovel");
         }
     }//GEN-LAST:event_btOkActionPerformed
 

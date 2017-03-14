@@ -38,7 +38,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="115" max="32767" attributes="0"/>
+              <EmptySpace pref="77" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -77,7 +77,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="Remover">
       <Properties>
-        <Property name="text" type="java.lang.String" value="REMOVER RESERVA"/>
+        <Property name="text" type="java.lang.String" value="CANCELAMENTO DE RESERVA"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RemoverActionPerformed"/>
