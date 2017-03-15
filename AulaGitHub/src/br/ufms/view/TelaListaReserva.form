@@ -211,7 +211,7 @@
     </Component>
     <Component class="javax.swing.JToggleButton" name="btExcluir">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Deletar"/>
+        <Property name="text" type="java.lang.String" value="Cancelar Reserva"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btExcluirActionPerformed"/>
@@ -219,7 +219,7 @@
     </Component>
     <Component class="javax.swing.JToggleButton" name="btCancelar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cancelar"/>
+        <Property name="text" type="java.lang.String" value="Voltar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCancelarActionPerformed"/>

@@ -166,5 +166,10 @@ public class Reserva {
         }
         return lista;
     }
+    public boolean alteraReserva(Reserva resAtual,Reserva resAlterada){
+        Reserva.listaReservas.remove(resAtual);
+        Reserva.listaReservas.add(resAlterada);
+        return true;
+    }
 }
 
