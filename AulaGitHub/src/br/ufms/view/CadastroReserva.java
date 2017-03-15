@@ -685,7 +685,7 @@ public class CadastroReserva extends javax.swing.JFrame {
             valorDesconto = 0;
         }else{    
             ServicosAdicionais c =new ServicosAdicionais();
-            valorServico = Double.parseDouble(c.getPreco());
+            valorServico = c.getPreco();
         }
         valorTotal = valorReservaData + valorServico;
         String desconto = descontoPorcentagem.getText();

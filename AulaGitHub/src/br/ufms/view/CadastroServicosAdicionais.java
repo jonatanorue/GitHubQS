@@ -195,24 +195,7 @@ public class CadastroServicosAdicionais extends javax.swing.JFrame {
             
             serva.setServico(TipoServ.getText());
             serva.setDescricao(DescServ.getText());
-            serva.setPreco(PrecoServ.getText());
-            JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
-        }
-
-        
-        int indice = serva.buscaindiceSA(TipoServ.getText());
-        
-        if(indice >= 0){
-            serva.listaServicos.get(indice).setServico(TipoServ.getText());
-            serva.listaServicos.get(indice).setServico(DescServ.getText());
-            serva.listaServicos.get(indice).setServico(PrecoServ.getText());
-            JOptionPane.showMessageDialog(null,"Servico Editado com sucesso!");
-        
-        }else{
-            
-            serva.setServico(TipoServ.getText());
-            serva.setDescricao(DescServ.getText());
-            serva.setPreco(PrecoServ.getText());
+            serva.setPreco(Double.parseDouble(PrecoServ.getText()));
             JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
         }
         

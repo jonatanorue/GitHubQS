@@ -18,7 +18,7 @@ public class Automovel {
     private int ano;
     private String modelo;
     
-    private static final ArrayList<Automovel> listaAutomovel = new ArrayList<Automovel>();
+    public static final ArrayList<Automovel> listaAutomovel = new ArrayList<Automovel>();
     
     public Automovel(){}
     
@@ -97,7 +97,6 @@ public class Automovel {
         }
         return null;
     }
-    
     
     public static void removeIndexListaAutomovel(int ind){
         listaAutomovel.remove(ind);

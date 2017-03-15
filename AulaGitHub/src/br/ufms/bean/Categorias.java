@@ -42,7 +42,7 @@ public class Categorias {
         return status;
     }
     
-    public Categorias buscarCatAutomoveis(String codCategoriabusca){
+    public static Categorias buscarCatAutomoveis(String codCategoriabusca){
         for(int i = 0; i < listaCategorias.size(); i++){
             if(listaCategorias.get(i).getcodCategoria().equals(codCategoriabusca)){
                 return listaCategorias.get(i);

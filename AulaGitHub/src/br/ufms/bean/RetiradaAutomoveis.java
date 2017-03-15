@@ -16,8 +16,13 @@ public class RetiradaAutomoveis {
     private String horaRetirada;
     private String dataDevolucao;
     private String horaDevolucao;
-    private double kmRetirada;
-    private double desconto;
+    private Automovel chassi;
+    private ClienteFisico cpf;
+    private ClienteJuridico cnpj;
+    private ServicosAdicionais tipo_servico;
+    private Funcionario nome;
+    private int kmRetirada;
+    private int desconto;
     
     public RetiradaAutomoveis(){
     }
@@ -60,19 +65,59 @@ public class RetiradaAutomoveis {
         this.horaDevolucao = horaDevolucao;
     }
     
-    public double getKmRetirada(){
+    public Automovel getChassi(){
+        return chassi;
+    }
+    
+    public void setChassi(Automovel chassi){
+        this.chassi = chassi;
+    }
+    
+    public ClienteFisico getCpf(){
+        return cpf;
+    }
+    
+    public void setCpf(ClienteFisico cpf){
+        this.cpf = cpf;
+    }
+    
+    public ClienteJuridico getCnpj(){
+        return cnpj;
+    }
+    
+    public void setCnpj(ClienteJuridico cnpj){
+        this.cnpj = cnpj;
+    }
+    
+    public ServicosAdicionais getServico(){
+        return tipo_servico;
+    }
+    
+    public void setServico(ServicosAdicionais tipo_servico){
+        this.tipo_servico = tipo_servico;
+    }
+    
+    public Funcionario getFuncionario(){
+        return nome;
+    }
+    
+    public void setFuncionario(Funcionario nome){
+        this.nome = nome;
+    }
+    
+    public int getKmRetirada(){
         return kmRetirada;
     }
     
-    public void setKmRetirada(double kmRetirada){
+    public void setKmRetirada(int kmRetirada){
         this.kmRetirada = kmRetirada;
     }
     
-    public double getDesconto(){
+    public int getDesconto(){
         return desconto;
     }
     
-    public void setDesconto(double desconto){
+    public void setDesconto(int desconto){
         this.desconto = desconto;
     }
     
