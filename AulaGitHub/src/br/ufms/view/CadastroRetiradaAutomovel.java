@@ -8,6 +8,7 @@ package br.ufms.view;
 import br.ufms.bean.Automovel;
 import br.ufms.bean.Categorias;
 import br.ufms.bean.ClienteFisico;
+import br.ufms.bean.ComprovanteRetiradaAutomoveis;
 import br.ufms.bean.Funcionario;
 import br.ufms.bean.RetiradaAutomoveis;
 import br.ufms.bean.ServicosAdicionais;
@@ -455,6 +456,10 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
                 System.out.println("Cliente Juridico");
             }
         }*/
+        
+        // Comprovante de Retirada dos Automoveis
+        ComprovanteRetiradaAutomoveis comprovante = new ComprovanteRetiradaAutomoveis(retirada);
+        comprovante.salvarComprovante();
     }//GEN-LAST:event_salvarBtnActionPerformed
 
     private void horaDevolucaoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaDevolucaoTxtActionPerformed
