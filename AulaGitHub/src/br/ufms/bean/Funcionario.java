@@ -7,7 +7,6 @@ package br.ufms.bean;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 
 /**
  *
@@ -30,7 +29,7 @@ public class Funcionario {
 
     }
 
-    private static final ArrayList<Funcionario> listaDeFuncionarios = new ArrayList<>();
+    public static final ArrayList<Funcionario> listaDeFuncionarios = new ArrayList<>();
 
     public boolean CadastrarFuncionario(Funcionario funcionario) {
         if (!verificaFuncionarioLogin(funcionario.getLogin())) {

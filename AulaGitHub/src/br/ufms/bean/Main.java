@@ -16,10 +16,10 @@ public class Main {
         Main.valorInicialCategorias();
         Main.valorInicialAutomovel();
         
-        //Principal janela = new Principal();
-        //janela.setVisible(true);
-        LoginFuncionario login = new LoginFuncionario();
-        login.setVisible(true);
+        Principal janela = new Principal(0);
+        janela.setVisible(true);
+        //LoginFuncionario login = new LoginFuncionario();
+        //login.setVisible(true);
     }
     
     private static void valorInicialCategorias(){
@@ -69,17 +69,17 @@ public class Main {
     }
 
     private static void valorInicialFuncionario() {
-        Funcionario func = new Funcionario();
-        func.setNome("Joel Cleidson");
-        func.setEndereco("R. dos bobos, n 0");
-        func.setCidade("5º Cafundé");
-        func.setEstado("Lele");
-        func.setDataDeNascimento(new Date("02/04/1990")); 
-        func.setLogin("admin");
-        func.setSenha("123");
-        func.setNivelDeAcesso(0);
-        func.setTelefone1("1234-1234");
-        func.setTelefone2("4321-5678");
-        func.CadastrarFuncionario(func);
+        Funcionario func1 = new Funcionario();
+        func1.setNome("Joel Cleidson");
+        func1.setEndereco("R. dos bobos, n 0");
+        func1.setCidade("5º Cafundé");
+        func1.setEstado("Lele");
+        func1.setDataDeNascimento(new Date("02/04/1990")); 
+        func1.setLogin("admin");
+        func1.setSenha("123");
+        func1.setNivelDeAcesso(0);
+        func1.setTelefone1("1234-1234");
+        func1.setTelefone2("4321-5678");
+        func1.CadastrarFuncionario(func1);
     }
 }

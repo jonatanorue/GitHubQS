@@ -42,7 +42,7 @@ public class Categorias {
         return status;
     }
     
-    public Categorias buscarCatAutomoveis(String codCategoriabusca){
+    public static Categorias buscarCatAutomoveis(String codCategoriabusca){
         for(int i = 0; i < listaCategorias.size(); i++){
             if(listaCategorias.get(i).getcodCategoria().equals(codCategoriabusca)){
                 return listaCategorias.get(i);
@@ -124,5 +124,13 @@ public class Categorias {
     
     public static Categorias buscarCatAutomoveisLista(int ind){
         return listaCategorias.get(ind);
+    }
+    public static Categorias buscaCatDesCat(String descricao){
+        for(int i = 0; i < listaCategorias.size(); i++){
+            if(listaCategorias.get(i).getdescCategoria().equals(descricao)){
+                return listaCategorias.get(i);
+            }
+        }
+        return null;
     }
 }

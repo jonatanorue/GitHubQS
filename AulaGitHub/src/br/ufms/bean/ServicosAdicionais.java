@@ -15,11 +15,11 @@ public class ServicosAdicionais {
     
     private String tipo_servico;
     private String descricao_servico;
-    private String preco_servico;
+    private double preco_servico;
     
     public static final ArrayList<ServicosAdicionais> listaServicos = new ArrayList<ServicosAdicionais>();
     
-    public ServicosAdicionais(String tiposerv,String descserv,String precoserv) {
+    public ServicosAdicionais(String tiposerv,String descserv,double precoserv) {
         this.tipo_servico = tiposerv;
         this.descricao_servico = descserv;
         this.preco_servico = precoserv;
@@ -46,7 +46,7 @@ public class ServicosAdicionais {
     }
         
     
-    public String getPreco(){
+    public double getPreco(){
         return preco_servico;
     }  
     public void setServico(String tiposerv){
@@ -55,7 +55,7 @@ public class ServicosAdicionais {
     public void setDescricao(String descserv){
         this.descricao_servico = descserv;
     }
-    public void setPreco(String precoserv){
+    public void setPreco(double precoserv){
         this.preco_servico = precoserv;
     }
     
@@ -76,6 +76,28 @@ public class ServicosAdicionais {
         return null;
         
     }
+    
+
+     public ServicosAdicionais buscarServicoDes(String desc){
+        for(int i = 0 ; i<listaServicos.size();i++){
+            if(listaServicos.get(i).getDescricao().equals(desc)){
+                return listaServicos.get(i);
+            }
+        }
+        return null;
+        
+    }
+    
+
+    public static ServicosAdicionais buscarDescricao(String descserv){
+        for(int i = 0 ; i<listaServicos.size();i++){
+            if(listaServicos.get(i).getDescricao().equals(descserv)){
+                return listaServicos.get(i);
+            }
+        }
+        return null;
+    }    
+    
     public boolean RemoverSA(String tiposerv){
         boolean status = false;
         for(int i = 0; i<listaServicos.size();i++){
@@ -85,5 +107,9 @@ public class ServicosAdicionais {
         }
         }
         return status;
+    }
+    
+    public static ArrayList<ServicosAdicionais> getListaServicos(){
+        return listaServicos;
     }
 }

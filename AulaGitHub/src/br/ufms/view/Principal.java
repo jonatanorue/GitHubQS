@@ -24,6 +24,11 @@ public class Principal extends javax.swing.JFrame {
         this.setAlwaysOnTop(false);
     }
 
+    public Principal(int nivelAcesso) {
+        initComponents();
+        this.setAlwaysOnTop(false);
+        this.checkAcesso(nivelAcesso);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,11 +45,14 @@ public class Principal extends javax.swing.JFrame {
         headerAutomoveis = new javax.swing.JMenu();
         menuAutomovel = new javax.swing.JMenuItem();
         menuCatAutomoveis = new javax.swing.JMenuItem();
+        menuRetiradaAutomovel = new javax.swing.JMenuItem();
         headerFuncionario = new javax.swing.JMenu();
         menuFuncionario = new javax.swing.JMenuItem();
         menuNivelAcesso = new javax.swing.JMenuItem();
         headerSA = new javax.swing.JMenu();
         menuServicosAdicionais = new javax.swing.JMenuItem();
+        headerReserva = new javax.swing.JMenu();
+        MenuReserva = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Janela Principal");
@@ -100,6 +108,14 @@ public class Principal extends javax.swing.JFrame {
         });
         headerAutomoveis.add(menuCatAutomoveis);
 
+        menuRetiradaAutomovel.setText("Retirada");
+        menuRetiradaAutomovel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRetiradaAutomovelActionPerformed(evt);
+            }
+        });
+        headerAutomoveis.add(menuRetiradaAutomovel);
+
         topMenuBar.add(headerAutomoveis);
 
         headerFuncionario.setText("Funcionários");
@@ -133,6 +149,30 @@ public class Principal extends javax.swing.JFrame {
         headerSA.add(menuServicosAdicionais);
 
         topMenuBar.add(headerSA);
+
+        headerReserva.setText("Reservas");
+
+        MenuReserva.setText("Reserva");
+        MenuReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuReservaActionPerformed(evt);
+            }
+        });
+        headerReserva.add(MenuReserva);
+
+        topMenuBar.add(headerReserva);
+
+        headerReserva.setText("Reservas");
+
+        MenuReserva.setText("Reserva");
+        MenuReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuReservaActionPerformed(evt);
+            }
+        });
+        headerReserva.add(MenuReserva);
+
+        topMenuBar.add(headerReserva);
 
         setJMenuBar(topMenuBar);
 
@@ -186,6 +226,18 @@ public class Principal extends javax.swing.JFrame {
         this.addView(new MenuServicosAdicionais());
     }//GEN-LAST:event_menuServicosAdicionaisActionPerformed
 
+
+    private void menuRetiradaAutomovelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRetiradaAutomovelActionPerformed
+        System.out.println("Chamado > MenuRetiradaAutomovel");
+        this.addView(new MenuRetiradaAutomovel());
+    }//GEN-LAST:event_menuRetiradaAutomovelActionPerformed
+
+    private void MenuReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuReservaActionPerformed
+        System.out.println("Chamado > MenuReserva");
+        this.addView(new MenuReserva());
+    }//GEN-LAST:event_MenuReservaActionPerformed
+
+
     private void addView(JFrame window){
         Container interalContainer = internalFramePrincipal.getContentPane();
         interalContainer.removeAll();
@@ -234,9 +286,11 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MenuReserva;
     private javax.swing.JMenu headerAutomoveis;
     private javax.swing.JMenu headerClientes;
     private javax.swing.JMenu headerFuncionario;
+    private javax.swing.JMenu headerReserva;
     private javax.swing.JMenu headerSA;
     private javax.swing.JInternalFrame internalFramePrincipal;
     private javax.swing.JMenuItem menuAutomovel;
@@ -244,7 +298,27 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuClientes;
     private javax.swing.JMenuItem menuFuncionario;
     private javax.swing.JMenuItem menuNivelAcesso;
+    private javax.swing.JMenuItem menuRetiradaAutomovel;
     private javax.swing.JMenuItem menuServicosAdicionais;
     private javax.swing.JMenuBar topMenuBar;
     // End of variables declaration//GEN-END:variables
+
+    private void checkAcesso(int nivelAcesso) {
+        // 0 - Administrador
+        // 1 - Gerente
+        // 2 - Funcionario
+        switch(nivelAcesso){
+            case 2:
+                System.out.println("Principal > Bloqueios Funcionario");
+                this.menuAutomovel.setEnabled(false);
+                this.menuCatAutomoveis.setEnabled(false);
+                this.headerSA.setEnabled(false); // Menu Header
+                this.menuServicosAdicionais.setEnabled(false);
+            case 1:
+                System.out.println("Principal > Bloqueios Gerente");
+                this.headerFuncionario.setEnabled(false); // Menu Header
+                this.menuFuncionario.setEnabled(false);
+                this.menuNivelAcesso.setEnabled(false);
+        }
+    }
 }

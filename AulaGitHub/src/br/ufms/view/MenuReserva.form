@@ -33,12 +33,12 @@
                       <EmptySpace min="-2" pref="146" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="Adicionar" max="32767" attributes="0"/>
-                          <Component id="jButton3" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
+                          <Component id="Alterar" alignment="0" max="32767" attributes="0"/>
+                          <Component id="Remover" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="163" max="32767" attributes="0"/>
+              <EmptySpace pref="77" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -50,9 +50,9 @@
               <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
               <Component id="Adicionar" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+              <Component id="Remover" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+              <Component id="Alterar" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="91" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -69,24 +69,27 @@
     </Component>
     <Component class="javax.swing.JButton" name="Adicionar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="ADICIONAR"/>
+        <Property name="text" type="java.lang.String" value="ADICIONAR RESERVA"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AdicionarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="Remover">
       <Properties>
-        <Property name="text" type="java.lang.String" value="REMOVER"/>
+        <Property name="text" type="java.lang.String" value="CANCELAMENTO DE RESERVA"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RemoverActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="Alterar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="ALTERAR"/>
+        <Property name="text" type="java.lang.String" value="ALTERAR RESERVA"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AlterarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -351,61 +351,70 @@ public class CadastroClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_voltarBotaoActionPerformed
 
     private void salvarbotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarbotaoActionPerformed
-        if (nometxt.getText() == null || enderecotxt.getText()== null || cidadetxt.getText() == null|| estadotxt.getText() == null|| telefone1txt.getText() == null|| telefone2txt.getText() == null || emailtxt.getText() == null || cpftxt.getText() == null || datanascimentotxt.getText() == null || inadimplenciaradio.isSelected() == false);
-        JOptionPane.showMessageDialog(null, "INFORMAR TODOS OS CAMPOS");
+       
         // TODO add your handling code here:
         if (cpfradio.isSelected()) {
             ClienteFisico cf = new ClienteFisico();
             // se existir cliente alterar direto na lista, caso não adicione um novo
-            int indice = cf.buscaClienteFisicoB(cpftxt.getText());
-            System.out.println(indice);
-            if (indice >= 0) {
-                cf.listaClienteFisico.get(indice).setNome(nometxt.getText());
-                cf.listaClienteFisico.get(indice).setEndereço(enderecotxt.getText());
-                cf.listaClienteFisico.get(indice).setCidade(cidadetxt.getText());
-                cf.listaClienteFisico.get(indice).setEstado(estadotxt.getText());
-                cf.listaClienteFisico.get(indice).setTelefone(telefone1txt.getText());
-                cf.listaClienteFisico.get(indice).setTelefone(telefone2txt.getText());
-                cf.listaClienteFisico.get(indice).setEmail(emailtxt.getText());
-                cf.listaClienteFisico.get(indice).setCpf(cpftxt.getText());
-                cf.listaClienteFisico.get(indice).setData_de_nascimento(datanascimentotxt.getText());
-                cf.listaClienteFisico.get(indice).setSituaçao_de_inadimplência(inadimplenciaradio.isSelected());
-                JOptionPane.showMessageDialog(null, "Editado com Sucesso");
-            } else {
-                cf.setNome(nometxt.getText());
-                cf.setEndereço(enderecotxt.getText());
-                cf.setCidade(cidadetxt.getText());
-                cf.setEstado(estadotxt.getText());
-                cf.setTelefone(telefone1txt.getText());
-                cf.setTelefone(telefone2txt.getText());
-                cf.setEmail(emailtxt.getText());
-                cf.setCpf(cpftxt.getText());
-                cf.setData_de_nascimento(datanascimentotxt.getText());
-                cf.setSituaçao_de_inadimplência(inadimplenciaradio.isSelected());
-                cf.cadastraClienteFisico(cf);
-                JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
-            }
+                 if (nometxt.getText().equals("") || enderecotxt.getText().equals("") || cidadetxt.getText().equals("")|| estadotxt.getText().equals("")|| telefone1txt.getText().equals("") || emailtxt.getText().equals("") || cpftxt.getText().equals("") || datanascimentotxt.getText().equals("") || inadimplenciaradio.isSelected() == false){
+                    JOptionPane.showMessageDialog(null, "INFORMAR TODOS OS CAMPOS");
+                 }else{
+                    int indice = cf.buscaClienteFisicoB(cpftxt.getText());
+                    if (indice >= 0) {
+                        cf.listaClienteFisico.get(indice).setNome(nometxt.getText());
+                        cf.listaClienteFisico.get(indice).setEndereço(enderecotxt.getText());
+                        cf.listaClienteFisico.get(indice).setCidade(cidadetxt.getText());
+                        cf.listaClienteFisico.get(indice).setEstado(estadotxt.getText());
+                        cf.listaClienteFisico.get(indice).setTelefone(telefone1txt.getText());
+                        cf.listaClienteFisico.get(indice).setTelefone(telefone2txt.getText());
+                        cf.listaClienteFisico.get(indice).setEmail(emailtxt.getText());
+                        cf.listaClienteFisico.get(indice).setCpf(cpftxt.getText());
+                        cf.listaClienteFisico.get(indice).setData_de_nascimento(datanascimentotxt.getText());
+                        cf.listaClienteFisico.get(indice).setSituaçao_de_inadimplência(inadimplenciaradio.isSelected());
+                        JOptionPane.showMessageDialog(null, "Editado com Sucesso");
+                        dispose();
+                    } else {
+                        cf.setNome(nometxt.getText());
+                        cf.setEndereço(enderecotxt.getText());
+                        cf.setCidade(cidadetxt.getText());
+                        cf.setEstado(estadotxt.getText());
+                        cf.setTelefone(telefone1txt.getText());
+                        cf.setTelefone(telefone2txt.getText());
+                        cf.setEmail(emailtxt.getText());
+                        cf.setCpf(cpftxt.getText());
+                        cf.setData_de_nascimento(datanascimentotxt.getText());
+                        cf.setSituaçao_de_inadimplência(inadimplenciaradio.isSelected());
+                        cf.cadastraClienteFisico(cf);
+                        JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
+                        dispose();
+                    }
+                }
         } else if (cnpjradio.isSelected()) {
-            ClienteJuridico cj = new ClienteJuridico();
-            cj.setNome(nometxt.getText());
-            cj.setEndereço(enderecotxt.getText());
-            cj.setCidade(cidadetxt.getText());
-            cj.setEstado(estadotxt.getText());
-            cj.setTelefone(telefone1txt.getText());
-            cj.setTelefone(telefone2txt.getText());
-            cj.setEmail(emailtxt.getText());
-            cj.setCnpj(cnpjtxt.getText());
-            cj.setNomeFantasia(nomeFantasiatxt.getText());
-            cj.setData_de_nascimento(datanascimentotxt.getText());
-            cj.setSituaçao_de_inadimplência(inadimplenciaradio.isSelected());
-            cj.cadastraClienteJuridico(cj);
-            JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
+            if (nometxt.getText().equals("") || enderecotxt.getText().equals("") || cidadetxt.getText().equals("")|| estadotxt.getText().equals("")|| telefone1txt.getText().equals("") || emailtxt.getText().equals("") || cnpjtxt.getText().equals("") || nomeFantasiatxt.getText().equals("") || datanascimentotxt.getText().equals("") || inadimplenciaradio.isSelected() == false){
+                    JOptionPane.showMessageDialog(null, "INFORMAR TODOS OS CAMPOS");
+            }else{
+                    ClienteJuridico cj = new ClienteJuridico();
+                    cj.setNome(nometxt.getText());
+                    cj.setEndereço(enderecotxt.getText());
+                    cj.setCidade(cidadetxt.getText());
+                    cj.setEstado(estadotxt.getText());
+                    cj.setTelefone(telefone1txt.getText());
+                    cj.setTelefone(telefone2txt.getText());
+                    cj.setEmail(emailtxt.getText());
+                    cj.setCnpj(cnpjtxt.getText());
+                    cj.setNomeFantasia(nomeFantasiatxt.getText());
+                    cj.setData_de_nascimento(datanascimentotxt.getText());
+                    cj.setSituaçao_de_inadimplência(inadimplenciaradio.isSelected());
+                    cj.cadastraClienteJuridico(cj);
+                    JOptionPane.showMessageDialog(null, "Salvo com Sucesso");
+                    dispose();
+            }
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione CPF ou CNPJ");
         }
 
-        dispose();
+        //dispose();
 
     }//GEN-LAST:event_salvarbotaoActionPerformed
 
