@@ -367,10 +367,11 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_senhaActionPerformed
     private boolean validarEntradas() {
+        String pass = new String(senha.getPassword());
         return(vPlv(nome.getText())&&vPlv(endereco.getText())
                && vPlv(endereco.getText()) && vPlv(tel1.getText())
                && vPlv(data.getText()) && vPlv(login.getText())
-               && vPlv(senha.getPassword().toString()));
+               && vPlv(pass));
     }
     
     private boolean vPlv(String palavra){ 
@@ -399,7 +400,8 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
               }
               funcionario.setDataDeNascimento(dt);
               funcionario.setLogin(this.login.getText());
-              funcionario.setSenha(senha.getPassword().toString());
+              String pass = new String(senha.getPassword());
+              funcionario.setSenha(pass);
         
               funcionario.setNivelDeAcesso(this.nivel.getSelectedIndex());
               
@@ -439,7 +441,8 @@ public class CadastroDeFuncionario extends javax.swing.JFrame {
               }
               funcionario.setDataDeNascimento(dt);
               funcionario.setLogin(this.login.getText());
-              funcionario.setSenha(senha.getPassword().toString());
+              String pass = new String(senha.getPassword());
+              funcionario.setSenha(pass);
         
               funcionario.setNivelDeAcesso(this.nivel.getSelectedIndex());
               
