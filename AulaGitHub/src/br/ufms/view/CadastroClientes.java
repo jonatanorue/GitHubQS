@@ -31,12 +31,12 @@ public class CadastroClientes extends javax.swing.JFrame {
         cidadetxt.setText(c.getCidade());
         estadotxt.setText(c.getEstado());
         telefone1txt.setText(c.getTelefone());
-        telefone2txt.setText(c.getTelefone());
+        telefone2txt.setText(c.getTelefone2());
         emailtxt.setText(c.getEmail());
         cpfradio.setSelected(true);
         cpftxt.setText(c.getCpf());
         datanascimentotxt.setText(c.getData_de_nascimento());
-        inadimplenciaradio.isSelected();
+        inadimplenciaradio.setSelected(c.getSituaçao_de_inadimplência());
 
     }
 
@@ -47,13 +47,13 @@ public class CadastroClientes extends javax.swing.JFrame {
         cidadetxt.setText(c.getCidade());
         estadotxt.setText(c.getEstado());
         telefone1txt.setText(c.getTelefone());
-        telefone2txt.setText(c.getTelefone());
+        telefone2txt.setText(c.getTelefone2());
         emailtxt.setText(c.getEmail());
         cnpjradio.setSelected(true);
         cnpjtxt.setText(c.getCnpj());
         nomeFantasiatxt.setText(c.getNomeFantasia());
         datanascimentotxt.setText(c.getData_de_nascimento());
-        inadimplenciaradio.isSelected();
+        inadimplenciaradio.setSelected(c.getSituaçao_de_inadimplência());
     }
 
     /**
@@ -366,7 +366,7 @@ public class CadastroClientes extends javax.swing.JFrame {
                         cf.listaClienteFisico.get(indice).setCidade(cidadetxt.getText());
                         cf.listaClienteFisico.get(indice).setEstado(estadotxt.getText());
                         cf.listaClienteFisico.get(indice).setTelefone(telefone1txt.getText());
-                        cf.listaClienteFisico.get(indice).setTelefone(telefone2txt.getText());
+                        cf.listaClienteFisico.get(indice).setTelefone2(telefone2txt.getText());
                         cf.listaClienteFisico.get(indice).setEmail(emailtxt.getText());
                         cf.listaClienteFisico.get(indice).setCpf(cpftxt.getText());
                         cf.listaClienteFisico.get(indice).setData_de_nascimento(datanascimentotxt.getText());
@@ -379,7 +379,7 @@ public class CadastroClientes extends javax.swing.JFrame {
                         cf.setCidade(cidadetxt.getText());
                         cf.setEstado(estadotxt.getText());
                         cf.setTelefone(telefone1txt.getText());
-                        cf.setTelefone(telefone2txt.getText());
+                        cf.setTelefone2(telefone2txt.getText());
                         cf.setEmail(emailtxt.getText());
                         cf.setCpf(cpftxt.getText());
                         cf.setData_de_nascimento(datanascimentotxt.getText());
@@ -399,7 +399,7 @@ public class CadastroClientes extends javax.swing.JFrame {
                     cj.setCidade(cidadetxt.getText());
                     cj.setEstado(estadotxt.getText());
                     cj.setTelefone(telefone1txt.getText());
-                    cj.setTelefone(telefone2txt.getText());
+                    cj.setTelefone2(telefone2txt.getText());
                     cj.setEmail(emailtxt.getText());
                     cj.setCnpj(cnpjtxt.getText());
                     cj.setNomeFantasia(nomeFantasiatxt.getText());

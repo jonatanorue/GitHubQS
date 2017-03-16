@@ -128,18 +128,20 @@ public class MenuCliente extends javax.swing.JFrame {
     private void editarClienteCpfbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarClienteCpfbtnActionPerformed
         // TODO add your handling code here:
         String buscar = JOptionPane.showInputDialog("Digite o CPF do cliente a ser buscado");
-         if(buscar == null){
-            JOptionPane.showMessageDialog(null, "ERRO");
+         if(buscar.equals("")){
+            JOptionPane.showMessageDialog(null, "Cpf não informado");
         }else{
             ClienteFisico c = new ClienteFisico();
             ClienteFisico buscaC = c.buscaClienteFisico(buscar);
-
-            CadastroClientes cs = new CadastroClientes(buscaC);
-            cs.setVisible(true);
-           
+             System.out.println(buscaC.getCpf());
+            if(!buscaC.getCpf().equals("")){
+                 CadastroClientes cs = new CadastroClientes(buscaC);
+                 cs.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Cliente inexistente");
+            }
         }
-        
-                
+     
     }//GEN-LAST:event_editarClienteCpfbtnActionPerformed
 
     private void novoclientebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoclientebtnActionPerformed
@@ -155,7 +157,7 @@ public class MenuCliente extends javax.swing.JFrame {
         if(cf.removerClienteFisico(buscar) == true){
             JOptionPane.showMessageDialog(null, "Removido com sucesso");
         }else{
-            JOptionPane.showMessageDialog(null, "ERRO");
+            JOptionPane.showMessageDialog(null, "Cliente não encontrado");
         }
                
     }//GEN-LAST:event_excluirClienteCpfbtnActionPerformed
@@ -167,24 +169,26 @@ public class MenuCliente extends javax.swing.JFrame {
         if(cj.removerClienteJuridico(buscar) == true){
             JOptionPane.showMessageDialog(null, "Removido com sucesso");
         }else{
-            JOptionPane.showMessageDialog(null, "ERRO");
+            JOptionPane.showMessageDialog(null, "Cliente não encontrado");
         }
     }//GEN-LAST:event_excluirclienteCnpjbtnActionPerformed
 
     private void editarClienteCnpjbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarClienteCnpjbtnActionPerformed
         // TODO add your handling code here:
         String buscar = JOptionPane.showInputDialog("Digite o cliente a ser buscado");
-        if(buscar == null){
-            JOptionPane.showMessageDialog(null, "ERRO");
+        if(buscar.equals("")){
+            JOptionPane.showMessageDialog(null, "Cnpj não informado");
         }else{
-        ClienteJuridico c = new ClienteJuridico();
-        ClienteJuridico buscaC = c.buscaClienteJuridico(buscar);
-                
-                
-                
-        CadastroClientes cs = new CadastroClientes(buscaC);
-        cs.setVisible(true);
-        }     
+                ClienteJuridico c = new ClienteJuridico();
+                ClienteJuridico buscaC = c.buscaClienteJuridico(buscar);               
+                System.out.println(buscaC.getCnpj());
+            if(!buscaC.getCnpj().equals("")){
+                 CadastroClientes cs = new CadastroClientes(buscaC);
+                 cs.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Cliente inexistente");
+            }
+         }        
     }//GEN-LAST:event_editarClienteCnpjbtnActionPerformed
 
     /**

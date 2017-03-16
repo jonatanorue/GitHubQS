@@ -18,6 +18,7 @@ public class Cliente {
     private String cidade;
     private String estado;
     private String telefone;
+    private String telefone2;
     private String email;
     private String data_de_nascimento;
     private Boolean situaçao_de_inadimplência;
@@ -28,6 +29,7 @@ public class Cliente {
         this.cidade = "";
         this.estado = "";
         this.telefone = "";
+        this.telefone2 = "";
         this.email = "";
         this.data_de_nascimento = "";
         this.situaçao_de_inadimplência = false;
@@ -72,6 +74,13 @@ public class Cliente {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+    public String getTelefone2() {
+        return telefone2;
+    }
+
+    public void setTelefone2(String telefone2) {
+        this.telefone2 = telefone2;
+    }
 
     public String getEmail() {
         return email;
@@ -100,4 +109,3 @@ public class Cliente {
     
   
 }
-
