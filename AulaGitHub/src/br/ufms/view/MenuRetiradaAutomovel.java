@@ -59,9 +59,9 @@ public class MenuRetiradaAutomovel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(101, 101, 101)
+                .addGap(84, 84, 84)
                 .addComponent(novaRetiradaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         pack();
@@ -71,6 +71,7 @@ public class MenuRetiradaAutomovel extends javax.swing.JFrame {
         // TODO add your handling code here:
         CadastroRetiradaAutomovel retirada = new CadastroRetiradaAutomovel();
         retirada.setVisible(true);
+        dispose();
     }//GEN-LAST:event_novaRetiradaBtnActionPerformed
 
     /**
