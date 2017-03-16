@@ -457,6 +457,10 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
             retirada.setHoraDevolucao(this.horaDevolucaoTxt.getText());
             retirada.setDesconto(Integer.parseInt(this.descontoTxt.getText()));
             retirada.setKmRetirada(Integer.parseInt(this.kmRetiradaTxt.getText()));
+            
+            // Comprovante de Retirada dos Automoveis
+            ComprovanteRetiradaAutomoveis comprovante = new ComprovanteRetiradaAutomoveis(retirada);
+            comprovante.salvarComprovante();
         } else {
             JOptionPane.showMessageDialog(this, "Reserva não efetuada anteriormente", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -473,10 +477,6 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
                 System.out.println("Cliente Juridico");
             }
         }*/
-        
-        // Comprovante de Retirada dos Automoveis
-        ComprovanteRetiradaAutomoveis comprovante = new ComprovanteRetiradaAutomoveis(retirada);
-        comprovante.salvarComprovante();
     }//GEN-LAST:event_salvarBtnActionPerformed
 
     private void horaDevolucaoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaDevolucaoTxtActionPerformed
