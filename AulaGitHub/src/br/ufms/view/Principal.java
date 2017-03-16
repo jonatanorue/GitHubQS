@@ -24,6 +24,11 @@ public class Principal extends javax.swing.JFrame {
         this.setAlwaysOnTop(false);
     }
 
+    public Principal(int nivelAcesso) {
+        initComponents();
+        this.setAlwaysOnTop(false);
+        this.checkAcesso(nivelAcesso);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -297,4 +302,23 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuServicosAdicionais;
     private javax.swing.JMenuBar topMenuBar;
     // End of variables declaration//GEN-END:variables
+
+    private void checkAcesso(int nivelAcesso) {
+        // 0 - Administrador
+        // 1 - Gerente
+        // 2 - Funcionario
+        switch(nivelAcesso){
+            case 2:
+                System.out.println("Principal > Bloqueios Funcionario");
+                this.menuAutomovel.setEnabled(false);
+                this.menuCatAutomoveis.setEnabled(false);
+                this.headerSA.setEnabled(false); // Menu Header
+                this.menuServicosAdicionais.setEnabled(false);
+            case 1:
+                System.out.println("Principal > Bloqueios Gerente");
+                this.headerFuncionario.setEnabled(false); // Menu Header
+                this.menuFuncionario.setEnabled(false);
+                this.menuNivelAcesso.setEnabled(false);
+        }
+    }
 }

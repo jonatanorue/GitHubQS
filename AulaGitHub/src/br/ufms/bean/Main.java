@@ -1,6 +1,8 @@
 package br.ufms.bean;
 
+import br.ufms.view.LoginFuncionario;
 import br.ufms.view.Principal;
+import java.util.Date;
 
 /**
  * Função para Inicialização de Valores
@@ -10,16 +12,14 @@ public class Main {
     public static void main(String[] args) {
 	System.out.println("--> Main.java");
         
-        //ClienteFisico c = ClienteFisico.buscaClienteFisico("11");
-        
-         ClienteFisico c = new ClienteFisico();
-         c = c.buscaClienteFisico("11");
-        
+        Main.valorInicialFuncionario();
         Main.valorInicialCategorias();
         Main.valorInicialAutomovel();
         
-        Principal janela = new Principal();
+        Principal janela = new Principal(0);
         janela.setVisible(true);
+        //LoginFuncionario login = new LoginFuncionario();
+        //login.setVisible(true);
     }
     
     private static void valorInicialCategorias(){
@@ -66,5 +66,20 @@ public class Main {
         auto2.setPlaca("bca-3443");
         auto2.setCategoria(Categorias.buscarCatAutomoveisLista(1));
         Automovel.cadastrarAutomovel(auto2);
+    }
+
+    private static void valorInicialFuncionario() {
+        Funcionario func1 = new Funcionario();
+        func1.setNome("Joel Cleidson");
+        func1.setEndereco("R. dos bobos, n 0");
+        func1.setCidade("5º Cafundé");
+        func1.setEstado("Lele");
+        func1.setDataDeNascimento(new Date("02/04/1990")); 
+        func1.setLogin("admin");
+        func1.setSenha("123");
+        func1.setNivelDeAcesso(0);
+        func1.setTelefone1("1234-1234");
+        func1.setTelefone2("4321-5678");
+        func1.CadastrarFuncionario(func1);
     }
 }
