@@ -1,6 +1,8 @@
 package br.ufms.bean;
 
+import br.ufms.view.LoginFuncionario;
 import br.ufms.view.Principal;
+import java.util.Date;
 
 /**
  * Função para Inicialização de Valores
@@ -10,11 +12,14 @@ public class Main {
     public static void main(String[] args) {
 	System.out.println("--> Main.java");
         
+        Main.valorInicialFuncionario();
         Main.valorInicialCategorias();
         Main.valorInicialAutomovel();
         
-        Principal janela = new Principal();
-        janela.setVisible(true);
+        //Principal janela = new Principal();
+        //janela.setVisible(true);
+        LoginFuncionario login = new LoginFuncionario();
+        login.setVisible(true);
     }
     
     private static void valorInicialCategorias(){
@@ -61,5 +66,20 @@ public class Main {
         auto2.setPlaca("bca-3443");
         auto2.setCategoria(Categorias.buscarCatAutomoveisLista(1));
         Automovel.cadastrarAutomovel(auto2);
+    }
+
+    private static void valorInicialFuncionario() {
+        Funcionario func = new Funcionario();
+        func.setNome("Joel Cleidson");
+        func.setEndereco("R. dos bobos, n 0");
+        func.setCidade("5º Cafundé");
+        func.setEstado("Lele");
+        func.setDataDeNascimento(new Date("02/04/1990")); 
+        func.setLogin("admin");
+        func.setSenha("123");
+        func.setNivelDeAcesso(0);
+        func.setTelefone1("1234-1234");
+        func.setTelefone2("4321-5678");
+        func.CadastrarFuncionario(func);
     }
 }
