@@ -7,9 +7,11 @@ package br.ufms.view;
 
 import br.ufms.bean.Automovel;
 import br.ufms.bean.Categorias;
+import br.ufms.bean.Cliente;
 import br.ufms.bean.ClienteFisico;
 import br.ufms.bean.ComprovanteRetiradaAutomoveis;
 import br.ufms.bean.Funcionario;
+import br.ufms.bean.Reserva;
 import br.ufms.bean.RetiradaAutomoveis;
 import br.ufms.bean.ServicosAdicionais;
 import java.text.DateFormat;
@@ -436,14 +438,29 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
     }//GEN-LAST:event_removerServicoBtnActionPerformed
 
     private void salvarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarBtnActionPerformed
-        if(!this.checkInputFields()) return;
-        
-        RetiradaAutomoveis retirada = new RetiradaAutomoveis();
-        retirada.setDataDevolucao(this.dataDevolucaoTxt.getText());
-        retirada.setHoraDevolucao(this.horaDevolucaoTxt.getText());
-        retirada.setDesconto(Integer.parseInt(this.descontoTxt.getText()));
-        retirada.setKmRetirada(Integer.parseInt(this.kmRetiradaTxt.getText()));
-        
+
+        Reserva r = new Reserva();
+        boolean status = false;
+        ArrayList<Reserva> lista = r.buscaReservasCliente(identificacaoClienteTxt.getText());
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getCarro().getChassi().equals(chassisAutomovelTxt.getText())) {
+                status = true;
+
+            }
+        }
+        if (!this.checkInputFields()) {
+        }
+
+        if (status == true) {
+            RetiradaAutomoveis retirada = new RetiradaAutomoveis();
+            retirada.setDataDevolucao(this.dataDevolucaoTxt.getText());
+            retirada.setHoraDevolucao(this.horaDevolucaoTxt.getText());
+            retirada.setDesconto(Integer.parseInt(this.descontoTxt.getText()));
+            retirada.setKmRetirada(Integer.parseInt(this.kmRetiradaTxt.getText()));
+        } else {
+            JOptionPane.showMessageDialog(this, "Reserva não efetuada anteriormente", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+
         /*if (tipoClienteBtnGrp.isSelected(null)) {
             JOptionPane.showMessageDialog(this, "Selecione o tipo de cliente.", "Erro", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -533,10 +550,10 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-            
-            double qtdMes = diffDays / 30;
-            double qtdSem = (diffDays%30) / 7;
-            double qtdDias = (diffDays%30)%7;
+
+        double qtdMes = diffDays / 30;
+        double qtdSem = (diffDays % 30) / 7;
+        double qtdDias = (diffDays % 30) % 7;
 
         for (i = 0; i < listServicosAdicionais.size(); i++) {
             ServicosAdicionais sa = ServicosAdicionais.buscarDescricao(listServicosAdicionais.get(i));
@@ -549,14 +566,13 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
             for (i = 0; i < Automovel.listaAutomovel.size(); i++) {
                 if (chassisAutomovelTxt.getText().equals(Automovel.listaAutomovel.get(i).getChassi())) {
                     total += qtdMes * Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorMensal()
-                             + qtdSem * Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorSemanal()
-                             + qtdDias * Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorDiario();
+                            + qtdSem * Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorSemanal()
+                            + qtdDias * Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorDiario();
                 }
             }
         }
-        
-        //Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorDiario()
 
+        //Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorDiario()
         System.out.print(diffDays + " days ");
 
         if (descontoTxt.getText().equals("")) {
@@ -567,36 +583,31 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
             valorTotalTxt.setText("R$" + total);
         }
     }
-    
-    private boolean checkInputFields(){
+
+    private boolean checkInputFields() {
         String regexDataDevolucao = "^[0-9]{2}(/)?[0-9]{2}(/)?[0-9]{4}$";
         String regexChassi = "^[a-zA-Z0-9]{3}( )?[a-zA-Z0-9]{6}( )?[a-zA-Z0-9]{2}( )?[a-zA-Z0-9]{6}$";
         String regexHoraDevolucao = "^[0-9]{2}(:)?[0-9]{2}$";
-        String regexCpf= "^[0-9]{3}(.)?[0-9]{3}(.)?[0-9]{3}(-)?[0-9]{2}$";
-        String regexCnpj= "^[0-9]{2}(.)?[0-9]{3}(.)?[0-9]{3}(/)?[0-9]{4}(-)?[0-9]{2}$";
+        String regexCpf = "^[0-9]{3}(.)?[0-9]{3}(.)?[0-9]{3}(-)?[0-9]{2}$";
+        String regexCnpj = "^[0-9]{2}(.)?[0-9]{3}(.)?[0-9]{3}(/)?[0-9]{4}(-)?[0-9]{2}$";
 
-        
-        if(!Pattern.compile(regexDataDevolucao).matcher(this.dataDevolucaoTxt.getText()).find()){
+        if (!Pattern.compile(regexDataDevolucao).matcher(this.dataDevolucaoTxt.getText()).find()) {
             JOptionPane.showMessageDialog(this, "Data Incorreta!\nExemplo correto '01/01/2017'.", "Valor Incorreto", JOptionPane.ERROR_MESSAGE);
             this.dataDevolucaoTxt.requestFocus();
             return false;
-        }
-        else if(!Pattern.compile(regexHoraDevolucao).matcher(this.horaDevolucaoTxt.getText()).find()){
+        } else if (!Pattern.compile(regexHoraDevolucao).matcher(this.horaDevolucaoTxt.getText()).find()) {
             JOptionPane.showMessageDialog(this, "Hora Incorreta!\nExemplo correto '19:50'.", "Valor Incorreto", JOptionPane.ERROR_MESSAGE);
             this.horaDevolucaoTxt.requestFocus();
             return false;
-        }
-        else if(clienteJuridicoRadio.isSelected() && !Pattern.compile(regexCnpj).matcher(this.identificacaoClienteTxt.getText()).find()){
+        } else if (clienteJuridicoRadio.isSelected() && !Pattern.compile(regexCnpj).matcher(this.identificacaoClienteTxt.getText()).find()) {
             JOptionPane.showMessageDialog(this, "CNPJ Incorreto!\nExemplo Correto '74.452.936/0001-90'.", "Valor Incorreto", JOptionPane.ERROR_MESSAGE);
             this.identificacaoClienteTxt.requestFocus();
             return false;
-        }
-        else if(clienteFisicoRadio.isSelected() && !Pattern.compile(regexCpf).matcher(this.identificacaoClienteTxt.getText()).find()){
+        } else if (clienteFisicoRadio.isSelected() && !Pattern.compile(regexCpf).matcher(this.identificacaoClienteTxt.getText()).find()) {
             JOptionPane.showMessageDialog(this, "CPF Incorreto!\nExemplo Correto '456.741.616-31'.", "Valor Incorreto", JOptionPane.ERROR_MESSAGE);
             this.identificacaoClienteTxt.requestFocus();
             return false;
-        }
-        else if(!Pattern.compile(regexChassi).matcher(this.chassisAutomovelTxt.getText()).find()){
+        } else if (!Pattern.compile(regexChassi).matcher(this.chassisAutomovelTxt.getText()).find()) {
             JOptionPane.showMessageDialog(this, "Chassi Incorreta!\nApenas caracteres alfanuméricos.", "Valor Incorreto", JOptionPane.ERROR_MESSAGE);
             this.chassisAutomovelTxt.requestFocus();
             return false;
