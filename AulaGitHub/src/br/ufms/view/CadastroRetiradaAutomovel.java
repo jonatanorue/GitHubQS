@@ -31,6 +31,8 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
 
     private final DefaultComboBoxModel modelServicos;
     private static DefaultListModel listModel;
+    
+    RetiradaAutomoveis retirada;
 
     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
     Date dataRetirada = new Date();
@@ -69,6 +71,8 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
         cat.cadastrarCatAutomoveis(cat);
 
         initComponents();
+        
+        retirada = new RetiradaAutomoveis();
 
         this.modelServicos = new DefaultComboBoxModel();
         this.servicosAdicionaisCombo.setModel(this.modelServicos);
@@ -452,11 +456,7 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
         }
 
         if (status == true) {
-            RetiradaAutomoveis retirada = new RetiradaAutomoveis();
-            retirada.setDataDevolucao(this.dataDevolucaoTxt.getText());
-            retirada.setHoraDevolucao(this.horaDevolucaoTxt.getText());
-            retirada.setDesconto(Integer.parseInt(this.descontoTxt.getText()));
-            retirada.setKmRetirada(Integer.parseInt(this.kmRetiradaTxt.getText()));
+            
             
             // Comprovante de Retirada dos Automoveis
             ComprovanteRetiradaAutomoveis comprovante = new ComprovanteRetiradaAutomoveis(retirada);
@@ -542,7 +542,9 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
 
         try {
             data_retirada = dateFormat.parse(dataRetiradaTxt.getText());
+            retirada.setDataRetirada(dataRetirada);
             data_devolucao = dateFormat.parse(dataDevolucaoTxt.getText());
+            retirada.setDataDevolucao(data_devolucao);
 
             long diff = data_devolucao.getTime() - data_retirada.getTime();
 
@@ -572,15 +574,16 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
             }
         }
 
-        //Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorDiario()
         System.out.print(diffDays + " days ");
 
         if (descontoTxt.getText().equals("")) {
             valorTotalTxt.setText("R$" + total);
+            retirada.setValorTotal(total);
         } else {
             double desconto = Double.parseDouble(descontoTxt.getText());
             total -= (total * desconto) / 100;
             valorTotalTxt.setText("R$" + total);
+            retirada.setValorTotal(total);
         }
     }
 

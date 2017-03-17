@@ -6,16 +6,17 @@
 package br.ufms.bean;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
  * @author Nicolas
  */
 public class RetiradaAutomoveis {
-    private String dataRetirada;
-    private String horaRetirada;
-    private String dataDevolucao;
-    private String horaDevolucao;
+    private Date dataRetirada;
+    private Date horaRetirada;
+    private Date dataDevolucao;
+    private Date horaDevolucao;
     private Automovel chassi;
     private ClienteFisico cpf;
     private ClienteJuridico cnpj;
@@ -23,6 +24,7 @@ public class RetiradaAutomoveis {
     private Funcionario nome;
     private int kmRetirada;
     private int desconto;
+    private double valor_total;
     
     public RetiradaAutomoveis(){
     }
@@ -33,35 +35,35 @@ public class RetiradaAutomoveis {
         listaRetirada.add(Retirada);
     }
     
-    public String getDataRetirada(){
+    public Date getDataRetirada(){
         return dataRetirada;
     }
     
-    public void setDataRetirada(String dataRetirada){
+    public void setDataRetirada(Date dataRetirada){
         this.dataRetirada = dataRetirada;
     }
     
-    public String getHoraRetirada(){
+    public Date getHoraRetirada(){
         return horaRetirada;
     }
     
-    public void setHoraRetirada(String horaRetirada){
+    public void setHoraRetirada(Date horaRetirada){
         this.horaRetirada = horaRetirada;
     }
     
-    public String getDataDevolucao(){
+    public Date getDataDevolucao(){
         return dataDevolucao;
     }
     
-    public void setDataDevolucao(String dataDevolucao){
+    public void setDataDevolucao(Date dataDevolucao){
         this.dataDevolucao = dataDevolucao;
     }
     
-    public String getHoraDevolucao(){
+    public Date getHoraDevolucao(){
         return horaDevolucao;
     }
     
-    public void setHoraDevolucao(String horaDevolucao){
+    public void setHoraDevolucao(Date horaDevolucao){
         this.horaDevolucao = horaDevolucao;
     }
     
@@ -121,7 +123,15 @@ public class RetiradaAutomoveis {
         this.desconto = desconto;
     }
     
+    public double getValorTotal(){
+        return valor_total;
+    }
+    
+    public void setValorTotal(double valor_total){
+        this.valor_total = valor_total;
+    }
+    
     public static ArrayList<RetiradaAutomoveis> getRetiradaAutomoveis(){
-     return listaRetirada;
+        return listaRetirada;
     }
 }

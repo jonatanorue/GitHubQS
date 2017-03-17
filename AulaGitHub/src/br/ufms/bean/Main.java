@@ -29,7 +29,7 @@ public class Main {
         cat1.setdescCategoria("Exemplo 1");
         cat1.setvalorDiario(10);
         cat1.setvalorSemanal(70);
-        cat1.setvalorMensal(300);
+        cat1.setvalorMensal(301);
         cat1.setvalorKM(30);
         cat1.setqtdAutomoveis("12");
         cat1.cadastrarCatAutomoveis(cat1);
