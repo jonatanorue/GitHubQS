@@ -30,8 +30,8 @@ public class ComprovanteRetiradaAutomoveis {
             PrintWriter writer = new PrintWriter(this.pasta+arquivo, "utf-8");
             // nome do cliente
             // documento do cliente
-            ClienteFisico cli = ret.getCpf();
-            ClienteJuridico emp = ret.getCnpj();
+            ClienteFisico cli = new ClienteFisico().buscaClienteFisico(ret.getCpf_Cnpj());
+            ClienteJuridico emp = new ClienteJuridico().buscaClienteJuridico(ret.getCpf_Cnpj());
             writer.println("Comprovante de Retirada\n");
             if(cli != null){
                 writer.println("Cliente Fisico: "+cli.getNome());

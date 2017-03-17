@@ -14,16 +14,14 @@ import java.util.Date;
  */
 public class RetiradaAutomoveis {
     private Date dataRetirada;
-    private Date horaRetirada;
+    private String horaRetirada;
     private Date dataDevolucao;
-    private Date horaDevolucao;
-    private Automovel chassi;
-    private ClienteFisico cpf;
-    private ClienteJuridico cnpj;
-    private ServicosAdicionais tipo_servico;
-    private Funcionario nome;
+    private String horaDevolucao;
+    private String chassi;
+    private String cpf_cnpj;
+    private ArrayList<String> listaServicosAdicionais;
+    private String nome_funcionario;
     private int kmRetirada;
-    private int desconto;
     private double valor_total;
     
     public RetiradaAutomoveis(){
@@ -43,11 +41,11 @@ public class RetiradaAutomoveis {
         this.dataRetirada = dataRetirada;
     }
     
-    public Date getHoraRetirada(){
+    public String getHoraRetirada(){
         return horaRetirada;
     }
     
-    public void setHoraRetirada(Date horaRetirada){
+    public void setHoraRetirada(String horaRetirada){
         this.horaRetirada = horaRetirada;
     }
     
@@ -59,52 +57,35 @@ public class RetiradaAutomoveis {
         this.dataDevolucao = dataDevolucao;
     }
     
-    public Date getHoraDevolucao(){
+    public String getHoraDevolucao(){
         return horaDevolucao;
     }
     
-    public void setHoraDevolucao(Date horaDevolucao){
+    public void setHoraDevolucao(String horaDevolucao){
         this.horaDevolucao = horaDevolucao;
     }
     
-    public Automovel getChassi(){
+    public String getChassi(){
         return chassi;
     }
     
-    public void setChassi(Automovel chassi){
+    public void setChassi(String chassi){
         this.chassi = chassi;
     }
     
-    public ClienteFisico getCpf(){
-        return cpf;
+    public String getCpf_Cnpj(){
+        return cpf_cnpj;
     }
     
-    public void setCpf(ClienteFisico cpf){
-        this.cpf = cpf;
+    public void setCpf_Cnpj(String cpf_cnpj){
+        this.cpf_cnpj = cpf_cnpj;
+    }
+    public String getFuncionario(){
+        return nome_funcionario;
     }
     
-    public ClienteJuridico getCnpj(){
-        return cnpj;
-    }
-    
-    public void setCnpj(ClienteJuridico cnpj){
-        this.cnpj = cnpj;
-    }
-    
-    public ServicosAdicionais getServico(){
-        return tipo_servico;
-    }
-    
-    public void setServico(ServicosAdicionais tipo_servico){
-        this.tipo_servico = tipo_servico;
-    }
-    
-    public Funcionario getFuncionario(){
-        return nome;
-    }
-    
-    public void setFuncionario(Funcionario nome){
-        this.nome = nome;
+    public void setFuncionario(String nome_funcionario){
+        this.nome_funcionario = nome_funcionario;
     }
     
     public int getKmRetirada(){
@@ -113,14 +94,6 @@ public class RetiradaAutomoveis {
     
     public void setKmRetirada(int kmRetirada){
         this.kmRetirada = kmRetirada;
-    }
-    
-    public int getDesconto(){
-        return desconto;
-    }
-    
-    public void setDesconto(int desconto){
-        this.desconto = desconto;
     }
     
     public double getValorTotal(){
@@ -133,5 +106,19 @@ public class RetiradaAutomoveis {
     
     public static ArrayList<RetiradaAutomoveis> getRetiradaAutomoveis(){
         return listaRetirada;
+    }
+
+    /**
+     * @return the listaServicosAdicionais
+     */
+    public ArrayList<String> getListaServicosAdicionais() {
+        return listaServicosAdicionais;
+    }
+
+    /**
+     * @param listaServicosAdicionais the listaServicosAdicionais to set
+     */
+    public void setListaServicosAdicionais(ArrayList<String> listaServicosAdicionais) {
+        this.listaServicosAdicionais = listaServicosAdicionais;
     }
 }

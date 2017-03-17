@@ -415,7 +415,62 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
     }//GEN-LAST:event_voltarBtnActionPerformed
 
     private void calcularTotalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularTotalBtnActionPerformed
-        this.calcularTotal();
+        double total = 0;
+        int i = 0;
+
+        Date data_retirada = null;
+        Date data_devolucao = null;
+        long diffDays = 0;
+
+        try {
+            data_retirada = dateFormat.parse(dataRetiradaTxt.getText());
+            retirada.setDataRetirada(dataRetirada);
+            data_devolucao = dateFormat.parse(dataDevolucaoTxt.getText());
+            retirada.setDataDevolucao(data_devolucao);
+            
+            retirada.setHoraRetirada(horaRetiradaTxt.getText());
+            retirada.setHoraDevolucao(horaDevolucaoTxt.getText());
+
+            long diff = data_devolucao.getTime() - data_retirada.getTime();
+
+            diffDays = diff / (24 * 60 * 60 * 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        double qtdMes = diffDays / 30;
+        double qtdSem = (diffDays % 30) / 7;
+        double qtdDias = (diffDays % 30) % 7;
+
+        for (i = 0; i < listServicosAdicionais.size(); i++) {
+            ServicosAdicionais sa = ServicosAdicionais.buscarDescricao(listServicosAdicionais.get(i));
+            total += sa.getPreco();
+        }
+
+        if (dataDevolucaoTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Digite a data de devolução.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else {
+            for (i = 0; i < Automovel.listaAutomovel.size(); i++) {
+                if (chassisAutomovelTxt.getText().equals(Automovel.listaAutomovel.get(i).getChassi())) {
+                    total += qtdMes * Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorMensal()
+                            + qtdSem * Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorSemanal()
+                            + qtdDias * Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorDiario();
+                    retirada.setValorTotal(total);
+                }
+            }
+        }
+
+        System.out.print(diffDays + " days ");
+
+        if (descontoTxt.getText().equals("")) {
+            valorTotalTxt.setText("R$" + total);
+            
+        } else {
+            double desconto = Double.parseDouble(descontoTxt.getText());
+            total -= (total * desconto) / 100;
+            valorTotalTxt.setText("R$" + total);
+            retirada.setValorTotal(total);
+        }
     }//GEN-LAST:event_calcularTotalBtnActionPerformed
 
     private void servicosAdicionaisComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_servicosAdicionaisComboActionPerformed
@@ -449,14 +504,34 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(i).getCarro().getChassi().equals(chassisAutomovelTxt.getText())) {
                 status = true;
-
             }
         }
+        
         if (!this.checkInputFields()) {
+        }
+        
+        if (tipoClienteBtnGrp.isSelected(null)) {
+            JOptionPane.showMessageDialog(this, "Selecione o tipo de cliente.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (clienteFisicoRadio.isSelected()) {
+                int i = 0;
+                if (identificacaoClienteTxt.getText().equals(ClienteFisico.listaClienteFisico.get(i).getCpf())) {
+                    retirada.setCpf_Cnpj(identificacaoClienteTxt.getText());
+                }
+            } else if (clienteJuridicoRadio.isSelected()) {
+                retirada.setCpf_Cnpj(identificacaoClienteTxt.getText());
+            }
+        }
+        
+        if(kmRetiradaTxt.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Digite a quilometragem do automóvel.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }else{
+            retirada.setKmRetirada(Integer.parseInt(kmRetiradaTxt.getText()));
         }
 
         if (status == true) {
-            
+            retirada.setChassi(chassisAutomovelTxt.getText());
+            retirada.cadastrarRetiradaAutomovel(retirada);
             
             // Comprovante de Retirada dos Automoveis
             ComprovanteRetiradaAutomoveis comprovante = new ComprovanteRetiradaAutomoveis(retirada);
@@ -465,18 +540,7 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Reserva não efetuada anteriormente", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
-        /*if (tipoClienteBtnGrp.isSelected(null)) {
-            JOptionPane.showMessageDialog(this, "Selecione o tipo de cliente.", "Erro", JOptionPane.ERROR_MESSAGE);
-        } else {
-            if (clienteFisicoRadio.isSelected()) {
-                int i = 0;
-                if (identificacaoClienteTxt.getText().equals(ClienteFisico.listaClienteFisico.get(i).getCpf())) {
-                    JOptionPane.showMessageDialog(this, "CPF: " + identificacaoClienteTxt.getText(), "ABC", JOptionPane.INFORMATION_MESSAGE);
-                }
-            } else if (clienteJuridicoRadio.isSelected()) {
-                System.out.println("Cliente Juridico");
-            }
-        }*/
+        
     }//GEN-LAST:event_salvarBtnActionPerformed
 
     private void horaDevolucaoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaDevolucaoTxtActionPerformed
@@ -531,62 +595,7 @@ public class CadastroRetiradaAutomovel extends javax.swing.JFrame {
             this.modelServicos.addElement(servicos.getDescricao());
         }
     }
-
-    public void calcularTotal() {
-        double total = 0;
-        int i = 0;
-
-        Date data_retirada = null;
-        Date data_devolucao = null;
-        long diffDays = 0;
-
-        try {
-            data_retirada = dateFormat.parse(dataRetiradaTxt.getText());
-            retirada.setDataRetirada(dataRetirada);
-            data_devolucao = dateFormat.parse(dataDevolucaoTxt.getText());
-            retirada.setDataDevolucao(data_devolucao);
-
-            long diff = data_devolucao.getTime() - data_retirada.getTime();
-
-            diffDays = diff / (24 * 60 * 60 * 1000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        double qtdMes = diffDays / 30;
-        double qtdSem = (diffDays % 30) / 7;
-        double qtdDias = (diffDays % 30) % 7;
-
-        for (i = 0; i < listServicosAdicionais.size(); i++) {
-            ServicosAdicionais sa = ServicosAdicionais.buscarDescricao(listServicosAdicionais.get(i));
-            total += sa.getPreco();
-        }
-
-        if (dataDevolucaoTxt.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Digite a data de devolução.", "Erro", JOptionPane.ERROR_MESSAGE);
-        } else {
-            for (i = 0; i < Automovel.listaAutomovel.size(); i++) {
-                if (chassisAutomovelTxt.getText().equals(Automovel.listaAutomovel.get(i).getChassi())) {
-                    total += qtdMes * Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorMensal()
-                            + qtdSem * Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorSemanal()
-                            + qtdDias * Automovel.getAutomovelPorChassi(chassisAutomovelTxt.getText()).getCategoria().getvalorDiario();
-                }
-            }
-        }
-
-        System.out.print(diffDays + " days ");
-
-        if (descontoTxt.getText().equals("")) {
-            valorTotalTxt.setText("R$" + total);
-            retirada.setValorTotal(total);
-        } else {
-            double desconto = Double.parseDouble(descontoTxt.getText());
-            total -= (total * desconto) / 100;
-            valorTotalTxt.setText("R$" + total);
-            retirada.setValorTotal(total);
-        }
-    }
-
+    
     private boolean checkInputFields() {
         String regexDataDevolucao = "^[0-9]{2}(/)?[0-9]{2}(/)?[0-9]{4}$";
         String regexChassi = "^[a-zA-Z0-9]{3}( )?[a-zA-Z0-9]{6}( )?[a-zA-Z0-9]{2}( )?[a-zA-Z0-9]{6}$";
