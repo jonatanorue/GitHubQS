@@ -129,6 +129,26 @@ public class Reserva {
         return null;
     }
     
+    public Reserva buscarReservaChassi(String chassi){
+        for(int i = 0; i < listaReservas.size(); i++){
+            if(listaReservas.get(i).getCarro().getChassi().equals(chassi)){
+                return listaReservas.get(i);
+            }
+        }
+        return null;
+    }
+    
+    public boolean removerReservaChassi(String chassi){
+        boolean status = false;
+        for(int i = 0; i < listaReservas.size(); i++){
+            if(listaReservas.get(i).getCarro().getChassi().equals(chassi)){
+               listaReservas.remove(i);
+                status = true;
+            }
+        }
+        return status;
+    }
+    
     public boolean removerReserva(String cpfcnpj){
         boolean status = false;
         for(int i = 0; i < listaReservas.size(); i++){

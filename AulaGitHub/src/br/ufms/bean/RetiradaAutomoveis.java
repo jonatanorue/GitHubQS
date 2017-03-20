@@ -115,6 +115,16 @@ public class RetiradaAutomoveis {
         return listaServicosAdicionais;
     }
 
+    public RetiradaAutomoveis buscaRetiradaChassi(Reserva rs){
+        for(int i = 0; i < listaRetirada.size(); i++){
+            if(listaRetirada.get(i).getChassi().equals(rs.getCarro().getChassi()) && listaRetirada.get(i).getCpf_Cnpj().equals(rs.getCpfCnpj()) && 
+                    listaRetirada.get(i).getDataRetirada().getTime() == rs.getDataRetirada().getTime()){
+                return listaRetirada.get(i);
+            }
+        }
+        return new RetiradaAutomoveis();
+     
+    }
     /**
      * @param listaServicosAdicionais the listaServicosAdicionais to set
      */

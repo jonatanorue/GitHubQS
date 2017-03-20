@@ -5,12 +5,23 @@
  */
 package br.ufms.view;
 
+import br.ufms.bean.Reserva;
+import br.ufms.bean.RetiradaAutomoveis;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Nicolas
  */
 public class CadastroDevolucaoAutomovel extends javax.swing.JFrame {
 
+     Reserva rs;
+     RetiradaAutomoveis rt;
+     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+    
     /**
      * Creates new form CadastroDevolucaoAutomovel
      */
@@ -32,9 +43,7 @@ public class CadastroDevolucaoAutomovel extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        valorLocacaoTxt = new javax.swing.JTextField();
         descontoTxt = new javax.swing.JTextField();
         quilometragemTxt = new javax.swing.JTextField();
         chassiTxt = new javax.swing.JTextField();
@@ -44,6 +53,11 @@ public class CadastroDevolucaoAutomovel extends javax.swing.JFrame {
         salvarBtn = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         voltarBtn = new javax.swing.JButton();
+        tanqueCB = new javax.swing.JCheckBox();
+        precoBtn = new javax.swing.JToggleButton();
+        valorLb = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jFormattedTextField3.setText("jFormattedTextField3");
 
@@ -58,8 +72,6 @@ public class CadastroDevolucaoAutomovel extends javax.swing.JFrame {
 
         jLabel5.setText("Quilometragem:");
 
-        jLabel6.setText("Valor da Locação:");
-
         jLabel7.setText("Desconto:");
 
         dataTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
@@ -67,6 +79,11 @@ public class CadastroDevolucaoAutomovel extends javax.swing.JFrame {
         jLabel8.setText("Hora:");
 
         horaTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("HH:mm"))));
+        horaTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                horaTxtActionPerformed(evt);
+            }
+        });
 
         salvarBtn.setText("Salvar");
         salvarBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -77,85 +94,118 @@ public class CadastroDevolucaoAutomovel extends javax.swing.JFrame {
 
         voltarBtn.setText("Voltar");
 
+        tanqueCB.setText("Tanque não cheio");
+        tanqueCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tanqueCBActionPerformed(evt);
+            }
+        });
+
+        precoBtn.setText("Calcular Preço");
+        precoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precoBtnActionPerformed(evt);
+            }
+        });
+
+        valorLb.setText("R$ 0,00 ");
+
+        jLabel9.setText("Valor da Locação:");
+
+        jLabel3.setText("Ex: 10% - SOMENTE NÚMERO");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jSeparator1)
-                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel2))
-                                .addGap(18, 18, 18)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel9))
+                                .addGap(27, 27, 27)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(chassiTxt)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(descontoTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-                                            .addComponent(valorLocacaoTxt, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(quilometragemTxt, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(dataTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(28, 28, 28)
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(horaTxt))))
+                                        .addComponent(horaTxt))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(valorLb)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addComponent(descontoTxt, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                                    .addComponent(quilometragemTxt, javax.swing.GroupLayout.Alignment.LEADING))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel3)))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 84, Short.MAX_VALUE)
+                                .addGap(0, 108, Short.MAX_VALUE)
                                 .addComponent(jLabel1)))
                         .addGap(83, 83, 83))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(salvarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(voltarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(precoBtn)
+                            .addComponent(jLabel7)
+                            .addComponent(tanqueCB))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(dataTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel8)
+                                .addComponent(horaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(chassiTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(quilometragemTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(dataTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel8)
-                        .addComponent(horaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(chassiTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(quilometragemTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(valorLocacaoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(descontoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(descontoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)))
                 .addGap(18, 18, 18)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 15, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(salvarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(voltarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(27, 27, 27))
+                .addComponent(tanqueCB)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(valorLb)
+                    .addComponent(jLabel9))
+                .addGap(14, 14, 14)
+                .addComponent(precoBtn)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(salvarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(voltarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -163,7 +213,69 @@ public class CadastroDevolucaoAutomovel extends javax.swing.JFrame {
 
     private void salvarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarBtnActionPerformed
         // TODO add your handling code here:
+        //Remover da reserva
+        rs.removerReservaChassi(chassiTxt.getText());
+        
+        
     }//GEN-LAST:event_salvarBtnActionPerformed
+
+    private void tanqueCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tanqueCBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tanqueCBActionPerformed
+
+    private void precoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precoBtnActionPerformed
+        // TODO add your handling code here:
+        if (dataTxt.getText().equals("") || horaTxt.getText().equals("")){
+                    JOptionPane.showMessageDialog(null, "INFORME A DATA e Hora");
+        }else{
+        
+
+            rs = new Reserva().buscarReservaChassi(chassiTxt.getName());
+            rt = new RetiradaAutomoveis().buscaRetiradaChassi(rs);
+
+           Date DataDevolucaoRet = null;
+           Date DataDevolucao = null;
+           long diffDays = 0;
+           int diffHoras = 0;
+           double valorTotal = rt.getValorTotal();
+
+          try {
+              DataDevolucao = dateFormat.parse(dataTxt.getText());
+              DataDevolucaoRet = rt.getDataDevolucao();
+
+               long diff = DataDevolucaoRet.getTime() - DataDevolucao.getTime();
+
+               diffDays = diff / (24 * 60 * 60 * 1000);
+
+           } catch (Exception e) {
+               e.printStackTrace(); 
+
+           }
+           String[] horas = horaTxt.getText().split(":");
+           String[] horasRet = rt.getHoraDevolucao().split(":");
+           int hrs = Integer.parseInt(horas[0]);
+           int hrsRet = Integer.parseInt(horasRet[0]);
+
+            if(diffDays < 0 && (hrsRet - hrs) < 0 ){
+                valorTotal += rs.getTaxaMulta();
+            }
+            if(tanqueCB.isSelected() == true){
+                valorTotal += 150;
+            }
+
+            if(!descontoTxt.getText().equals("")){
+                int desc = Integer.parseInt(descontoTxt.getText());
+                valorTotal = valorTotal - valorTotal*(desc/100); 
+            }
+
+            valorLb.setText("R$ " + valorTotal);
+        }
+       
+    }//GEN-LAST:event_precoBtnActionPerformed
+
+    private void horaTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_horaTxtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,15 +320,18 @@ public class CadastroDevolucaoAutomovel extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JToggleButton precoBtn;
     private javax.swing.JTextField quilometragemTxt;
     private javax.swing.JButton salvarBtn;
-    private javax.swing.JTextField valorLocacaoTxt;
+    private javax.swing.JCheckBox tanqueCB;
+    private javax.swing.JLabel valorLb;
     private javax.swing.JButton voltarBtn;
     // End of variables declaration//GEN-END:variables
 }
