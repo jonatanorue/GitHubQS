@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author olimpio
+ * @author RVM
  */
 public class TelaSelecaoAutomovel extends javax.swing.JFrame {
 private ArrayList<Automovel> carros = new ArrayList<>();

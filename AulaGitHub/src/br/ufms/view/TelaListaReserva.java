@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author olimpio
+ * @author RVM
  */
 public class TelaListaReserva extends javax.swing.JFrame {
     private ArrayList<Reserva> lista;
@@ -211,58 +211,40 @@ public class TelaListaReserva extends javax.swing.JFrame {
         }
     }
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-         if(reservaSelecionada != null){
-             if(flag == false){
-             int linha = tabela.getSelectedRow();
-             Reserva x = lista.get(linha);
-             boolean auxCliente;
-             if(x.getClienteFisico() != null)
-                 auxCliente = true;
-             else
-                 auxCliente = false;
-             //data e hora atuais
-             Date data = new Date();
-             Calendar c = Calendar.getInstance();
-             c.setTime(data);
-             int diaAtual = c.get(Calendar.DAY_OF_MONTH);
-             int mesAtual = c.get(Calendar.MONTH);
-             int anoAtual = c.get(Calendar.YEAR);
-             //data da Devolução
-             Date data2 = x.getDataRetirada();
-             Calendar c2 = Calendar.getInstance();
-             c2.setTime(data2);
-             int diaRet = c2.get(Calendar.DAY_OF_MONTH);
-             int mesRet = c2.get(Calendar.MONTH);
-             int anoRet = c2.get(Calendar.YEAR);
-             if (diaAtual == diaRet && mesAtual == mesRet && anoAtual == anoRet) {
-                 int hrAtual = c.get(Calendar.HOUR_OF_DAY);
-                 int minAtual = c.get(Calendar.MINUTE);
-                 int hrRet = c2.get(Calendar.HOUR_OF_DAY);
-                 int minRet = c2.get(Calendar.MINUTE);
-                if (hrRet < hrAtual) {
-                    int res = JOptionPane.showConfirmDialog(null, "Cancelamento fora do prazo do horario cobrar MULTA do cliente\ndeseja excluir a reserva");
-                    if(auxCliente)
-                        reservaSelecionada.getClienteFisico().setSituaçao_de_inadimplência(false);
-                    else
-                        reservaSelecionada.getClienteJuridico().setSituaçao_de_inadimplência(false);
-                    if (res == 0) {
-                        if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
-                            lista.remove(reservaSelecionada);
-                            JOptionPane.showMessageDialog(null, "Reserva Excluida");
-                            this.atualizaTabela();
-                            this.revalidate();
-                        } else {
-                            JOptionPane.showMessageDialog(null, "erro ao excluir");
-                        }
-                    }
-                } else {
+        if (reservaSelecionada != null) {
+            if (flag == false) {
+                int linha = tabela.getSelectedRow();
+                Reserva x = lista.get(linha);
+                boolean auxCliente; // verifica se é cpf ou cnpj, para setar inadimplência
+                auxCliente = x.getClienteFisico() != null;
+                //data atual
+                Date data = new Date();
+                //data retirada
+                Date data2 = x.getDataRetirada();
+                long diff = data2.getTime() - data.getTime();
+                long diffDays = diff / (24 * 60 * 60 * 1000);
+
+                Calendar c = Calendar.getInstance();
+                c.setTime(data);
+
+                Calendar c2 = Calendar.getInstance();
+                c2.setTime(data2);
+                System.out.println("diferenca :"+ (c2.get(Calendar.DAY_OF_MONTH) == c.get(Calendar.DAY_OF_MONTH)-1));
+                // dia atula e retirada com o mesmo dia
+                if (diffDays == 0) {
+                    if(c2.get(Calendar.DAY_OF_MONTH) != c.get(Calendar.DAY_OF_MONTH)-1){
+                    int hrAtual = c.get(Calendar.HOUR_OF_DAY);
+                    int minAtual = c.get(Calendar.MINUTE);
+                    int hrRet = c2.get(Calendar.HOUR_OF_DAY);
+                    int minRet = c2.get(Calendar.MINUTE);
                     int diferenca = ((hrRet * 60) + minRet) - ((hrAtual * 60) + minAtual);
                     if (diferenca <= 240) {
                         int res = JOptionPane.showConfirmDialog(null, "Cancelamento fora do prazo do horario cobrar MULTA do cliente\ndeseja excluir a reserva");
-                        if(auxCliente)
+                        if (auxCliente) {
                             reservaSelecionada.getClienteFisico().setSituaçao_de_inadimplência(false);
-                        else
+                        } else {
                             reservaSelecionada.getClienteJuridico().setSituaçao_de_inadimplência(false);
+                        }
                         if (res == 0) {
                             if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
                                 lista.remove(reservaSelecionada);
@@ -280,74 +262,59 @@ public class TelaListaReserva extends javax.swing.JFrame {
                         this.revalidate();
                     } else {
                         JOptionPane.showMessageDialog(null, "erro ao excluir");
-                        
                     }
-                }
-            } else if (diaRet < diaAtual && mesRet == mesAtual && anoRet == anoAtual) {
-                int res = JOptionPane.showConfirmDialog(null, "Cancelamento fora do prazo cobrar MULTA do cliente\ndeseja excluir a reserva");
-                if(auxCliente)
+                    }else{
+                        int res = JOptionPane.showConfirmDialog(null, "Cancelamento fora do prazo do horario cobrar MULTA do cliente\ndeseja excluir a reserva");
+                        if (auxCliente) {
+                            reservaSelecionada.getClienteFisico().setSituaçao_de_inadimplência(false);
+                        } else {
+                            reservaSelecionada.getClienteJuridico().setSituaçao_de_inadimplência(false);
+                        }
+                        if (res == 0) {
+                            if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
+                                lista.remove(reservaSelecionada);
+                                JOptionPane.showMessageDialog(null, "Reserva Excluida");
+                                this.atualizaTabela();
+                                this.revalidate();
+                            } else {
+                                JOptionPane.showMessageDialog(null, "erro ao excluir");
+                            }
+                        }    
+                    }
+                } else if (diffDays < 0) { // reserva vencida
+                    int res = JOptionPane.showConfirmDialog(null, "Cancelamento fora do prazo do horario cobrar MULTA do cliente\ndeseja excluir a reserva");
+                    if (auxCliente) {
                         reservaSelecionada.getClienteFisico().setSituaçao_de_inadimplência(false);
-                    else
-                        reservaSelecionada.getClienteJuridico().setSituaçao_de_inadimplência(false);
-                if (res == 0) {
-                    if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
-                        lista.remove(reservaSelecionada);
-                        JOptionPane.showMessageDialog(null, "Reserva Excluida");
-                        this.atualizaTabela();
-                        this.revalidate();
                     } else {
-                        JOptionPane.showMessageDialog(null, "erro ao excluir");
-                    }
-                }
-            } else if (anoRet < anoAtual) {
-                int res = JOptionPane.showConfirmDialog(null, "Cancelamento fora do prazo cobrar MULTA do cliente\ndeseja excluir a reserva");
-                if(auxCliente)
-                        reservaSelecionada.getClienteFisico().setSituaçao_de_inadimplência(false);
-                    else
                         reservaSelecionada.getClienteJuridico().setSituaçao_de_inadimplência(false);
-                if (res == 0) {
-                    if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
-                        lista.remove(reservaSelecionada);
-                        JOptionPane.showMessageDialog(null, "Reserva Excluida");
-                        this.atualizaTabela();
-                        this.revalidate();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "erro ao excluir");
                     }
+                    if (res == 0) {
+                        if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
+                            lista.remove(reservaSelecionada);
+                            JOptionPane.showMessageDialog(null, "Reserva Excluida");
+                            this.atualizaTabela();
+                            this.revalidate();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "erro ao excluir");
+                        }
+                    } //reserva com horario de retirada maior que 4 horas
+                } else if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
+                    lista.remove(reservaSelecionada);
+                    JOptionPane.showMessageDialog(null, "Reserva Excluida");
+                    this.atualizaTabela();
+                    this.revalidate();
+                } else {
+                    JOptionPane.showMessageDialog(null, "erro ao excluir");
                 }
-            } else if (mesRet < mesAtual && anoRet == anoAtual) {
-                int res = JOptionPane.showConfirmDialog(null, "Cancelamento fora do prazo cobrar MULTA do cliente\ndeseja excluir a reserva");
-                if(auxCliente)
-                        reservaSelecionada.getClienteFisico().setSituaçao_de_inadimplência(false);
-                    else
-                        reservaSelecionada.getClienteJuridico().setSituaçao_de_inadimplência(false);
-                if (res == 0) {
-                    if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
-                        lista.remove(reservaSelecionada);
-                        JOptionPane.showMessageDialog(null, "Reserva Excluida");
-                        this.atualizaTabela();
-                        this.revalidate();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "erro ao excluir");
-                    }
-                }
-            } else if (reservaSelecionada.removerReserva(reservaSelecionada.getCpfCnpj())) {
-                lista.remove(reservaSelecionada);
-                JOptionPane.showMessageDialog(null, "Reserva Excluida");
-                this.atualizaTabela();
-                this.revalidate();
-            } else {
-                JOptionPane.showMessageDialog(null, "erro ao excluir");
+            } else { // tela cadastro/edição
+                CadastroReserva c = new CadastroReserva(reservaSelecionada);
+                c.setVisible(true);
+                this.dispose();
             }
-         }else{
-            CadastroReserva c = new CadastroReserva(reservaSelecionada);
-            c.setVisible(true);
-            this.dispose();
-          }
         } else {
             JOptionPane.showMessageDialog(null, "selecione a reserva");
         }
-             
+   
     }//GEN-LAST:event_btExcluirActionPerformed
 
     private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
